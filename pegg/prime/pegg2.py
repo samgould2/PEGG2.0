@@ -14,6 +14,7 @@ from matplotlib.colors import LinearSegmentedColormap
 import seaborn as sns
 import matplotlib.patches as patches
 from matplotlib.patches import Polygon
+from cyvcf2 import VCF
 import crisporEffScores #python script included in directory; from CRISPOR website github with modifications
 
 warnings.filterwarnings('ignore')
@@ -162,7 +163,7 @@ def df_formatter(df, chrom_dict, context_size = 120):
        
         chr_seq = chrom_dict[chrom].upper()
 
-        if vt in ['SNP', 'ONP', 'DNP']:
+        if vt in ['SNP', 'ONP', 'DNP', 'INDEL']:
             ref = ref
             alt = alt
             #assert ref == chr_seq[s-1:e], print(ref, chr_seq[s-1:e])
@@ -312,6 +313,102 @@ def primedesign_formatter(seq):
                 var_type = 'INDEL'
 
     return var_type, wt_w_context, alt_w_context, left_seq, right_seq, ref_seq, alt_seq
+
+
+def clinvar_VCF_translator(filepath, variation_ids):
+    """
+    Function that takes a clinvar.vcf.gz file containing information about variants, as well as a list of variation ID numbers,
+    and returns a pandas dataframe containing the variants in a format that can be used by PEGG to design pegRNAs.
+    
+    Parameters
+    ----------
+    filepath
+        *type = str*
+        
+        Filepath to the clinvar.vcf.gz file.
+        
+    variation_ids
+        *type = list*
+        
+        List of variation IDs that the user wants to convert to .
+        
+    """
+    gene = []
+    ref = []
+    alt = []
+    chrom = []
+    start = []
+    end = []
+    CLNHGVS = []
+    var_type = []
+    CLNDN = []
+    CLNSIG = []
+    allele_id = []
+    
+    var_id = []
+
+    #for translating between Clinvar variation classes, and PEGG-readable versions...
+    a = ['Deletion', 'Duplication', 'Indel', 'Insertion', 'Inversion',
+        'Microsatellite', 'Variation', 'single_nucleotide_variant']
+    b = ['DEL', 'Duplication', 'INDEL', 'INS', 'Inversion',
+        'Microsatellite', 'Variation', 'SNP']
+
+    var_dict = dict(zip(a,b))
+
+
+    for variant in VCF(filepath): # or VCF('some.bcf')
+        if int(variant.ID) in variation_ids:
+            
+            var_id.append(int(variant.ID))
+            allele_id.append(variant.INFO.get('ALLELEID'))
+            #change it to make it flexible for a list
+            gene.append(variant.INFO.get('GENEINFO'))
+            CLNSIG.append(variant.INFO.get('CLNSIG'))
+            var_type.append(variant.INFO.get('CLNVC'))
+            CLNHGVS.append(variant.INFO.get('CLNHGVS'))
+            CLNDN.append(variant.INFO.get('CLNDN'))
+            ref.append(variant.REF)
+            chrom.append(variant.CHROM)
+            start.append(variant.start)
+            end.append(variant.end)
+
+            if len(variant.ALT)==1:
+                alt.append(variant.ALT[0])
+            elif len(variant.ALT)>1:
+                tot = len(variant.ALT)-1
+                alt.append(variant.ALT[0])
+                for i in range(tot):
+                    var_id.append(int(variant.ID))
+                    allele_id.append(variant.INFO.get('ALLELEID'))
+                    #change it to make it flexible for a list
+                    gene.append(variant.INFO.get('GENEINFO'))
+                    CLNSIG.append(variant.INFO.get('CLNSIG'))
+                    var_type.append(variant.INFO.get('CLNVC'))
+                    CLNHGVS.append(variant.INFO.get('CLNHGVS'))
+                    CLNDN.append(variant.INFO.get('CLNDN'))
+                    ref.append(variant.REF)
+                    chrom.append(variant.CHROM)
+                    start.append(variant.start)
+                    end.append(variant.end)
+                    alt.append(variant.ALT[i+1])
+                    #d1.append(variant.ID)
+
+    var_type = [var_dict[i] for i in var_type]
+    gene = [i.split(':')[0] for i in gene] #extracting just gene information...
+
+    #fixing issue where Clinvar variants start one position early for some reason...
+    start = np.asarray(start)+1
+    
+    d1 = ['Hugo_Symbol', 'Chromosome', 'Start_Position', 'End_Position', 'Reference_Allele', 
+          'Tumor_Seq_Allele2', 'Variant_Type', 'Variation_ID','Allele_ID','CLNSIG', 'CLNHGVS', 'CLNDN']
+
+    combined = [gene, chrom, start, end, ref, alt, var_type, var_id, allele_id,
+               CLNSIG, CLNHGVS, CLNDN]
+    
+    d = dict(zip(d1, combined))
+    clinvar = pd.DataFrame(data = d)
+
+    return clinvar
 
 def PAM_finder(seq, PAM):
     """ 
@@ -683,6 +780,9 @@ def ontarget_score(df):
     for protospacer in dict_scores.keys():
         df.loc[df["Protospacer_30"]== protospacer, "OnTarget_Azimuth_Score"] = dict_scores[protospacer]
 
+    #for protospacer in dict_none.keys():
+    #    df.loc[df["Protospacer_30"]== protospacer, "OnTarget_Azimuth_Score"] = None
+
     return df
 
 
@@ -746,14 +846,160 @@ def input_formatter(input_df, input_format, chrom_dict, context_size):
         input_df = pd.DataFrame(dict(zip(col_labels, cols)))     
 
     elif input_format == 'ClinVar':
+
         return "ClinVar format input in development"
         #ADD FUNCTIONS...
     
     return input_df
 
+def other_filtration(pegRNA_df, RE_sites=None, polyT_threshold=4):
+
+    """
+    Determines whether pegRNAs contain polyT termination sites or Restriction Enzyme Sites. Returns pegRNA_df with properties added.
+    Note: RE_sites requires only A, T, C, or G bases (Ns will not work currently; need to do custom filtration)...
+    These properties are checking for:
+    
+    (1) u6 terminator (polyT sequence)
+        
+    (2) RE site presence 
+        
+    Parameters
+    ----------
+    pegRNA_df
+        *type = pd.DataFrame*
+        
+        A dataframe containing the pegRNAs for the selected input mutations. Generated by run() or pegRNA_generator()
+
+    RE_sites
+        *type = list or None*
+
+        A list containing the RE recognition sites to filter (e.g. ['CGTCTC', 'GAATTC'] for Esp3I and EcoRI). Default = None (no filtration).
+
+    polyT_threshold
+        *type = int*
+
+        The length of the polyT sequence to classify as a terminator. Default = 4.
+    
+    """
+    #checking the type of dataframe
+
+    prime=False
+    base=False
+    sensor=False
+
+    df_keys = pegRNA_df.keys()
+    if "RTT_PBS" in df_keys:
+        prime=True
+    else:
+        base=True
+    if 'sensor_wt' in df_keys:
+        sensor=True
+
+    terminator_sequence = 'T'*polyT_threshold
+
+    contains_terminator = []
+    RE_site = []
+
+    if RE_sites != None:
+
+        assert type(RE_sites)==list, "RE_sites must be in list format (e.g. ['CGTCTC', 'GAATTC'])"
+        
+        RE_sites_new = []
+        for i in RE_sites:
+            for k in i:
+                assert k.upper() in ['A', 'T', 'C', 'G'], "RE sites must only contain A, T, C, or G (Ns and other nucleic acid codes not permitted)"
+            RE_sites_new.append(i.upper())
+            RE_sites_new.append(str(Bio.Seq.Seq(i).reverse_complement()).upper())
+
+        RE_sites = RE_sites_new
+
+        #check for u6 terminator sequence "TTTT" in pbs or protospacer
+        for idx, i in pegRNA_df.iterrows():
+            #check if its base or prime for filtration purposes            
+            if prime==True:
+                pbs_rtt = i["RTT_PBS"]
+                proto = i["Protospacer"]
+
+                if terminator_sequence in (pbs_rtt or proto):
+                    contains_terminator.append(True)
+                else:
+                    contains_terminator.append(False)
+
+                if sensor==True:
+                    target = i['sensor_wt']
+                    #finally check for restriction enzyme sites
+                    res_proto = any(re_site in proto for re_site in RE_sites)
+                    res_pbs_rtt = any(re_site in pbs_rtt for re_site in RE_sites)
+                    res_target = any(re_site in target for re_site in RE_sites)
+
+                    if (res_proto or res_pbs_rtt or res_target)==True:
+                        RE_site.append(True)
+                    else:
+                        RE_site.append(False) 
+                elif sensor==False:
+                    #finally check for restriction enzyme sites
+                    res_proto = any(re_site in proto for re_site in RE_sites)
+                    res_pbs_rtt = any(re_site in pbs_rtt for re_site in RE_sites)
+
+                    if (res_proto or res_pbs_rtt)==True:
+                        RE_site.append(True)
+                    else:
+                        RE_site.append(False) 
+                    
+
+            elif base==True:
+                proto = i["Protospacer"]
+                if terminator_sequence in (proto):
+                    contains_terminator.append(True)
+                else:
+                    contains_terminator.append(False)
+
+                if sensor==True:
+                    target = i['sensor_wt']
+                    #finally check for restriction enzyme sites
+                    res_proto = any(re_site in proto for re_site in RE_sites)
+                    res_target = any(re_site in target for re_site in RE_sites)
+
+                    if (res_proto or res_target)==True:
+                        RE_site.append(True)
+                    else:
+                        RE_site.append(False) 
+                elif sensor==False:
+                    #finally check for restriction enzyme sites
+                    res_proto = any(re_site in proto for re_site in RE_sites)
+                    if (res_proto)==True:
+                        RE_site.append(True)
+                    else:
+                        RE_site.append(False) 
+
+        pegRNA_df['contains_polyT_terminator']=contains_terminator
+        pegRNA_df['contains_RE_site']=RE_site
+    
+    if RE_sites == None:
+        #check for u6 terminator sequence "TTTT" in pbs or protospacer
+        for idx, i in pegRNA_df.iterrows():
+            if prime==True:
+                pbs_rtt = i["RTT_PBS"]
+                proto = i["Protospacer"]
+
+                if terminator_sequence in (pbs_rtt or proto):
+                    contains_terminator.append(True)
+                else:
+                    contains_terminator.append(False)
+            elif base==True:
+                proto = i["Protospacer"]
+                if terminator_sequence in (proto):
+                    contains_terminator.append(True)
+                else:
+                    contains_terminator.append(False)
+            
+        pegRNA_df['contains_polyT_terminator']=contains_terminator
+
+    return pegRNA_df
 
 def run(input_df, input_format, chrom_dict, PAM = "NGG", rankby = 'PEGG2_Score', pegRNAs_per_mut = 'All',
-        RTT_lengths = [5,10,15,25,30], PBS_lengths = [8,10,13,15], min_RHA_size = 1, 
+        RTT_lengths = [5,10,15,25,30], PBS_lengths = [8,10,13,15], min_RHA_size = 1,
+        RE_sites=None, polyT_threshold=4, 
         proto_size=19, context_size = 120, 
         before_proto_context=5, sensor_length=60, sensor_orientation = 'reverse-complement', sensor=True):
 
@@ -767,9 +1013,13 @@ def run(input_df, input_format, chrom_dict, PAM = "NGG", rankby = 'PEGG2_Score',
         if i>30:
             print("Warning: RTT lengths larger than 30 nt are not reccomended due to potential low PE efficiency")
             
-    #format the input df
-    #NEED TO UPDATE TO INCLUDE CLINVAR!!!
-    #also alter the "cols_to_save" parameter to avoid errors here...
+    ##enforce the proper formatting for INS, DEL, and INDEL
+    #Note: for some reason, Clinvar encodes INS/DEL differently than cBioPortal so most INS/DEL need to be labelled as INDELs
+    if input_format == 'cBioPortal':
+        input_df.loc[((input_df['Variant_Type']=='INS') & (~input_df['Reference_Allele'].isin(['-', '', None]))), 'Variant_Type'] = 'INDEL'
+        input_df.loc[((input_df['Variant_Type']=='DEL') & (~input_df['Tumor_Seq_Allele2'].isin(['-', '', None]))), 'Variant_Type'] = 'INDEL'
+
+    #and format the input df
     input_df = input_formatter(input_df, input_format, chrom_dict, context_size)
 
     combined_peg_dfs = []
@@ -792,6 +1042,10 @@ def run(input_df, input_format, chrom_dict, PAM = "NGG", rankby = 'PEGG2_Score',
 
     peg_df = pd.concat(combined_peg_dfs).set_index('mutation_idx').reset_index()
 
+    if len(peg_df)==0:
+        print('No pegRNAs generated; try increasing the size of the RTT in parameters')
+        return peg_df
+    
     #COMBINE WITH Input dataframe information...
     peg_df = pd.merge(input_df, peg_df, on='mutation_idx')
 
@@ -823,8 +1077,11 @@ def run(input_df, input_format, chrom_dict, PAM = "NGG", rankby = 'PEGG2_Score',
     if sensor == True:
         peg_df = sensor_generator(peg_df, proto_size, before_proto_context, sensor_length, sensor_orientation)
     
+    #add in information about polyT sequences and RE sites
+    peg_df = other_filtration(peg_df, RE_sites, polyT_threshold)
+
     #resetting the index and sorting by mutation
-    peg_df = peg_df.sort_values(by='mutation_idx', ascending=True).set_index('mutation_idx').reset_index().drop(columns='index')
+    peg_df = peg_df.sort_values(by=['mutation_idx', 'pegRNA_rank'], ascending=[True, True]).set_index('mutation_idx').reset_index().drop(columns='index')
 
     #and add names...
     peg_df['pegRNA_id'] = ['pegRNA_' + str(i) for i in range(len(peg_df))]
@@ -861,6 +1118,10 @@ def peggscore2(df):
     df['RTT_GC_content'] = rtt_gc
     df['indel_size'] = var_size
 
+    #check if there are any none value types in Ontarget score; if so set to 0
+    df2 = df.copy()
+    df2.loc[df2['OnTarget_Azimuth_Score'].isna(), 'OnTarget_Azimuth_Score'] = 0
+
     #dummy weights for PEGG Score
     factor_weights = {'Proto_disrupted':5, 
                'PAM_disrupted':3, 
@@ -882,7 +1143,7 @@ def peggscore2(df):
     factor_lists = []
     for i in factor_weights.keys():
         weight = factor_weights[i]
-        factor_lists.append(weight*np.asarray(df[i]))
+        factor_lists.append(weight*np.asarray(df2[i]))
 
     pegg2_score = np.zeros(len(factor_lists[0]))
     for i in factor_lists:
@@ -897,7 +1158,11 @@ def RF_score(df):
 
     factors = ['Proto_disrupted', 'PAM_disrupted', 'indel_size', 'PBS_GC_content', 'RTT_GC_content', 'RTT_length', 'PBS_length', 'Distance_to_nick', 'RHA_size', 'OnTarget_Azimuth_Score']
 
-    X = df[factors]
+    #check if there are any none value types in Ontarget score; if so set to 0
+    df2 = df.copy()
+    df2.loc[df2['OnTarget_Azimuth_Score'].isna(), 'OnTarget_Azimuth_Score'] = 0
+
+    X = df2[factors]
 
     pred = m.predict(X)
 

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2D2D2D" />
+  
+  <title>PEGG :: pegg.base package</title>
+  
+  <link rel="icon" type="image/png" href="_static/PEGG_notext.ico">
+  
+  <link rel="index" title="Index" href="genindex.html"/>
+
+  <link rel="stylesheet" href="_static/css/nltk_theme.css"/>
+  <link rel="stylesheet" href="_static/css/custom.css"/>
+
+  <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+      <script type="text/javascript" src="_static/documentation_options.js"></script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+  
+
+  <script src="https://email.tl.fortawesome.com/c/eJxNjUEOgyAQAF8jR7Kw6wIHDh7sP1Cw2mgxgmn6-3JsMqc5zEQfE8dkxOY1KKMUOI3ACFKRJpSW2AAp7ontYIaxI6i7XPJVwyeVfCQ550Os3jLrGSNOLgbdAy6s0PBk2TFNjEbsfq31LB0OnX407pJa5v2faRadwSW63mn5KuLyR9j2tgx3zecanl-55R_-jjPs"></script> 
+</head>
+
+<body>
+  <div id="nltk-theme-container">
+    <header>
+      <div id="logo-container">
+          
+          <a href="index.html"><img src="_static/PEGG_notext.png"></a>
+          
+      </div>
+      <div id="project-container">
+        
+        <h1>PEGG Documentation</h1>
+        
+      </div>
+
+      <a id="menu-toggle" class="fa fa-bars" aria-hidden="true"></a>
+
+      <script type="text/javascript">
+        $("#menu-toggle").click(function() {
+          $("#menu-toggle").toggleClass("toggled");
+          $("#side-menu-container").slideToggle(300);
+        });
+      </script>
+    </header>
+
+    <div id="content-container">
+
+      <div id="side-menu-container">
+
+        <div id="search" role="search">
+        <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+            <input type="text" name="q" placeholder="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+</div>
+
+        <div id="side-menu" role="navigation">
+          
+  
+    
+  
+  
+    <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">🚀 Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#required-input-files">Required Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#reference-file-formatting">Reference File Formatting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#input-mutations">(1) Input mutations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#a-compatible-input-files">(1a) Compatible Input Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#b-clinvar-variants">(1b) ClinVar variants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#reference-genome">(2) Reference Genome</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#on-off-target-scores">(3) On/Off Target scores</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#using-pegg">Using PEGG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#visualization-tools">Visualization Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#oligo-generation">Oligo Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#library-generation">Library Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#jupyter-notebook-tutorial">Jupyter Notebook Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#a-note-on-ram">A Note on RAM</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jupyter_tutorial.html">🪐 Jupyter Notebook Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PEGG.html">📚 Complete Function Documentation</a></li>
+</ul>
+
+  
+
+        </div>
+
+        
+      </div>
+
+      <div id="main-content-container">
+        <div id="main-content" role="main">
+          
+  <div class="section" id="pegg-base-package">
+<h1>pegg.base package<a class="headerlink" href="#pegg-base-package" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
+</div>
+<div class="section" id="module-pegg.base.base_editing">
+<span id="pegg-base-base-editing-module"></span><h2>pegg.base.base_editing module<a class="headerlink" href="#module-pegg.base.base_editing" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pegg.base.base_editing.eligible_PAM_finder_base">
+<span class="sig-prename descclassname"><span class="pre">pegg.base.base_editing.</span></span><span class="sig-name descname"><span class="pre">eligible_PAM_finder_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PAM</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proto_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">19</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.base.base_editing.eligible_PAM_finder_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines eligible PAM sequences for creating pegRNAs…</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pegg.base.base_editing.gRNA_generator">
+<span class="sig-prename descclassname"><span class="pre">pegg.base.base_editing.</span></span><span class="sig-name descname"><span class="pre">gRNA_generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PAM</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proto_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ideal_edit_window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[4,</span> <span class="pre">8]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.base.base_editing.gRNA_generator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pegg.base.base_editing.run_base">
+<span class="sig-prename descclassname"><span class="pre">pegg.base.base_editing.</span></span><span class="sig-name descname"><span class="pre">run_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chrom_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PAM</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NGG'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filtration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ABE+CBE'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ideal_edit_window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[4,</span> <span class="pre">8]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_SNP_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proto_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">19</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">before_proto_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor_orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'reverse-complement'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.base.base_editing.run_base" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pegg.base.base_editing.sensor_generator_base">
+<span class="sig-prename descclassname"><span class="pre">pegg.base.base_editing.</span></span><span class="sig-name descname"><span class="pre">sensor_generator_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proto_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">before_proto_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">60</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor_orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'reverse-complement'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.base.base_editing.sensor_generator_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates sensor sequence for quantification of pegRNA editing outcomes
+Automatically puts sensor in reverse complement orientation with respect to protospacer
+This is highly reccomended to reduce recombination during cloning/library preparation</p>
+<p>options for sensor_orienation = ‘reverse_comp’; ‘forward’</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pegg.base.base_editing.sensor_viz_base">
+<span class="sig-prename descclassname"><span class="pre">pegg.base.base_editing.</span></span><span class="sig-name descname"><span class="pre">sensor_viz_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_w_sensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.base.base_editing.sensor_viz_base" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pegg.base.base_editing.split">
+<span class="sig-prename descclassname"><span class="pre">pegg.base.base_editing.</span></span><span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">word</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.base.base_editing.split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple function for splitting string into component characters</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pegg.base">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pegg.base" title="Permalink to this heading">¶</a></h2>
+</div>
+</div>
+
+
+        </div>
+      </div>
+
+    </div>
+
+<footer>
+    <div id="footer-info">
+        <ul id="build-details">
+            
+                <li class="footer-element">
+                    
+                        <a href="_sources/pegg.base.rst.txt" rel="nofollow"> source</a>
+                    
+                </li>
+            
+
+            
+
+            
+        </ul>
+
+        
+            <div id="copyright">
+                &copy; 2023, Samuel Gould
+            </div>
+        
+
+        <div id="credit">
+            created with <a href="http://sphinx-doc.org/">Sphinx</a> and <a href="https://github.com/tomaarsen/nltk_theme">NLTK Theme</a>
+        </div>
+    </div>
+</footer> 
+
+</div>
+
+</body>
+</html>

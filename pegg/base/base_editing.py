@@ -124,6 +124,7 @@ def gRNA_generator(mut, PAM, orientation, proto_size, ideal_edit_window = [4,8])
 
 def run_base(input_df, input_format, chrom_dict, PAM = "NGG", filtration = "ABE+CBE", ideal_edit_window = [4,8], auto_SNP_filter = True, 
         proto_size=19, context_size = 120, 
+        RE_sites=None, polyT_threshold=4, 
         before_proto_context=5, sensor_length=40, sensor_orientation = 'reverse-complement', sensor=True):
             
     #format the input df
@@ -236,6 +237,9 @@ def run_base(input_df, input_format, chrom_dict, PAM = "NGG", filtration = "ABE+
     #create sensor if desired
     if sensor == True:
         peg_df = sensor_generator_base(peg_df, proto_size, before_proto_context, sensor_length, sensor_orientation)
+
+    #add in information about polyT sequences and RE sites
+    peg_df = pegg2.other_filtration(peg_df, RE_sites, polyT_threshold)
     
     return peg_df
 
