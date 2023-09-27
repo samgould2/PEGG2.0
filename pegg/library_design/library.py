@@ -416,7 +416,7 @@ def library_maker(mutant_input, gene_name, chrom_dict, fraction_safetarget=0.05,
     if fraction_silent>0:
         neutrals = neutral_substitutions(gene_name, chrom, strand, start_end_cds, chrom_dict)
 
-        num_silent = int(total_size*fraction_silent)
+        num_silent = min(int(total_size*fraction_silent), len(neutrals))
 
         a = list(range(len(neutrals)))
         rand_choices = np.random.choice(a, size=num_silent, replace=False)
