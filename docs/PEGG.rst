@@ -12,3 +12,8 @@ This page contains the complete documentation for each function in the pegg modu
    :members:
    :undoc-members:
    :show-inheritance:
+
+.. automodule:: pegg.library_design.library
+   :members:
+   :undoc-members:
+   :show-inheritance:

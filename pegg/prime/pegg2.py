@@ -150,6 +150,8 @@ def df_formatter(df, chrom_dict, context_size = 120):
     seq_start = []
     seq_end = []
 
+    to_drop = []
+
     for i, val in df.iterrows():
         vt = val['Variant_Type']
         s = val['Start_Position']
@@ -186,23 +188,30 @@ def df_formatter(df, chrom_dict, context_size = 120):
         wt_seq = left_context + ref + right_context
         alt_seq = left_context + alt + right_context
 
-        wt_w_context.append(str(wt_seq))
-        alt_w_context.append(str(alt_seq))
-        left_context_list.append(str(left_context))
-        right_context_list.append(str(right_context))
-        ref_allele.append(str(ref))
-        alt_allele.append(str(alt))
+        
 
         start = s-context_size
         end = e+context_size
 
-        seq_start.append(start)
-        seq_end.append(end)
+        if str(chr_seq[start-1:end])!=str(wt_seq): #changed from assert to allow it to continue to run
 
-        assert str(chr_seq[start-1:end])==str(wt_seq), print(chr_seq[start-1:end] + '\n' + str(wt_seq))
-                                                            
+            print(f"Error in mutant # {i}; Dropped from pegRNA generation\nVariant Type = {vt}| REF = {ref} | ALT = {alt}\n{chr_seq[start-1:end]}\n{str(wt_seq)}")
+            to_drop.append(i)
+        else:
+            seq_start.append(start)
+            seq_end.append(end)
+            
+            wt_w_context.append(str(wt_seq))
+            alt_w_context.append(str(alt_seq))
+            left_context_list.append(str(left_context))
+            right_context_list.append(str(right_context))
+            ref_allele.append(str(ref))
+            alt_allele.append(str(alt))
+
     cols_to_save = list(df.keys())
+
     df_new = df[cols_to_save]
+    df_new = df_new.drop(index=to_drop).reset_index(drop=True)
 
     df_new['seq_start'] = seq_start
     df_new['seq_end'] = seq_end
@@ -788,6 +797,8 @@ def ontarget_score(df):
 
 def input_formatter(input_df, input_format, chrom_dict, context_size):
 
+    assert input_format in ['cBioPortal', 'WT_ALT', 'PrimeDesign'], "input_format is not correct. Choose from ['cBioPortal', 'WT_ALT', 'PrimeDesign']."
+
     #format the input dataframe appropriately...
     if input_format == 'cBioPortal':
         #add assert statement to make sure all necessary info is included
@@ -845,11 +856,6 @@ def input_formatter(input_df, input_format, chrom_dict, context_size):
         col_labels = ["mutation_idx", 'wt_w_context', 'alt_w_context', 'Variant_Type', 'REF', 'ALT', 'left_context', 'right_context']
         input_df = pd.DataFrame(dict(zip(col_labels, cols)))     
 
-    elif input_format == 'ClinVar':
-
-        return "ClinVar format input in development"
-        #ADD FUNCTIONS...
-    
     return input_df
 
 def other_filtration(pegRNA_df, RE_sites=None, polyT_threshold=4):
@@ -997,7 +1003,7 @@ def other_filtration(pegRNA_df, RE_sites=None, polyT_threshold=4):
 
     return pegRNA_df
 
-def run(input_df, input_format, chrom_dict, PAM = "NGG", rankby = 'PEGG2_Score', pegRNAs_per_mut = 'All',
+def run(input_df, input_format, chrom_dict=None, PAM = "NGG", rankby = 'PEGG2_Score', pegRNAs_per_mut = 'All',
         RTT_lengths = [5,10,15,25,30], PBS_lengths = [8,10,13,15], min_RHA_size = 1,
         RE_sites=None, polyT_threshold=4, 
         proto_size=19, context_size = 120, 
@@ -1018,6 +1024,8 @@ def run(input_df, input_format, chrom_dict, PAM = "NGG", rankby = 'PEGG2_Score',
     if input_format == 'cBioPortal':
         input_df.loc[((input_df['Variant_Type']=='INS') & (~input_df['Reference_Allele'].isin(['-', '', None]))), 'Variant_Type'] = 'INDEL'
         input_df.loc[((input_df['Variant_Type']=='DEL') & (~input_df['Tumor_Seq_Allele2'].isin(['-', '', None]))), 'Variant_Type'] = 'INDEL'
+
+        assert chrom_dict != None, "Genome required to use cBioPortal input format. Load genome with genome_loader() and re-run."
 
     #and format the input df
     input_df = input_formatter(input_df, input_format, chrom_dict, context_size)
@@ -1081,7 +1089,11 @@ def run(input_df, input_format, chrom_dict, PAM = "NGG", rankby = 'PEGG2_Score',
     peg_df = other_filtration(peg_df, RE_sites, polyT_threshold)
 
     #resetting the index and sorting by mutation
-    peg_df = peg_df.sort_values(by=['mutation_idx', 'pegRNA_rank'], ascending=[True, True]).set_index('mutation_idx').reset_index().drop(columns='index')
+    peg_df = peg_df.sort_values(by=['mutation_idx', 'pegRNA_rank'], ascending=[True, True]).set_index('mutation_idx').reset_index(drop=True)
+
+    #restore columns to boolean
+    peg_df['PAM_disrupted'] = peg_df['PAM_disrupted'].astype(bool)
+    peg_df['Proto_disrupted'] = peg_df['Proto_disrupted'].astype(bool)
 
     #and add names...
     peg_df['pegRNA_id'] = ['pegRNA_' + str(i) for i in range(len(peg_df))]
@@ -1333,7 +1345,7 @@ def sensor_viz(df_w_sensor, i):
             #mut_size = 2
             mut_size = len(df_w_sensor.iloc[i]['ALT'])
 
-            ax.add_patch(patches.Rectangle((mut_start+mut_size, 1), 0, 2, fill=False, edgecolor='tab:red', lw=3, label='Mutated Bases')) #protospacer location
+            ax.add_patch(patches.Rectangle((mut_start-mut_size+1, 1), 0, 2, fill=False, edgecolor='tab:red', lw=3, label='Mutated Bases')) #protospacer location
 
         elif vt=='DEL':
             mut_size = len(df_w_sensor.iloc[i]['REF'])

@@ -6,6 +6,7 @@ from matplotlib.colors import LinearSegmentedColormap
 import seaborn as sns
 import matplotlib.patches as patches
 from matplotlib.patches import Polygon
+import matplotlib.pyplot as plt
 
 def eligible_PAM_finder_base(mut, PAM, proto_size=19):
     """ 
