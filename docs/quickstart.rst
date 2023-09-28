@@ -14,8 +14,11 @@ To modify and/or download specific python files, download the package from the `
 In order to use PEGG to design pegRNAs, you must provide a set of mutations in a pandas DataFrame for PEGG to use.
 There are 3 acceptable input formats that PEGG accepts
 
+Input Formatting
+**************************
+
 (1) WT-ALT Format
-*******************
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In this format, the user feeds in a set of wildtype sequences, and the corresponding set of desired mutant sequences.
 PEGG then uses a built-in aligner to determine the mutation from these sequences, and design pegRNAs for these variants.
 Note: Complex INDELs will break this function because they are difficult to align. If you want to design INDELs, use one of the two formats below.
@@ -23,7 +26,7 @@ Note: Complex INDELs will break this function because they are difficult to alig
 The pandas DataFrame must have at least 2 columns, with the following column names **(1) 'WT'** and **(2) 'ALT'**
 
 (2) PrimeDesign Format
-************************
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In this format, users feed in a set of sequences with the desired edit in `PrimeDesign <https://primedesign.pinellolab.partners.org/>`_ format.
 For example, an A>G SNP would look like: "AATCG(A/G)GCTAG", a "GTT" insertion would be: "AATCG(/GTT)GCTAG", a "GTT" deletion: "AATCG(GTT/)GCTAG", and a "C>GTT" INDEL: "AATCG(C/GTT)GCTAG".
@@ -34,7 +37,7 @@ This column contains the PrimeDesign formatted sequences.
 
 
 (3) cBioPortal Format
-***********************
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In this format, users simply provide a set of variants with their genome coordinates and reference and alternate alleles, as well as the variant type.
 This format is compatible with all of the datasets in the `cBioPortal <http://www.cbioportal.org/datasets>`_ , which contains cancer-associated variant datasets.
@@ -66,7 +69,7 @@ An example for loading in a dataset is provided here:
 .. image:: mutant_input.png
 
 (3b) Reference Genome
-***********************
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition, to use the "cBioPortal" input format, you must provide a genome that PEGG can use to find the associated sequences. 
 There is a built in genome loader function that you can use, or you can format the chromosome sequences in a dictionary, with the keys as the chromosome identifiers:
@@ -85,7 +88,7 @@ You can access the genome files at this link: `Reference Files Dropbox Link <htt
 It has been tested on human and mouse genomes.
 
 (4) ClinVar mutations
-***********************
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 PEGG also has a built-in function for translating ClinVar IDs to the "cBioPortal" input format. To do so, download a ClinVar vcf.gz file,
 and choose your desired Variation IDs that you wish to model. These vcf.gz files are available in the `Reference Files Dropbox Link <https://www.dropbox.com/sh/5xsdzyiyrjiu9pf/AADiFFA3BQ3vX7swja-i2NBqa?dl=0>`_ (under the clinvar folder)
@@ -110,10 +113,31 @@ See the below codeblock for the precise syntax:
 Generating pegRNAs
 ********************
 
+To run PEGG to generate pegRNA-sensor pairs with the default parameters, simply execute the following codeblow, 
+which shows an example with PrimeDesign format:
 
+.. code-block:: python
+
+   from pegg.prime import pegg2 
+   import pandas as pd
+
+   seqs = ['AAAATCGTAGCTAGGCGTAGGGCGCGCGGGCTCGGAGGCGCGATGCGCAT(A/G)TGGATCGGGCTAGGCTAGCGCGGGCTAGCTAGCTTCGAGCCGCTA',
+        'AAAATCGTAGCTAGGCGTAGGGCGCGCGGGCTCGGAGGCGCGATGCGCAT(/GTGC)TGGATCGGGCTAGGCTAGCGCGGGCTAGCTAGCTTCGAGCCGCTA',
+        'AAAATCGTAGCTAGGCGTAGGGCGCGCGGGCTCGGAGGCGCGATGCGCAT(A/GTGC)TGGATCGGGCTAGGCTAGCGCGGGCTAGCTAGCTTCGAGCCGCTA']
+
+   input = pd.DataFrame(dict(zip(['SEQ'], [seqs])))
+   
+   #options = 'cBioPortal', 'WT_ALT', 'PrimeDesign'
+   input_format = 'PrimeDesign'
+   
+   pegRNAs = pegg2.run(input, input_format)
+
+This will output a dataframe that contains the pegRNA-sensor designs with default parameters.
 
 pegRNA Design Options
 ************************
+
+There are a whole host of design parameters for the pegRNAs and sensors that can be customized.
 
 
 
