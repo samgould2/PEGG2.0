@@ -6,10 +6,10 @@ setup(
     author = 'Samuel Gould',
     author_email = 'samgould@mit.edu',
     url = 'https://github.com/samgould2/PEGG2.0',
-    version = '2.0.0',
+    version = '2.0.3',
     description = 'Prime Editing Guide Generator',
-    py_modules = ["prime", "base", "library_design"],
     package_dir = {'': 'pegg'},
+    packages = ["prime", "base", "library_design"],
 
     install_requires = ["Bio>=1.4.0",
         "cyvcf2>=0.30.18",
@@ -19,8 +19,9 @@ setup(
         "pandas>=1.4.2",
         "seaborn>=0.11.2",
         "setuptools>=61.2.0",
-        "Sphinx>=4.4.0"
-        "scikit-learn==1.1.1"
+        "Sphinx>=4.4.0",
+        "scikit-learn==1.1.1",
+        "regex>=2023.8.8"
     ],
 
     classifiers=[

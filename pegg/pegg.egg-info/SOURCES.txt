@@ -1,0 +1,15 @@
+LICENSE
+README.rst
+setup.py
+pegg/base/__init__.py
+pegg/base/base_editing.py
+pegg/library_design/__init__.py
+pegg/library_design/library.py
+pegg/pegg.egg-info/PKG-INFO
+pegg/pegg.egg-info/SOURCES.txt
+pegg/pegg.egg-info/dependency_links.txt
+pegg/pegg.egg-info/requires.txt
+pegg/pegg.egg-info/top_level.txt
+pegg/prime/__init__.py
+pegg/prime/crisporEffScores.py
+pegg/prime/pegg2.py

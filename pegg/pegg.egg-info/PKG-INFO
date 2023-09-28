@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: pegg
+Version: 2.0.3
+Summary: Prime Editing Guide Generator
+Home-page: https://github.com/samgould2/PEGG2.0
+Author: Samuel Gould
+Author-email: samgould@mit.edu
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+License-File: LICENSE
