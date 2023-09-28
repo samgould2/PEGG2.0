@@ -89,7 +89,12 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="jupyter_tutorial.html">🪐 Jupyter Notebook Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="PEGG.html">📚 Complete Function Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PEGG.html">📚 Complete Function Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.prime.pegg2">pegg.prime module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.base.base_editing">pegg.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.library_design.library">pegg.library_design module</a></li>
+</ul>
+</li>
 </ul>
 
   
@@ -131,229 +136,9 @@ Returns tuple (seqs, scores)</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.cacheScores">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">cacheScores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scoreName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scoreFunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.cacheScores" title="Permalink to this definition">¶</a></dt>
-<dd><p>run scoreFunc on seqs, using an on-disk score cache to improve speed</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcAllBaeScores">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcAllBaeScores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcAllBaeScores" title="Permalink to this definition">¶</a></dt>
-<dd><p>run seqs through calcMicroHomolScore()
-PAM-site has to start at the nucleotide exactly in the middle of the sequence.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">calcAllBaeScores</span><span class="p">([</span><span class="s2">&quot;AGCAGGATAGTCCTTCCGAGTGGAGGGAGGAGCAGGATAGTCCTTCCGAGTGGAGGGAGGAGCAGGATAGTCCTTCCGAGTGGAGGGAGG&quot;</span><span class="p">])[:</span><span class="mi">2</span><span class="p">]</span>
-<span class="go">([7829], [46])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">calcAllBaeScores</span><span class="p">([</span><span class="s2">&quot;AGCAGGATAGTCCTTCCGAGTGGANNNAGGAGCAGGATAGTCCTTCCGAGTGGAGGGAGGAGCAGGATAGTCCTTCCGAGTGGAGGGAGG&quot;</span><span class="p">])[:</span><span class="mi">2</span><span class="p">]</span>
-<span class="go">([6646], [45])</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcAllScores">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcAllScores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addOpt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skipScores</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enzyme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scoreNames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcAllScores" title="Permalink to this definition">¶</a></dt>
-<dd><p>given 100bp sequences (50bp 5’ of PAM, 50bp 3’ of PAM) calculate all efficiency scores
-and return as a dict scoreName -&gt; list of scores (same order).
-&gt;&gt;&gt; sorted(calcAllScores([“CCACGTCTCCACACATCAGCACAACTACGCAGCGCCTCCCTCCACTCGGAAGGACTATCCTGCTGCCAAGAGGGTCAAGTTGGACAGTGTCAGAGTCCTG”]).items())
-[(‘aziInVitro’, [39]), (‘ccTop’, [64.53235600000001]), (‘chariRank’, [54]), (‘chariRaw’, [-0.15504833]), (‘crisprScan’, [39]), (‘doench’, [10]), (‘fusi’, [55]), (‘fusiOld’, [56]), (‘housden’, [6.3]), (‘ssc’, [-0.035894]), (‘wang’, [66]), (‘wuCrispr’, [0])]
-&gt;&gt;&gt; sorted(calcAllScores([“CCACGTCTCCACACATCAGCACAACTACGCAGCGCCTCCCTCCACTCGGAAGGACTANCCTGCTGCCAAGAGGGTCAAGTTGGACAGTGTCAGAGTCCTG”]).items())
-[(‘aziInVitro’, [39]), (‘ccTop’, [64.53235600000001]), (‘chariRank’, [54]), (‘chariRaw’, [-0.15504833]), (‘crisprScan’, [40]), (‘doench’, [10]), (‘fusi’, [55]), (‘fusiOld’, [56]), (‘housden’, [6.3]), (‘ssc’, [-0.035894]), (‘wang’, [66]), (‘wuCrispr’, [0])]</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcAziInVitro">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcAziInVitro</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcAziInVitro" title="Permalink to this definition">¶</a></dt>
-<dd><p>Another score: Azimuth trained on the Moreno-Mateos data, see README, received from J. Listgarden</p>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcAziScore">
 <span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcAziScore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcAziScore" title="Permalink to this definition">¶</a></dt>
 <dd><p>the official implementation of the Doench2016 (aka Fusi) score from Microsoft</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcCctopScore">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcCctopScore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcCctopScore" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcChariScores">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcChariScores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baseDir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcChariScores" title="Permalink to this definition">¶</a></dt>
-<dd><p>return dict with chari 2015 scores, returns two lists (rawScores, rankPercent)
-input seqs have lengths 21bp: 20 bp guide + 1bp first from PAM
-&gt;&gt;&gt; calcChariScores([“CTTCTTCAAGGTAACTGCAGA”, “CTTCTTCAAGGTAACTGGGGG”])
-([0.54947621, 0.58604487], [80, 81])
-&gt;&gt;&gt; calcChariScores([“CTTCTTCAAGGNAACTGCAGA”])
-([0.9025848], [88])</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcCrisprScanScores">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcCrisprScanScores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcCrisprScanScores" title="Permalink to this definition">¶</a></dt>
-<dd><p>input is a 35bp long sequence: 6bp 5’, 20bp guide, 3 bp PAM and 6bp 3’
-&gt;&gt;&gt; calcCrisprScanScores([“TCCTCTGGTGGCGCTGCTGGATGGACGGGACTGTA”])
-[77]
-&gt;&gt;&gt; calcCrisprScanScores([“TCCTCTNGTGGCGCTGCTGGATGGACGGGACTGTA”])
-[77]</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcDeepCpf1Scores">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcDeepCpf1Scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcDeepCpf1Scores" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcDoenchScores">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcDoenchScores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcDoenchScores" title="Permalink to this definition">¶</a></dt>
-<dd><p>Code reproduced following paper’s methods section. Thanks to Daniel McPherson for fixing it.
-Input is a 30mer: 4bp 5’, 20bp guide, 3bp PAM, 3bp 5’</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcFreeEnergy">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcFreeEnergy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcFreeEnergy" title="Permalink to this definition">¶</a></dt>
-<dd><p>runs a list of 20bp guide sequences through mfold and returns their gibbs free energy
-&gt;&gt;&gt; calcFreeEnergy([“GGGTGGGGGGAGTTTGCTCCTGG”])
-0</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcFusiDoench">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcFusiDoench</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcFusiDoench" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcHousden">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcHousden</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcHousden" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calc housden score and round to one decimal point.
-Based on java file Crispr.java received from the authors.
-&gt;&gt;&gt; calcHousden([“ATCTGACCTCCCGGCTAATT”])
-[6.9]</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcLindelScore">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcLindelScore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqIds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcLindelScore" title="Permalink to this definition">¶</a></dt>
-<dd><p>run model by Wei Chen. seqs is 100bp long sequences around beginning of PAM, like all other code.
-returns dict with seqId -&gt; (probability of frameshift, mutSeqs)</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcMicroHomolScore">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcMicroHomolScore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcMicroHomolScore" title="Permalink to this definition">¶</a></dt>
-<dd><p>calculate the micro homology and out-of-frame score for a breakpoint in a 60-80mer
-See <a class="reference external" href="http://www.nature.com/nmeth/journal/v11/n7/full/nmeth.3015.html">http://www.nature.com/nmeth/journal/v11/n7/full/nmeth.3015.html</a>
-Source code adapted from Supp File 1
-returns micro-homology score, out-of-frame score and a list of tuples:
-(sequence, score)</p>
-<p>From the manuscript:
-“On the basis of these observations, we developed a simple formula and a
-computer program (Supplementary Fig. 3) to predict the deletion patterns
-at a given nuclease target site that are associated with microhomology of
-at least two bases (Fig. 1b and Supplementary Note). We assigned a pattern
-score to each deletion pattern and a microhomology score (equaling the sum
-of pattern scores) to each target site. We then obtained an out-of-frame
-score at a given site by dividing the sum of pattern scores assigned to
-frameshifting deletions by the microhomology score.”</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcMutSeqs">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcMutSeqs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqIds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enzyme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scoreNames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcMutSeqs" title="Permalink to this definition">¶</a></dt>
-<dd><p>run predictors that return the result of DSB repair. seqs is a list of 100bp long sequences.</p>
-<p>returns dict with the score name as the key.
-Each value is a dict again. The keys are the name of the resulting score e.g. “oof” (out of frame score) and
-at least the key “seqs”, a dict with seqId -&gt; (score, sequence).</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcNajmScore">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcNajmScore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcNajmScore" title="Permalink to this definition">¶</a></dt>
-<dd><p>The score of the Najm 2018 paper, for SaCas9, using Azimuth</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcRs3Scores">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcRs3Scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcRs3Scores" title="Permalink to this definition">¶</a></dt>
-<dd><p>calc Doench RS3 scores, from <a class="reference external" href="https://github.com/gpp-rnd/rs3">https://github.com/gpp-rnd/rs3</a></p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcSscScores">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcSscScores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcSscScores" title="Permalink to this definition">¶</a></dt>
-<dd><p>calc the SSC scores from the paper Xu Xiao Chen Li Meyer Brown Lui Gen Res 2015 
-Input is a 30mer, 20bp for the guide, 3bp PAM, 7bp 3’ flanking
-&gt;&gt;&gt; calcSscScores([“AGCAGGATAGTCCTTCCGAGTGGAGGGAGG”])
-[0.182006]</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcWangSvmScores">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcWangSvmScores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcWangSvmScores" title="Permalink to this definition">¶</a></dt>
-<dd><p>Use the wang.model file to score sequences. Input is only the 20bp guide sequence.
-Uses libsvm’s svm-predict program, V2.6.
-The score is inversed, so higher scores are better, like all other scores</p>
-<p>The results here are off mostly by 1-5% from the results returned by the Wang et al source code.
-I never found out why, there are no parameters for “svm_predict”. Should not be due to a version
-difference either, I’m using the same libsvm version as the e1071 R module.
-This is necessary for a web server implementation as e1071 in R cannot read the model from a file.</p>
-<p>The original implementation from the paper can be called with calcWangSvmScoresUsingR()</p>
-<p>See compareWangScores.py:</p>
-<p>The Pearson correlation between both ways to calculate the score is 97%.</p>
-<p>Histogram of the score differences:
-0.000000 <strong>********************************************************</strong> 3074
-0.050000 <strong>*****************************</strong> 1674
-0.100000 <strong>********</strong> 612
-0.150000 <a href="#id1"><span class="problematic" id="id2">**</span></a>** 191
-0.200000 * 52
-0.250000  7
-0.300000  1
-cat out/wangDiffs.tsv | cut -f4 | tr -d ‘-‘ | grep -v diff | textHistogram stdin stdout -real -binSize=0.05</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">calcWangSvmScores</span><span class="p">([</span><span class="s2">&quot;ATAGACCTACCTTGTTGAAG&quot;</span><span class="p">])</span>
-<span class="go">[60]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">calcWangSvmScores</span><span class="p">([</span><span class="s2">&quot;NTAGACCTACCTTGTTGAAG&quot;</span><span class="p">])</span>
-<span class="go">[60]</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcWangSvmScoresUsingR">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcWangSvmScoresUsingR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcWangSvmScoresUsingR" title="Permalink to this definition">¶</a></dt>
-<dd><p>returns the SVM-calculated efficiency scores from the Wang/Sabatini/Lander paper
-This is using their original source code
-We’re inversing the score so higher scores are better</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcWeiChenScores">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcWeiChenScores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcWeiChenScores" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calc weiChen score</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.calcWuCrisprScore">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">calcWuCrisprScore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.calcWuCrisprScore" title="Permalink to this definition">¶</a></dt>
-<dd><p>Input is a list of 30mers:
-20bp guide, 3bp PAM, 7bp 3’ sequence.
-&gt;&gt;&gt; calcWuCrisprScore([“ggtgcagctcgagcaacaggcggc”])
-[93]
-&gt;&gt;&gt; calcWuCrisprScore([“ggtgcagctngagcaacaggcggc”])
-[0]</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.convertChariToRankPerc">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">convertChariToRankPerc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">score</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.convertChariToRankPerc" title="Permalink to this definition">¶</a></dt>
-<dd><p>convert chari score to rank percent using only 2 digits precision. A lot faster than
-the version in the paper.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.forceWrapper">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">forceWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.forceWrapper" title="Permalink to this definition">¶</a></dt>
-<dd><p>run func over seqs. If any exception occurs, return a list of -1s for all seqs.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -363,86 +148,9 @@ the version in the paper.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.getGrafType">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">getGrafType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.getGrafType" title="Permalink to this definition">¶</a></dt>
-<dd><p>check if a guide fulfills the criteria described in Graf et al, Cell Reports 2019
-returns “tt” or “gcc” depending on the motif found or None if none of them were found.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.inList">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">inList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.inList" title="Permalink to this definition">¶</a></dt>
-<dd><p>return true if name is in list l</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.isCas9">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">isCas9</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enzyme</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.isCas9" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.iterSvmRows">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">iterSvmRows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.iterSvmRows" title="Permalink to this definition">¶</a></dt>
-<dd><p>translate sequences to wang/sabatini/lander paper representation
-&gt;&gt;&gt; list(iterSvmRows([“ATAGACCTACCTTGTTGAAG”]))
-[[‘SEQ’, ‘BP1A’, ‘BP1C’, ‘BP1T’, ‘BP1G’, ‘BP2A’, ‘BP2C’, ‘BP2T’, ‘BP2G’, ‘BP3A’, ‘BP3C’, ‘BP3T’, ‘BP3G’, ‘BP4A’, ‘BP4C’, ‘BP4T’, ‘BP4G’, ‘BP5A’, ‘BP5C’, ‘BP5T’, ‘BP5G’, ‘BP6A’, ‘BP6C’, ‘BP6T’, ‘BP6G’, ‘BP7A’, ‘BP7C’, ‘BP7T’, ‘BP7G’, ‘BP8A’, ‘BP8C’, ‘BP8T’, ‘BP8G’, ‘BP9A’, ‘BP9C’, ‘BP9T’, ‘BP9G’, ‘BP10A’, ‘BP10C’, ‘BP10T’, ‘BP10G’, ‘BP11A’, ‘BP11C’, ‘BP11T’, ‘BP11G’, ‘BP12A’, ‘BP12C’, ‘BP12T’, ‘BP12G’, ‘BP13A’, ‘BP13C’, ‘BP13T’, ‘BP13G’, ‘BP14A’, ‘BP14C’, ‘BP14T’, ‘BP14G’, ‘BP15A’, ‘BP15C’, ‘BP15T’, ‘BP15G’, ‘BP16A’, ‘BP16C’, ‘BP16T’, ‘BP16G’, ‘BP17A’, ‘BP17C’, ‘BP17T’, ‘BP17G’, ‘BP18A’, ‘BP18C’, ‘BP18T’, ‘BP18G’, ‘BP19A’, ‘BP19C’, ‘BP19T’, ‘BP19G’, ‘BP20A’, ‘BP20C’, ‘BP20T’, ‘BP20G’], [‘ATAGACCTACCTTGTTGAAG’, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1]]</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.listToSvml">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">listToSvml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">res</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.listToSvml" title="Permalink to this definition">¶</a></dt>
-<dd><p>convert a list of values to a line in svml format line like “+1 1:0.5 2:1.5 …</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.parseArgs">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">parseArgs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.parseArgs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.parseSvmOut">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">parseSvmOut</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.parseSvmOut" title="Permalink to this definition">¶</a></dt>
-<dd><p>parse R SVM output file, return as dict seq -&gt; score</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.printScoreTabSep">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">printScoreTabSep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enzyme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.printScoreTabSep" title="Permalink to this definition">¶</a></dt>
-<dd><p>print tab-sep rows with all seqs</p>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="pegg.prime.crisporEffScores.readDict">
 <span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">readDict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isFloat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.readDict" title="Permalink to this definition">¶</a></dt>
 <dd><p>read dict from a tab sep file</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.readSeqs">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">readSeqs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inFname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.readSeqs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.runLindel">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">runLindel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqIds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.runLindel" title="Permalink to this definition">¶</a></dt>
-<dd><p>based on Lindel_prediction.py sent by Wei Chen
-runtime 1-2 seconds.
-Return: a dict with seqId -&gt; list of (fs-score, list of (seq-illustration, score, indel-desc))
-&gt;&gt;&gt; ret = runLindel([“test”], [“CCCTGGCGGCCTAAGGACTCGGCGCGCCGGAAGTGGCCAGGGCGGGGGCGACCTCGGCTCACAG”])
-&gt;&gt;&gt; ret[“test”][0]
-70.36
-&gt;&gt;&gt; ret[“test”][1][1]
-(‘4.91554921’, ‘CCCTGGCGGCCTAAGGACTCGGCGCGCCGG | ——CCAGGGCGGGGGCGACCTCGGCTCACAG’, ‘D6  0’)</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.sendFusiRequest">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">sendFusiRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.sendFusiRequest" title="Permalink to this definition">¶</a></dt>
-<dd><p>obtain the fusi score as calculated by Fusi et al’s webservice
-Needs a file fusiKey.txt in current directory or a file ~/.fusiKey.txt in user’s home directory.</p>
-<p># test deactivated - server is not working
-&gt;&gt; sendFusiRequest([ “GGGAGGCTGCTTTACCCGCTGTGGGGGCGC”, “GGGAGGCTGCTTTACCCGCTGTGGGGGCGC”])
-[60, 60]</p>
 </dd></dl>
 
 <dl class="py function">
@@ -451,14 +159,6 @@ Needs a file fusiKey.txt in current directory or a file ~/.fusiKey.txt in user�
 <dd><p>convert a x bp sequence to a 4 * x 0/1 vector
 &gt;&gt;&gt; seqToVec(“AAAAATTTTTGGGGGCCCCC”)
 [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0]</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.seqsToChariSvml">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">seqsToChariSvml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.seqsToChariSvml" title="Permalink to this definition">¶</a></dt>
-<dd><p>partially copied from generateSVMFile.FASTA.py in the Chari et al source code
-&gt;&gt;&gt; seqsToChariSvml([“CTTCTTCAAGGTAACTGCAGA”, “CTTCTTCAAGGTAACTGGGGG”])
-‘0 13:1 22:1 32:1 43:1 52:1 62:1 73:1 84:1 94:1 101:1 111:1 122:1 134:1 144:1 153:1 162:1 171:1 183:1 194:1 201:1 214:1n0 13:1 22:1 32:1 43:1 52:1 62:1 73:1 84:1 94:1 101:1 111:1 122:1 134:1 144:1 153:1 162:1 171:1 181:1 191:1 201:1 211:1’</p>
 </dd></dl>
 
 <dl class="py function">
@@ -472,25 +172,6 @@ Needs a file fusiKey.txt in current directory or a file ~/.fusiKey.txt in user�
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.test">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.test" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.trimSeqs">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">trimSeqs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiveFlank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threeFlank</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.trimSeqs" title="Permalink to this definition">¶</a></dt>
-<dd><p>given a list of 100bp sequences, return a list of sequences with the
-given number of basepairs 5’ and 3’ added from the middle position (pos 50) of
-the sequences.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.trimSeqsForGuides">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">trimSeqsForGuides</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiveFlank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threeFlank</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.trimSeqsForGuides" title="Permalink to this definition">¶</a></dt>
-<dd><p>like trimSeqs, but yield  (guide, trimmedSeq)</p>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="pegg.prime.crisporEffScores.vecToSeqDicts">
 <span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">vecToSeqDicts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coefs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.vecToSeqDicts" title="Permalink to this definition">¶</a></dt>
 <dd><p>convert a list of 80 floats to 20 dictionaries with A/C/T/G -&gt; float</p>
@@ -500,13 +181,6 @@ the sequences.</p>
 <dt class="sig sig-object py" id="pegg.prime.crisporEffScores.writeDict">
 <span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">writeDict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.writeDict" title="Permalink to this definition">¶</a></dt>
 <dd><p>write dict as a tab file</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pegg.prime.crisporEffScores.writeSvmRows">
-<span class="sig-prename descclassname"><span class="pre">pegg.prime.crisporEffScores.</span></span><span class="sig-name descname"><span class="pre">writeSvmRows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.crisporEffScores.writeSvmRows" title="Permalink to this definition">¶</a></dt>
-<dd><p>write the seqs in wang/sabatini SVM format to a file
-#&gt;&gt;&gt; writeSvmRows([“ATAGACCTACCTTGTTGAAG”])</p>
 </dd></dl>
 
 </div>
@@ -540,7 +214,12 @@ V = [A|C|G]</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pegg.prime.pegg2.RF_score">
 <span class="sig-prename descclassname"><span class="pre">pegg.prime.pegg2.</span></span><span class="sig-name descname"><span class="pre">RF_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.pegg2.RF_score" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function for calculating the Random Forest score from</p>
+<dd><p>Function for calculating the Random Forest score from pegRNA parameters.</p>
+<dl>
+<dt>df</dt><dd><p><em>type = pd.DataFrame</em></p>
+<p>Dataframe containing the pegRNAs generated by run().</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -749,15 +428,18 @@ V = [A|C|G]</p>
 <dt class="sig sig-object py" id="pegg.prime.pegg2.peggscore2">
 <span class="sig-prename descclassname"><span class="pre">pegg.prime.pegg2.</span></span><span class="sig-name descname"><span class="pre">peggscore2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.pegg2.peggscore2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function for calculating the PEGG2 Score. A multiple linear regression score based on pegRNA parameters.</p>
+<dl>
+<dt>df</dt><dd><p><em>type = pd.DataFrame</em></p>
+<p>Dataframe containing the pegRNAs generated by run().</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pegg.prime.pegg2.prime_oligo_generator">
 <span class="sig-prename descclassname"><span class="pre">pegg.prime.pegg2.</span></span><span class="sig-name descname"><span class="pre">prime_oligo_generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">peg_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epeg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epeg_motif</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tevopreQ1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">five_prime_adapter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'AGCGTACACGTCTCACACC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">three_prime_adapter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'GAATTCTAGATCCGGTCGTCAAC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gRNA_scaff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'GTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGC'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.pegg2.prime_oligo_generator" title="Permalink to this definition">¶</a></dt>
 <dd><p>A tool for automatically generating oligos from the output of run().
-Returns input dataframe with new columns containing pegRNA version and epegRNA version of oligo.
-(epegRNA version just contains additional 3’ structural motif, tevopreQ1, which helps prevent degradation
-of the pegRNA)</p>
+Returns input dataframe with new columns containing the pegRNA oligo.</p>
 <dl>
 <dt>peg_df</dt><dd><p><em>type = pd.DataFrame</em></p>
 <p>A dataframe containing the pegRNAs for the selected input mutations. Generated by run() or pegRNA_generator()</p>
@@ -886,7 +568,17 @@ This is highly reccomended to reduce recombination during cloning/library prepar
 <dl class="py function">
 <dt class="sig sig-object py" id="pegg.prime.pegg2.sensor_viz">
 <span class="sig-prename descclassname"><span class="pre">pegg.prime.pegg2.</span></span><span class="sig-name descname"><span class="pre">sensor_viz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_w_sensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.prime.pegg2.sensor_viz" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Function for visualizing the pegRNA aligned to the sensor. Input = dataframe with pegRNA-sensor pairs
+and the row index (i) to visualize.</p>
+<dl>
+<dt>df_w_sensor</dt><dd><p><em>type = pd.DataFrame</em></p>
+<p>Dataframe containing the pegRNA-sensor pairs generated by run().</p>
+</dd>
+<dt>i</dt><dd><p><em>type = int</em></p>
+<p>Row index from the dataframe that you want to visualize.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pegg.prime.pegg2.split">
