@@ -6,7 +6,7 @@ setup(
     author = 'Samuel Gould',
     author_email = 'samgould@mit.edu',
     url = 'https://github.com/samgould2/PEGG2.0',
-    version = '2.0.3',
+    version = '2.0.4',
     description = 'Prime Editing Guide Generator',
     package_dir = {'': 'pegg'},
     packages = ["prime", "base", "library_design"],
