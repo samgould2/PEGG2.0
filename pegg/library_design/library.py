@@ -278,6 +278,23 @@ def safe_muts(num_muts, chrom_dict, organism='human'):
     targeting mutations in your desired reference build.
 
     This is a random subset of 100,000 "safe regions" taken from Morgens et al., 2017 (https://doi.org/10.1038/ncomms15178)
+
+    Parameters
+    -----------
+    num_muts
+        *type = int*
+        
+        Number of safe-targetting mutations to select/generate.
+
+    chrom_dict
+        *type = dict*
+
+        Dictionary containing chromosomes in dictionary format for parsing by PEGG.
+
+    organism
+        *type = str*
+
+        Choices = "human" or "mouse". Generates safe targeting guides in human or mouse genome.
     """
 
     assert organism in ['human', 'mouse'], "Pick a valid reference organism ('human' or 'mouse')"
@@ -333,6 +350,25 @@ def aavs1_muts(chrom_dict, num_muts, genome_version = 'GRCh37'):
     Generates a list of SNPs that contain idential reference and alternate alleles.
     Intron 1-2 of PPP1R12C (AAVS1 locus): GRCh37 transcript = ENST00000263433.3 | GRCh38 transcript = ENST00000263433.8
     
+    Not currently used in the pipeline, but provided anyway.
+
+    Parameters
+    -----------
+    chrom_dict
+        *type = dict*
+
+        Dictionary containing chromosomes in dictionary format for parsing by PEGG.
+
+    num_muts
+        *type = int*
+        
+        Number of safe-targetting mutations to select/generate.
+
+    genome_version
+        *type = str*
+
+        Options = 'GRCh37', 'GRCh38'
+
     """
 
     assert genome_version in ['GRCh37', 'GRCh38'], "Pick a valid reference genome ('GRCh37' or 'GRCh38')"
@@ -368,9 +404,20 @@ def aavs1_muts(chrom_dict, num_muts, genome_version = 'GRCh37'):
 def nontargeting_guides(num_guides, edit_type='prime'):
     """ 
     Function for generating a list of non-targetting guides (in the human genome).
-    Future versions will expand to mouse as well...
+    Future versions will expand to mouse as well...Unprocessed files for mouse located within this module.
+    Guides taken from: https://www.nature.com/articles/nmeth.4423 (https://doi.org/10.1038/nmeth.4423)
 
+    Parameters
+    -----------
+    num_guides
+        *type = int*
 
+        Number of guides to non-targetting generate. Max = 1000.
+
+    edit_type
+        *type = str*
+
+        Options = 'base', 'prime'
     """
 
     assert edit_type in ['base', 'prime'], "Choose valid edit_type (choices = 'prime', 'base')"
@@ -402,6 +449,55 @@ def library_maker(mutant_input, gene_name, chrom_dict, fraction_safetarget=0.05,
     Alternatively, generate these mutations/guides using these reference builds, and then generate your own guides
     targeting mutations in your desired reference build.
 
+    Parameters
+    -----------
+    mutant_input
+        *type = pd.DataFrame*
+
+        DataFrame containing all of the input mutations. Doesn't require filtration for gene of interest.
+    
+    gene_name
+        *type = str*
+
+        Gene name to select from the mutant_input dataframe. 
+
+    chrom_dict
+        *type = dict*
+
+        Dictionary containing the reference genome. See genome_loader() 
+
+    fraction_safetarget
+        *type = float*
+
+        Value from 0 to 1 that corresponds to the fraction of safe-targetting mutations to include in the library.
+        (i.e. what fraction of the mutant_input)
+
+    organism
+        *type = str*
+
+        Options = 'human' or 'mouse'. Determines which of the organisms to generate safe targeting guides for.
+
+    fraction_silent
+        *type = float*
+
+        Value from 0 to 1 that corresponds to the fraction of silent mutations to include in the library.
+        (i.e. what fraction of the mutant_input)
+
+    chrom
+        *type = int or str*
+
+        Chromosome that the gene of interest falls on.
+
+    strand
+        *type = str*
+
+        '+' or '-' -- corresponds with which strand the transcript falls on.
+
+    start_end_cds
+        *type = list*
+
+        Nested list that contains the CDS locations of the gene transcript of interest, in the + strand orientation.
+    
     """
     assert (fraction_silent>=0) & (fraction_silent<=1), "Choose valid fraction_silent (between 0 and 1)"
     assert (fraction_safetarget>=0) & (fraction_safetarget<=1), "Choose valid fraction_nontarget (between 0 and 1)"
