@@ -71,7 +71,12 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">🚀 Quickstart</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#required-input-files">Required Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#designing-pegrnas-with-pegg">Designing pegRNAs with PEGG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#wt-alt-format">(1) WT-ALT Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#primedesign-format">(2) PrimeDesign Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#cbioportal-format">(3) cBioPortal Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#clinvar-mutations">(4) ClinVar mutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#generating-pegrnas">Generating pegRNAs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#reference-file-formatting">Reference File Formatting</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="quickstart.html#input-mutations">(1) Input mutations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="quickstart.html#a-compatible-input-files">(1a) Compatible Input Files</a></li>
@@ -90,9 +95,16 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="jupyter_tutorial.html">🪐 Jupyter Notebook Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PEGG.html">📚 Complete Function Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.prime.pegg2">pegg.prime module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.base.base_editing">pegg.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#pegg-prime-module">pegg.prime module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#pegg-base-module">pegg.base module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.library_design.library">pegg.library_design module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">❓ About PEGG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other_design_tools.html">🚩Other pegRNA &amp; gRNA Design Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="other_design_tools.html#pegrna-design-tools">pegRNA Design Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="other_design_tools.html#base-editing-design-tools">base editing design tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="other_design_tools.html#off-target-analysis">off-target analysis</a></li>
 </ul>
 </li>
 </ul>
@@ -112,17 +124,12 @@
 
 <div class="genindex-jumpbox">
  <a href="#A"><strong>A</strong></a>
- | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
- | <a href="#D"><strong>D</strong></a>
- | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
- | <a href="#I"><strong>I</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
- | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
@@ -138,42 +145,10 @@
   </ul></td>
 </tr></table>
 
-<h2 id="B">B</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="PEGG.html#pegg.base.base_editing.base_oligo_generator">base_oligo_generator() (in module pegg.base.base_editing)</a>, <a href="pegg.base.html#pegg.base.base_editing.base_oligo_generator">[1]</a>
-</li>
-  </ul></td>
-</tr></table>
-
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pegg.prime.html#pegg.prime.crisporEffScores.calcAziScore">calcAziScore() (in module pegg.prime.crisporEffScores)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="PEGG.html#pegg.prime.pegg2.clinvar_VCF_translator">clinvar_VCF_translator() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.clinvar_VCF_translator">[1]</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="D">D</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="PEGG.html#pegg.prime.pegg2.df_formatter">df_formatter() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.df_formatter">[1]</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="E">E</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="PEGG.html#pegg.prime.pegg2.eligible_PAM_finder">eligible_PAM_finder() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.eligible_PAM_finder">[1]</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="PEGG.html#pegg.base.base_editing.eligible_PAM_finder_base">eligible_PAM_finder_base() (in module pegg.base.base_editing)</a>, <a href="pegg.base.html#pegg.base.base_editing.eligible_PAM_finder_base">[1]</a>
 </li>
   </ul></td>
 </tr></table>
@@ -189,23 +164,7 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="PEGG.html#pegg.prime.pegg2.genome_loader">genome_loader() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.genome_loader">[1]</a>
-</li>
       <li><a href="pegg.prime.html#pegg.prime.crisporEffScores.getBinPath">getBinPath() (in module pegg.prime.crisporEffScores)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="PEGG.html#pegg.prime.pegg2.goldengate_oligos">goldengate_oligos() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.goldengate_oligos">[1]</a>
-</li>
-      <li><a href="PEGG.html#pegg.base.base_editing.gRNA_generator">gRNA_generator() (in module pegg.base.base_editing)</a>, <a href="pegg.base.html#pegg.base.base_editing.gRNA_generator">[1]</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="I">I</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="PEGG.html#pegg.prime.pegg2.input_formatter">input_formatter() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.input_formatter">[1]</a>
 </li>
   </ul></td>
 </tr></table>
@@ -221,8 +180,6 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="PEGG.html#pegg.prime.pegg2.make_aligner">make_aligner() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.make_aligner">[1]</a>
-</li>
       <li><a href="PEGG.html#pegg.library_design.library.matrix_rep_library">matrix_rep_library() (in module pegg.library_design.library)</a>
 </li>
       <li><a href="pegg.prime.html#pegg.prime.crisporEffScores.ScoreCache.mergeIntoCache">mergeIntoCache() (pegg.prime.crisporEffScores.ScoreCache method)</a>
@@ -233,23 +190,15 @@
       <ul>
         <li><a href="pegg.base.html#module-pegg.base">pegg.base</a>
 </li>
-        <li><a href="PEGG.html#module-pegg.base.base_editing">pegg.base.base_editing</a>, <a href="pegg.base.html#module-pegg.base.base_editing">[1]</a>
-</li>
         <li><a href="PEGG.html#module-pegg.library_design.library">pegg.library_design.library</a>
 </li>
         <li><a href="pegg.prime.html#module-pegg.prime">pegg.prime</a>
 </li>
         <li><a href="pegg.prime.html#module-pegg.prime.crisporEffScores">pegg.prime.crisporEffScores</a>
 </li>
-        <li><a href="PEGG.html#module-pegg.prime.pegg2">pegg.prime.pegg2</a>, <a href="pegg.prime.html#module-pegg.prime.pegg2">[1]</a>
-</li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="PEGG.html#pegg.prime.pegg2.mut_formatter">mut_formatter() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.mut_formatter">[1]</a>
-</li>
-      <li><a href="PEGG.html#pegg.prime.pegg2.mutation">mutation (class in pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.mutation">[1]</a>
-</li>
       <li><a href="PEGG.html#pegg.library_design.library.mutation_aggregator">mutation_aggregator() (in module pegg.library_design.library)</a>
 </li>
   </ul></td>
@@ -267,35 +216,14 @@
   </ul></td>
 </tr></table>
 
-<h2 id="O">O</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="PEGG.html#pegg.prime.pegg2.ontarget_score">ontarget_score() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.ontarget_score">[1]</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="PEGG.html#pegg.prime.pegg2.other_filtration">other_filtration() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.other_filtration">[1]</a>
-</li>
-  </ul></td>
-</tr></table>
-
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="PEGG.html#pegg.prime.pegg2.PAM_finder">PAM_finder() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.PAM_finder">[1]</a>
-</li>
       <li>
     pegg.base
 
       <ul>
         <li><a href="pegg.base.html#module-pegg.base">module</a>
-</li>
-      </ul></li>
-      <li>
-    pegg.base.base_editing
-
-      <ul>
-        <li><a href="PEGG.html#module-pegg.base.base_editing">module</a>, <a href="pegg.base.html#module-pegg.base.base_editing">[1]</a>
 </li>
       </ul></li>
       <li>
@@ -305,6 +233,8 @@
         <li><a href="PEGG.html#module-pegg.library_design.library">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     pegg.prime
 
@@ -312,8 +242,6 @@
         <li><a href="pegg.prime.html#module-pegg.prime">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     pegg.prime.crisporEffScores
 
@@ -321,21 +249,6 @@
         <li><a href="pegg.prime.html#module-pegg.prime.crisporEffScores">module</a>
 </li>
       </ul></li>
-      <li>
-    pegg.prime.pegg2
-
-      <ul>
-        <li><a href="PEGG.html#module-pegg.prime.pegg2">module</a>, <a href="pegg.prime.html#module-pegg.prime.pegg2">[1]</a>
-</li>
-      </ul></li>
-      <li><a href="PEGG.html#pegg.prime.pegg2.peggscore2">peggscore2() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.peggscore2">[1]</a>
-</li>
-      <li><a href="PEGG.html#pegg.prime.pegg2.pegRNA_generator">pegRNA_generator() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.pegRNA_generator">[1]</a>
-</li>
-      <li><a href="PEGG.html#pegg.prime.pegg2.prime_oligo_generator">prime_oligo_generator() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.prime_oligo_generator">[1]</a>
-</li>
-      <li><a href="PEGG.html#pegg.prime.pegg2.primedesign_formatter">primedesign_formatter() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.primedesign_formatter">[1]</a>
-</li>
   </ul></td>
 </tr></table>
 
@@ -343,14 +256,6 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pegg.prime.html#pegg.prime.crisporEffScores.readDict">readDict() (in module pegg.prime.crisporEffScores)</a>
-</li>
-      <li><a href="PEGG.html#pegg.prime.pegg2.RF_score">RF_score() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.RF_score">[1]</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="PEGG.html#pegg.prime.pegg2.run">run() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.run">[1]</a>
-</li>
-      <li><a href="PEGG.html#pegg.base.base_editing.run_base">run_base() (in module pegg.base.base_editing)</a>, <a href="pegg.base.html#pegg.base.base_editing.run_base">[1]</a>
 </li>
   </ul></td>
 </tr></table>
@@ -362,28 +267,14 @@
 </li>
       <li><a href="pegg.prime.html#pegg.prime.crisporEffScores.ScoreCache">ScoreCache (class in pegg.prime.crisporEffScores)</a>
 </li>
-      <li><a href="PEGG.html#pegg.prime.pegg2.sensor_generator">sensor_generator() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.sensor_generator">[1]</a>
-</li>
-      <li><a href="PEGG.html#pegg.base.base_editing.sensor_generator_base">sensor_generator_base() (in module pegg.base.base_editing)</a>, <a href="pegg.base.html#pegg.base.base_editing.sensor_generator_base">[1]</a>
-</li>
-      <li><a href="PEGG.html#pegg.prime.pegg2.sensor_viz">sensor_viz() (in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.sensor_viz">[1]</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="PEGG.html#pegg.base.base_editing.sensor_viz_base">sensor_viz_base() (in module pegg.base.base_editing)</a>, <a href="pegg.base.html#pegg.base.base_editing.sensor_viz_base">[1]</a>
-</li>
       <li><a href="pegg.prime.html#pegg.prime.crisporEffScores.seqToVec">seqToVec() (in module pegg.prime.crisporEffScores)</a>
 </li>
       <li><a href="pegg.prime.html#pegg.prime.crisporEffScores.setBinDir">setBinDir() (in module pegg.prime.crisporEffScores)</a>
 </li>
       <li><a href="pegg.prime.html#pegg.prime.crisporEffScores.setCacheDir">setCacheDir() (in module pegg.prime.crisporEffScores)</a>
 </li>
-      <li><a href="PEGG.html#pegg.base.base_editing.split">split() (in module pegg.base.base_editing)</a>, <a href="pegg.base.html#pegg.base.base_editing.split">[1]</a>
-
-      <ul>
-        <li><a href="PEGG.html#pegg.prime.pegg2.split">(in module pegg.prime.pegg2)</a>, <a href="pegg.prime.html#pegg.prime.pegg2.split">[1]</a>
-</li>
-      </ul></li>
   </ul></td>
 </tr></table>
 

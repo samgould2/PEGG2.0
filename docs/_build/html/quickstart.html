@@ -71,7 +71,12 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">🚀 Quickstart</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#required-input-files">Required Input Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#designing-pegrnas-with-pegg">Designing pegRNAs with PEGG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#wt-alt-format">(1) WT-ALT Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#primedesign-format">(2) PrimeDesign Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cbioportal-format">(3) cBioPortal Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#clinvar-mutations">(4) ClinVar mutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generating-pegrnas">Generating pegRNAs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#reference-file-formatting">Reference File Formatting</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#input-mutations">(1) Input mutations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#a-compatible-input-files">(1a) Compatible Input Files</a></li>
@@ -90,9 +95,16 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="jupyter_tutorial.html">🪐 Jupyter Notebook Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PEGG.html">📚 Complete Function Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.prime.pegg2">pegg.prime module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.base.base_editing">pegg.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#pegg-prime-module">pegg.prime module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#pegg-base-module">pegg.base module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.library_design.library">pegg.library_design module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">❓ About PEGG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other_design_tools.html">🚩Other pegRNA &amp; gRNA Design Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="other_design_tools.html#pegrna-design-tools">pegRNA Design Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="other_design_tools.html#base-editing-design-tools">base editing design tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="other_design_tools.html#off-target-analysis">off-target analysis</a></li>
 </ul>
 </li>
 </ul>
@@ -115,9 +127,84 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pegg</span>
 </pre></div>
 </div>
+<p>To modify and/or download specific python files, download the package from the <a class="reference external" href="https://github.com/samgould2/PEGG2.0">Github Repository</a> .</p>
 </div>
-<div class="section" id="required-input-files">
-<h2>Required Input Files<a class="headerlink" href="#required-input-files" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="designing-pegrnas-with-pegg">
+<h2>Designing pegRNAs with PEGG<a class="headerlink" href="#designing-pegrnas-with-pegg" title="Permalink to this heading">¶</a></h2>
+<p>In order to use PEGG to design pegRNAs, you must provide a set of mutations in a pandas DataFrame for PEGG to use.
+There are 3 acceptable input formats that PEGG accepts</p>
+</div>
+<div class="section" id="wt-alt-format">
+<h2>(1) WT-ALT Format<a class="headerlink" href="#wt-alt-format" title="Permalink to this heading">¶</a></h2>
+<p>In this format, the user feeds in a set of wildtype sequences, and the corresponding set of desired mutant sequences.
+PEGG then uses a built-in aligner to determine the mutation from these sequences, and design pegRNAs for these variants.
+Note: Complex INDELs will break this function because they are difficult to align. If you want to design INDELs, use one of the two formats below.</p>
+<p>The pandas DataFrame must have at least 2 columns, with the following column names <strong>(1) ‘WT’</strong> and <strong>(2) ‘ALT’</strong></p>
+</div>
+<div class="section" id="primedesign-format">
+<h2>(2) PrimeDesign Format<a class="headerlink" href="#primedesign-format" title="Permalink to this heading">¶</a></h2>
+<p>In this format, users feed in a set of sequences with the desired edit in <a class="reference external" href="https://primedesign.pinellolab.partners.org/">PrimeDesign</a> format.
+For example, an A to G SNP would look like: “AATCG(A/G)GCTAG”, an insertion would be: “AATCG(/GTT)GCTAG”, a deletion: “AATCG(GTT/)GCTAG”, and an INDEL: “AATCG(C/GTT)GCTAG”.</p>
+<p>The pandas DataFrame must have at least 1 column, with the following column name: <strong>(1) ‘SEQ’</strong> .
+This column contains the PrimeDesign formatted sequences.</p>
+</div>
+<div class="section" id="cbioportal-format">
+<h2>(3) cBioPortal Format<a class="headerlink" href="#cbioportal-format" title="Permalink to this heading">¶</a></h2>
+<p>In this format, users simply provide a set of variants with their genome coordinates and reference and alternate alleles, as well as the variant type.
+This format is compatible with all of the datasets in the <a class="reference external" href="http://www.cbioportal.org/datasets">cBioPortal</a> , which contains cancer-associated variant datasets.</p>
+<p>If you want to build you own mutation dataset, it must have the following columns, with the associated column header names, in .csv format:</p>
+<ol class="arabic simple">
+<li><p>Chromosome: which chromosome the mutation falls in. Use integers or ‘X’ and ‘Y’.</p></li>
+<li><p>Start_Position: start position of mutation in the reference genome (mutations should only be reported on the + strand)</p></li>
+<li><p>End_Position: end position of mutation in the reference genome</p></li>
+<li><p>Variant_Type: what type of mutation is it. Options: “SNP”, “ONP”, “INS”, “DEL”</p></li>
+<li><p>Reference_Allele: what is the reference allele. For insertions, this can be set to “-“.</p></li>
+<li><p>Tumor_Seq_Allele2: what is the mutant allele (i.e. what is the mutation sequence). For deletions, this can be set to “-“.</p></li>
+</ol>
+<p>An example for loading in a dataset is provided here:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1">#------(1) loading in input mutatations-------------</span>
+<span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;.../2020-06-16-MSK-IMPACT_EDITED.txt&#39;</span>
+<span class="n">mutant_input</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/mutant_input.png" src="_images/mutant_input.png" />
+<p>In addition, you must provide a genome that PEGG can use to find the associated sequences.
+There is a built in genome loader function that you can use, or format the chromosome sequences in a dictionary, with the keys as the chromosome identifiers:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pegg.prime</span> <span class="kn">import</span> <span class="n">pegg2</span>
+
+<span class="c1">#filepath to .gz containing reference genome (here = GrCh37)</span>
+<span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;./GCF_000001405.25_GRCh37.p13_genomic.fna.gz&#39;</span>
+
+<span class="n">chrom_dict</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">pegg2</span><span class="o">.</span><span class="n">genome_loader</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can access the genome files at this link: <a class="reference external" href="https://www.dropbox.com/sh/5xsdzyiyrjiu9pf/AADiFFA3BQ3vX7swja-i2NBqa?dl=0">https://www.dropbox.com/sh/5xsdzyiyrjiu9pf/AADiFFA3BQ3vX7swja-i2NBqa?dl=0</a></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.dropbox.com/sh/5xsdzyiyrjiu9pf/AADiFFA3BQ3vX7swja-i2NBqa?dl=0">Reference Files Dropbox Link</a></p></li>
+</ul>
+<p>It has been tested on human and mouse genomes.</p>
+</div>
+<div class="section" id="clinvar-mutations">
+<h2>(4) ClinVar mutations<a class="headerlink" href="#clinvar-mutations" title="Permalink to this heading">¶</a></h2>
+<p>PEGG also has a built-in function for translating ClinVar IDs to the “cBioPortal” input format. To do so, download a ClinVar vcf.gz file,
+and choose your desired Variation IDs that you wish to model. These vcf.gz files are available in the <a class="reference external" href="https://www.dropbox.com/sh/5xsdzyiyrjiu9pf/AADiFFA3BQ3vX7swja-i2NBqa?dl=0">Reference Files Dropbox Link</a> (under the clinvar folder)
+or the more up to date files can be accessed here: <a class="reference external" href="https://ftp.ncbi.nlm.nih.gov/pub/clinvar/">https://ftp.ncbi.nlm.nih.gov/pub/clinvar/</a></p>
+<p>These variation IDs are the identifiers for ClinVar variants:</p>
+<img alt="_images/var_ids.png" src="_images/var_ids.png" />
+<p>See the below codeblock for the precise syntax:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pegg.prime</span> <span class="kn">import</span> <span class="n">pegg2</span>
+
+<span class="c1">#filepath to the clinvar vcf.gz file</span>
+<span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;.../GrCh37_clinvar_20230923.vcf.gz&#39;</span>
+<span class="n">variation_ids</span> <span class="o">=</span> <span class="p">[</span><span class="mi">925574</span><span class="p">,</span> <span class="mi">925434</span><span class="p">,</span> <span class="mi">926695</span><span class="p">,</span> <span class="mi">925707</span><span class="p">,</span> <span class="mi">325626</span><span class="p">,</span> <span class="mi">1191613</span><span class="p">,</span> <span class="mi">308061</span><span class="p">,</span> <span class="mi">361149</span><span class="p">,</span> <span class="mi">1205375</span><span class="p">,</span> <span class="mi">208043</span><span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pegg2</span><span class="o">.</span><span class="n">clinvar_VCF_translator</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">variation_ids</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="generating-pegrnas">
+<h2>Generating pegRNAs<a class="headerlink" href="#generating-pegrnas" title="Permalink to this heading">¶</a></h2>
 <p>In order to use PEGG, you need at minimum 2 input files:</p>
 <ol class="arabic simple">
 <li><p>A dataframe containing a list of input mutations</p></li>
@@ -149,7 +236,7 @@ to allow PEGG to generate pegRNAs.</p>
 </div>
 <p>The above codeblock shows how to load in the sample mutation input file available in the <a class="reference external" href="https://www.dropbox.com/sh/h6fdvpv3tyny27q/AADYVOkJe12XZiD4pf3_WXuga?dl=0">dropbox of reference files</a>.
 To use <strong>your own mutation input</strong>, the input mutations must follow the format shown in the dataframe below:</p>
-<img alt="mutant_input.png" src="mutant_input.png" />
+<img alt="_images/mutant_input.png" src="_images/mutant_input.png" />
 <p>Namely, 7 columns are required, providing information about the input mutations relative to the provided reference genome.
 The input mutation dataframe <strong>must match the column naming scheme shown above</strong>:</p>
 <ol class="arabic simple">
@@ -237,7 +324,7 @@ GrCh38 will be provided shortly and available in the <a class="reference externa
 <p>Now that our reference files are loaded in, and PEGG is imported as a module, using PEGG is simple.
 We simply need to specify parameters which correspond with the different options associated with prime editing,
 as depicted in the visualization below:</p>
-<img alt="PE_schematic.png" src="PE_schematic.png" />
+<img alt="_images/PE_schematic.png" src="_images/PE_schematic.png" />
 <p>Namely, the user must specify:</p>
 <ol class="arabic simple">
 <li><p>Select mutations within mutant_input to generate pegRNAs for. This is done by providing a list of indeces that correspond with the desired mutations. The alternative is simply setting this to <strong>all mutations in the datasets, by having mut_idx_list = list(range(len(mutant_input)))</strong>.</p></li>
@@ -285,7 +372,7 @@ function provides multiple options, and produces both a <strong>pegRNA oligo</st
 This sensor region is a synthetic version of the endogenous target site, providing the ability to measure a proxy of editing outcomes at the endogenous locus.
 This approach can be useful in the context of a library of pegRNAs, allowing for the measurement of pegRNA enrichment/depletion <em>as well as</em> a proxy of editing outcomes
 with a single NGS amplicon. The below schematic shows a schematic of the oligos that are output with sensor=True or sensor=False:</p>
-<img alt="oligos.png" src="oligos.png" />
+<img alt="_images/oligos.png" src="_images/oligos.png" />
 <p>Additionally, users need to specify whether they want to append a ‘G’ nucleotide to the beginning of the protospacer.
 This is reccomended in the original Anzalone et al., 2019 prime editing paper. The sensor and append_proto_G options are both set to True in the below example.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">oligos_w_sensor</span> <span class="o">=</span> <span class="n">pegg</span><span class="o">.</span><span class="n">oligo_generator</span><span class="p">(</span><span class="n">run_output</span><span class="p">,</span> <span class="n">append_proto_G</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sensor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>

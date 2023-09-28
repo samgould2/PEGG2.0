@@ -9,8 +9,110 @@ PEGG is available through the python package index. To install, use pip:
 
    pip install pegg
 
-Required Input Files
+To modify and/or download specific python files, download the package from the `Github Repository <https://github.com/samgould2/PEGG2.0>`_ .
+
+Designing pegRNAs with PEGG
 ****************************
+
+In order to use PEGG to design pegRNAs, you must provide a set of mutations in a pandas DataFrame for PEGG to use.
+There are 3 acceptable input formats that PEGG accepts
+
+(1) WT-ALT Format
+*******************
+In this format, the user feeds in a set of wildtype sequences, and the corresponding set of desired mutant sequences.
+PEGG then uses a built-in aligner to determine the mutation from these sequences, and design pegRNAs for these variants.
+Note: Complex INDELs will break this function because they are difficult to align. If you want to design INDELs, use one of the two formats below.
+
+The pandas DataFrame must have at least 2 columns, with the following column names **(1) 'WT'** and **(2) 'ALT'**
+
+(2) PrimeDesign Format
+************************
+
+In this format, users feed in a set of sequences with the desired edit in `PrimeDesign <https://primedesign.pinellolab.partners.org/>`_ format.
+For example, an A to G SNP would look like: "AATCG(A/G)GCTAG", an insertion would be: "AATCG(/GTT)GCTAG", a deletion: "AATCG(GTT/)GCTAG", and an INDEL: "AATCG(C/GTT)GCTAG".
+
+The pandas DataFrame must have at least 1 column, with the following column name: **(1) 'SEQ'** .
+This column contains the PrimeDesign formatted sequences.
+
+
+(3) cBioPortal Format
+***********************
+
+In this format, users simply provide a set of variants with their genome coordinates and reference and alternate alleles, as well as the variant type.
+This format is compatible with all of the datasets in the `cBioPortal <http://www.cbioportal.org/datasets>`_ , which contains cancer-associated variant datasets.
+
+If you want to build you own mutation dataset, it must have the following columns, with the associated column header names, in .csv format:
+
+1. Chromosome: which chromosome the mutation falls in. Use integers or 'X' and 'Y'.
+
+2. Start_Position: start position of mutation in the reference genome (mutations should only be reported on the + strand)
+
+3. End_Position: end position of mutation in the reference genome
+
+4. Variant_Type: what type of mutation is it. Options: "SNP", "ONP", "INS", "DEL"
+
+5. Reference_Allele: what is the reference allele. For insertions, this can be set to "-".
+
+6. Tumor_Seq_Allele2: what is the mutant allele (i.e. what is the mutation sequence). For deletions, this can be set to "-".
+
+An example for loading in a dataset is provided here:
+
+.. code-block:: python
+
+   import pandas as pd
+
+   #------(1) loading in input mutatations-------------
+   filepath = '.../2020-06-16-MSK-IMPACT_EDITED.txt'
+   mutant_input = pd.read_csv(filepath, sep='\t')
+
+.. image:: mutant_input.png
+
+In addition, you must provide a genome that PEGG can use to find the associated sequences. 
+There is a built in genome loader function that you can use, or format the chromosome sequences in a dictionary, with the keys as the chromosome identifiers:
+
+.. code-block:: python
+
+   from pegg.prime import pegg2 
+
+   #filepath to .gz containing reference genome (here = GrCh37)
+   filepath = './GCF_000001405.25_GRCh37.p13_genomic.fna.gz'
+
+   chrom_dict, i = pegg2.genome_loader(filepath)
+
+You can access the genome files at this link: https://www.dropbox.com/sh/5xsdzyiyrjiu9pf/AADiFFA3BQ3vX7swja-i2NBqa?dl=0
+
+- `Reference Files Dropbox Link <https://www.dropbox.com/sh/5xsdzyiyrjiu9pf/AADiFFA3BQ3vX7swja-i2NBqa?dl=0>`_
+
+It has been tested on human and mouse genomes.
+
+(4) ClinVar mutations
+***********************
+
+PEGG also has a built-in function for translating ClinVar IDs to the "cBioPortal" input format. To do so, download a ClinVar vcf.gz file,
+and choose your desired Variation IDs that you wish to model. These vcf.gz files are available in the `Reference Files Dropbox Link <https://www.dropbox.com/sh/5xsdzyiyrjiu9pf/AADiFFA3BQ3vX7swja-i2NBqa?dl=0>`_ (under the clinvar folder)
+or the more up to date files can be accessed here: https://ftp.ncbi.nlm.nih.gov/pub/clinvar/
+
+These variation IDs are the identifiers for ClinVar variants:
+
+.. image:: var_ids.png
+
+See the below codeblock for the precise syntax:
+
+.. code-block:: python
+
+   from pegg.prime import pegg2 
+
+   #filepath to the clinvar vcf.gz file
+   filepath = '.../GrCh37_clinvar_20230923.vcf.gz'
+   variation_ids = [925574, 925434, 926695, 925707, 325626, 1191613, 308061, 361149, 1205375, 208043]
+   df = pegg2.clinvar_VCF_translator(filepath, variation_ids)
+
+
+Generating pegRNAs
+********************
+
+
+
 In order to use PEGG, you need at minimum 2 input files:
 
 (1) A dataframe containing a list of input mutations
