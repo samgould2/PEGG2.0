@@ -1,7 +1,7 @@
 |PEGG| PEGG: Prime Editing Guide Generator 
 ============================================
 
-.. |PEGG| image:: src/docs/PEGG_3.png
+.. |PEGG| image:: docs/PEGG_3.png
    :width: 200px
    :height: 200px
 
