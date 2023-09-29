@@ -1,1 +1,2 @@
 sphinx-autodoc-annotation == 1.0-1
+nltk_theme
