@@ -71,32 +71,32 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">🚀 Quickstart</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#designing-pegrnas-with-pegg">Designing pegRNAs with PEGG</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#wt-alt-format">(1) WT-ALT Format</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#primedesign-format">(2) PrimeDesign Format</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#cbioportal-format">(3) cBioPortal Format</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#clinvar-mutations">(4) ClinVar mutations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#generating-pegrnas">Generating pegRNAs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#reference-file-formatting">Reference File Formatting</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="quickstart.html#input-mutations">(1) Input mutations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quickstart.html#a-compatible-input-files">(1a) Compatible Input Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quickstart.html#b-clinvar-variants">(1b) ClinVar variants</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quickstart.html#reference-genome">(2) Reference Genome</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quickstart.html#on-off-target-scores">(3) On/Off Target scores</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#input-formatting">Input Formatting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#wt-alt-format">(1) WT-ALT Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#primedesign-format">(2) PrimeDesign Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#cbioportal-format">(3) cBioPortal Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#b-reference-genome">(3b) Reference Genome</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#clinvar-mutations">(4) ClinVar mutations</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#using-pegg">Using PEGG</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#visualization-tools">Visualization Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#generating-pegrnas">Generating pegRNAs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#design-options">Design Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#base-editing">Base Editing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#id2">Design Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#sensor-design">Sensor Design</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#oligo-generation">Oligo Generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#library-generation">Library Generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#jupyter-notebook-tutorial">Jupyter Notebook Tutorial</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#a-note-on-ram">A Note on RAM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#library-design">Library Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#visualizations">Visualizations</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="jupyter_tutorial.html">🪐 Jupyter Notebook Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PEGG.html">📚 Complete Function Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="PEGG.html#pegg-prime-module">pegg.prime module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="PEGG.html#pegg-base-module">pegg.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.prime.pegg2">pegg.prime module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.base.base_editing">pegg.base module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.library_design.library">pegg.library_design module</a></li>
 </ul>
 </li>
@@ -124,8 +124,200 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
 </div>
-<div class="section" id="pegg-base-base-editing-module">
-<h2>pegg.base.base_editing module<a class="headerlink" href="#pegg-base-base-editing-module" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="module-pegg.base.base_editing">
+<span id="pegg-base-base-editing-module"></span><h2>pegg.base.base_editing module<a class="headerlink" href="#module-pegg.base.base_editing" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pegg.base.base_editing.base_oligo_generator">
+<span class="sig-prename descclassname"><span class="pre">pegg.base.base_editing.</span></span><span class="sig-name descname"><span class="pre">base_oligo_generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">peg_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">five_prime_adapter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'AGCGTACACGTCTCACACC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">three_prime_adapter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'GAATTCTAGATCCGGTCGTCAAC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gRNA_scaff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'GTTTTAGAGCTAGAAATAGCAAGTTAAAATAAGGCTAGTCCGTTATCAACTTGAAAAAGTGGCACCGAGTCGGTGC'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.base.base_editing.base_oligo_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>A tool for automatically generating oligos from the output of run().
+Returns input dataframe with new columns containing gRNA oligo with or without sensor.</p>
+<dl>
+<dt>peg_df</dt><dd><p><em>type = pd.DataFrame</em></p>
+<p>A dataframe containing the gRNAs for the selected input mutations. Generated by run_base() or gRNA_generator()</p>
+</dd>
+<dt>five_prime_adapter</dt><dd><p><em>type = str</em></p>
+<p>5’ Prime Adapter. The automatically provided 5’ adapter contains an Esp3I (BsmBI) site. Can be swapped with 
+whatever input string user wants.</p>
+</dd>
+<dt>three_prime_adapter</dt><dd><p><em>type = str</em></p>
+<p>5’ Prime Adapter. The automatically provided 5’ adapter contains an Esp3I (BsmBI) site. Can be swapped with 
+whatever input string user wants.</p>
+</dd>
+<dt>gRNA_scaff</dt><dd><p><em>type = str</em></p>
+<p>gRNA scaffold region. Automatically set to a functional gRNA scaffold. Can be swapped with 
+whatever input string user wants.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pegg.base.base_editing.eligible_PAM_finder_base">
+<span class="sig-prename descclassname"><span class="pre">pegg.base.base_editing.</span></span><span class="sig-name descname"><span class="pre">eligible_PAM_finder_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PAM</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proto_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">19</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.base.base_editing.eligible_PAM_finder_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines eligible PAM sequences for creating gRNAs.
+Returns PAM sequence locations on (1) forward, and (2) reverse-complement strand</p>
+<dl>
+<dt>mut</dt><dd><p><em>type = mutation class</em></p>
+<p>See class: mutation</p>
+</dd>
+<dt>PAM</dt><dd><p><em>type = str</em></p>
+<p>PAM sequence for searching. Formatting: e.g. “NGG”</p>
+<p>N = [A|T|C|G]
+R = [A|G]
+Y = [C|T]
+S = [G|C]
+W = [A|T]
+K = [G|T]
+M = [A|C]
+B = [C|G|T]
+D = [A|G|T]
+H = [A|C|T]
+V = [A|C|G]</p>
+</dd>
+<dt>proto_size</dt><dd><p><em>type = int</em></p>
+<p>Size of protospacer being used. Default = 19 (G+19).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pegg.base.base_editing.gRNA_generator">
+<span class="sig-prename descclassname"><span class="pre">pegg.base.base_editing.</span></span><span class="sig-name descname"><span class="pre">gRNA_generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PAM</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proto_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ideal_edit_window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[4,</span> <span class="pre">8]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.base.base_editing.gRNA_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates pegRNAs for a given mutation.</p>
+<dl>
+<dt>mut</dt><dd><p><em>type = mutation class</em></p>
+<p>See class: mutation</p>
+</dd>
+<dt>PAM</dt><dd><p><em>type = str</em></p>
+<p>PAM sequence for searching. Formatting: e.g. “NGG”</p>
+<p>N = [A|T|C|G]
+R = [A|G]
+Y = [C|T]
+S = [G|C]
+W = [A|T]
+K = [G|T]
+M = [A|C]
+B = [C|G|T]
+D = [A|G|T]
+H = [A|C|T]
+V = [A|C|G]</p>
+</dd>
+<dt>orientation</dt><dd><p><em>type = str</em></p>
+<p>‘+’ or ‘-‘</p>
+</dd>
+<dt>proto_size</dt><dd><p><em>type = int</em></p>
+<p>Size of protospacer being used. Default = 19 (G+19).</p>
+</dd>
+<dt>ideal_edit_window</dt><dd><p><em>type = list</em></p>
+<p>Ideal editing window for the editor being used. Default = [4,8]. Labels mutations that fall in this window for 
+future filtration if desired.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pegg.base.base_editing.run_base">
+<span class="sig-prename descclassname"><span class="pre">pegg.base.base_editing.</span></span><span class="sig-name descname"><span class="pre">run_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chrom_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PAM</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NGG'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filtration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ABE+CBE'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ideal_edit_window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[4,</span> <span class="pre">8]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_SNP_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proto_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">19</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RE_sites</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polyT_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">before_proto_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor_orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'reverse-complement'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.base.base_editing.run_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Master function for generating base editing gRNAs. Takes as input a dataframe containing mutations in one of the acceptable formats.
+Returns a dataframe with gRNAs with desired design parameters.</p>
+<dl>
+<dt>input_df</dt><dd><p><em>type = pd.DataFrame</em></p>
+<p>Pandas dataframe that contains the input mutations.</p>
+</dd>
+<dt>input_format</dt><dd><p><em>type = str</em></p>
+<p>Options = ‘cBioPortal’, ‘WT_ALT’, ‘PrimeDesign’. For ‘WT_ALT’, make sure to put headers as “WT” and “ALT”. 
+For “PrimeDesign”, put the header as “SEQ”.</p>
+</dd>
+<dt>chrom_dict</dt><dd><p><em>type = dict or None</em></p>
+<p>Dictionary generated by genome_loader() that holds the chromosome sequences.</p>
+</dd>
+<dt>PAM</dt><dd><p><em>type = str</em></p>
+<p>PAM sequence for searching. Default = “NGG”. Can include any nucleic acid code (e.g. PAM = “NRCH”).</p>
+</dd>
+<dt>filtration</dt><dd><p><em>type = str or list</em></p>
+<p>Filters the mutation input list to only include the desired SNPs. Options = “No filter”, “ABE”, “CBE”, “ABE+CBE”,
+or a list containing the desired SNPs to model (e.g. [‘C&gt;A’, ‘T&gt;C’]).</p>
+</dd>
+<dt>ideal_edit_window</dt><dd><p><em>type = list</em></p>
+<p>Ideal editing window for the editor being used. Default = [4,8]. Labels mutations that fall in this window for 
+future filtration if desired.</p>
+</dd>
+<dt>auto_SNP_filter</dt><dd><p><em>type = bool</em></p>
+<p>True/False for whether to filter mutant input to exclude mutations that are NOT SNPs (and thus not BE amenable).</p>
+</dd>
+<dt>proto_size</dt><dd><p><em>type = int</em></p>
+<p>The length of the protospacer (excluding the appended G at the 5’ end). Default = 19 (G+19).</p>
+</dd>
+<dt>context_size</dt><dd><p><em>type = int</em></p>
+<p>The amount of context/flanking sequence on either side of the mutation to generate. For larger variants, set this larger.
+Default = 120. e.g. AAA(A/G)AAA = context_size of 3</p>
+</dd>
+<dt>RE_sites</dt><dd><p><em>type = list or None</em></p>
+<p>A list containing the RE recognition sites to filter (e.g. [‘CGTCTC’, ‘GAATTC’] for Esp3I and EcoRI). Default = None (no filtration).</p>
+</dd>
+<dt>polyT_threshold</dt><dd><p><em>type = int</em></p>
+<p>The length of the polyT sequence to classify as a terminator. Default = 4.</p>
+</dd>
+<dt>before_proto_context</dt><dd><p><em>type = int</em></p>
+<p>Default = 5. Amount of nucleotide context to put before the protospacer in the sensor</p>
+</dd>
+<dt>sensor_length</dt><dd><p><em>type = int</em></p>
+<p>Total length of the sensor in nt. Default = 60.</p>
+</dd>
+<dt>sensor_orientation</dt><dd><p><em>type = str</em></p>
+<p>Options for sensor_orientation = ‘reverse-complement’ or’forward’.</p>
+</dd>
+<dt>sensor</dt><dd><p><em>type = bool</em></p>
+<p>True/False whether to include a sensor in the pegRNA design or not.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pegg.base.base_editing.sensor_generator_base">
+<span class="sig-prename descclassname"><span class="pre">pegg.base.base_editing.</span></span><span class="sig-name descname"><span class="pre">sensor_generator_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proto_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">before_proto_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">60</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor_orientation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'reverse-complement'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.base.base_editing.sensor_generator_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates sensor sequence for quantification of gRNA editing outcomes.
+Automatically puts sensor in reverse complement orientation with respect to protospacer.
+This is highly reccomended to reduce recombination during cloning/library preparation.</p>
+<dl>
+<dt>df</dt><dd><p><em>type = pd.DataFrame</em></p>
+<p>Dataframe containing gRNAs.</p>
+</dd>
+<dt>proto_size</dt><dd><p><em>type = int</em></p>
+<p>Size of protospacer.</p>
+</dd>
+<dt>before_proto_context</dt><dd><p><em>type = int</em></p>
+<p>Default = 5. Amount of nucleotide context to put before the protospacer in the sensor</p>
+</dd>
+<dt>sensor_length</dt><dd><p><em>type = int</em></p>
+<p>Total length of the sensor in nt. Default = 60.</p>
+</dd>
+<dt>sensor_orientation</dt><dd><p><em>type = str</em></p>
+<p>Options for sensor_orientation = ‘reverse-complement’ or’forward’.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pegg.base.base_editing.sensor_viz_base">
+<span class="sig-prename descclassname"><span class="pre">pegg.base.base_editing.</span></span><span class="sig-name descname"><span class="pre">sensor_viz_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_w_sensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.base.base_editing.sensor_viz_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for visualizing the gRNA aligned to the sensor. Input = dataframe with pegRNA-sensor pairs
+and the row index (i) to visualize.</p>
+<dl>
+<dt>df_w_sensor</dt><dd><p><em>type = pd.DataFrame</em></p>
+<p>Dataframe containing the gRNA-sensor pairs generated by run().</p>
+</dd>
+<dt>i</dt><dd><p><em>type = int</em></p>
+<p>Row index from the dataframe that you want to visualize.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pegg.base.base_editing.split_word">
+<span class="sig-prename descclassname"><span class="pre">pegg.base.base_editing.</span></span><span class="sig-name descname"><span class="pre">split_word</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">word</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pegg.base.base_editing.split_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple function for splitting string into component characters</p>
+</dd></dl>
+
 </div>
 <div class="section" id="module-pegg.base">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pegg.base" title="Permalink to this heading">¶</a></h2>

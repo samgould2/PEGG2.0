@@ -16,7 +16,7 @@ import mock
 import sphinx.ext.autodoc
 #import nltk_theme
 sys.path.insert(0, os.path.abspath('..'))
-autodoc_mock_imports = ['numpy','matplotlib','pandas','Bio', 'gzip', 'seaborn','re','seaborn', 'cyvcf2']
+autodoc_mock_imports = ['numpy','matplotlib','pandas','Bio', 'gzip', 'seaborn','re','seaborn', 'cyvcf2', 'regex', 'sklearn', 'warnings', 'pickle', 'crisporEffScores']
 
 # -- Project information -----------------------------------------------------
 

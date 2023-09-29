@@ -71,32 +71,32 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">🚀 Quickstart</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#designing-pegrnas-with-pegg">Designing pegRNAs with PEGG</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#wt-alt-format">(1) WT-ALT Format</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#primedesign-format">(2) PrimeDesign Format</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#cbioportal-format">(3) cBioPortal Format</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#clinvar-mutations">(4) ClinVar mutations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#generating-pegrnas">Generating pegRNAs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#reference-file-formatting">Reference File Formatting</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="quickstart.html#input-mutations">(1) Input mutations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quickstart.html#a-compatible-input-files">(1a) Compatible Input Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quickstart.html#b-clinvar-variants">(1b) ClinVar variants</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quickstart.html#reference-genome">(2) Reference Genome</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quickstart.html#on-off-target-scores">(3) On/Off Target scores</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#input-formatting">Input Formatting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#wt-alt-format">(1) WT-ALT Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#primedesign-format">(2) PrimeDesign Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#cbioportal-format">(3) cBioPortal Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#b-reference-genome">(3b) Reference Genome</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#clinvar-mutations">(4) ClinVar mutations</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#using-pegg">Using PEGG</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#visualization-tools">Visualization Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#generating-pegrnas">Generating pegRNAs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#design-options">Design Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#base-editing">Base Editing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#id2">Design Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#sensor-design">Sensor Design</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#oligo-generation">Oligo Generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#library-generation">Library Generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#jupyter-notebook-tutorial">Jupyter Notebook Tutorial</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#a-note-on-ram">A Note on RAM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#library-design">Library Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#visualizations">Visualizations</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="jupyter_tutorial.html">🪐 Jupyter Notebook Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PEGG.html">📚 Complete Function Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="PEGG.html#pegg-prime-module">pegg.prime module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="PEGG.html#pegg-base-module">pegg.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.prime.pegg2">pegg.prime module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.base.base_editing">pegg.base module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.library_design.library">pegg.library_design module</a></li>
 </ul>
 </li>
@@ -132,14 +132,11 @@ the calibration of guide editing activity in pooled screens (see above bioRxiv p
 <li><p>Generating pegRNAs or gRNAs based on a list of input mutations. The input format is extremely flexible, allowing for users to input a list of genome coordinates or sequences with desired edits.</p></li>
 <li><p>Ranking and filtering these pegRNAs based on their properties, including On-Target (Azimuth) Scores.</p></li>
 <li><p>Automated oligo generation (with the option to include a synthetic “sensor” region).</p></li>
-<li><p>Automated pegRNA/gRNA library design with included safe-targetting mutations, non-targetting guides, and silent substitution controls.</p></li>
+<li><p>Automated pegRNA/gRNA library design with included safe-targeting mutations, non-targeting guides, and silent substitution controls.</p></li>
 <li><p>Visualization Tools for pegRNA and gRNA design.</p></li>
 </ol>
 <p>PEGG has recently been updated to version 2.0, with new features including (1) increased input mutation format flexibility,
-(2) Dynamically computed Azimuth on-target scores, (3) a new base editing module, (4) improved library design functionality,</p>
-<blockquote>
-<div><p>as well as some minor bug fixes with INS/DEL design.</p>
-</div></blockquote>
+(2) Dynamically computed Azimuth on-target scores, (3) a new base editing module, (4) improved library design functionality, as well as some minor bug fixes with INS/DEL design.</p>
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h2>
@@ -152,25 +149,19 @@ the calibration of guide editing activity in pooled screens (see above bioRxiv p
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">🚀 Quickstart</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#designing-pegrnas-with-pegg">Designing pegRNAs with PEGG</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#wt-alt-format">(1) WT-ALT Format</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#primedesign-format">(2) PrimeDesign Format</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#cbioportal-format">(3) cBioPortal Format</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#clinvar-mutations">(4) ClinVar mutations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#input-formatting">Input Formatting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#generating-pegrnas">Generating pegRNAs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#reference-file-formatting">Reference File Formatting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#using-pegg">Using PEGG</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#visualization-tools">Visualization Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#base-editing">Base Editing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#sensor-design">Sensor Design</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quickstart.html#oligo-generation">Oligo Generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#library-generation">Library Generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#jupyter-notebook-tutorial">Jupyter Notebook Tutorial</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quickstart.html#a-note-on-ram">A Note on RAM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#library-design">Library Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#visualizations">Visualizations</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="jupyter_tutorial.html">🪐 Jupyter Notebook Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PEGG.html">📚 Complete Function Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="PEGG.html#pegg-prime-module">pegg.prime module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="PEGG.html#pegg-base-module">pegg.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.prime.pegg2">pegg.prime module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.base.base_editing">pegg.base module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.library_design.library">pegg.library_design module</a></li>
 </ul>
 </li>

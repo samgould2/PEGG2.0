@@ -26,7 +26,7 @@ PEGG's main functions are:
 
 (3) Automated oligo generation (with the option to include a synthetic "sensor" region).
 
-(4) Automated pegRNA/gRNA library design with included safe-targetting mutations, non-targetting guides, and silent substitution controls.
+(4) Automated pegRNA/gRNA library design with included safe-targeting mutations, non-targeting guides, and silent substitution controls.
 
 (5) Visualization Tools for pegRNA and gRNA design.
 
@@ -53,7 +53,7 @@ PEGG is available through the python package index. To install, use pip:
 
 PEGG is an open source python package. If you use PEGG, please cite it using the following citation:
 
-Gould, S.I., Sánchez-Rivera, F.J. (2022). PEGG: A computational pipeline for rapid design of prime editing guide RNAs and sensor libraries. *bioRxiv*. DOI: https://doi.org/10.1101/2022.10.26.513842.
+Gould, S. I., Wuest, A. N., Dong, K., Johnson, G. A., Hsu, A., Narendra, V. K., Levine, S. S., Liu, D. R., & Sánchez Rivera, F. J. (2022). High throughput evaluation of genetic variants with prime editing sensor libraries. bioRxiv. https://doi.org/10.1101/2022.10.26.513842
 
 Function Index
 ***************

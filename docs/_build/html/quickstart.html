@@ -71,32 +71,32 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">🚀 Quickstart</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#designing-pegrnas-with-pegg">Designing pegRNAs with PEGG</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#wt-alt-format">(1) WT-ALT Format</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#primedesign-format">(2) PrimeDesign Format</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#cbioportal-format">(3) cBioPortal Format</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#clinvar-mutations">(4) ClinVar mutations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#generating-pegrnas">Generating pegRNAs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reference-file-formatting">Reference File Formatting</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#input-mutations">(1) Input mutations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#a-compatible-input-files">(1a) Compatible Input Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#b-clinvar-variants">(1b) ClinVar variants</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#reference-genome">(2) Reference Genome</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#on-off-target-scores">(3) On/Off Target scores</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#input-formatting">Input Formatting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#wt-alt-format">(1) WT-ALT Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#primedesign-format">(2) PrimeDesign Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cbioportal-format">(3) cBioPortal Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#b-reference-genome">(3b) Reference Genome</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clinvar-mutations">(4) ClinVar mutations</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#using-pegg">Using PEGG</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#visualization-tools">Visualization Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generating-pegrnas">Generating pegRNAs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#design-options">Design Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#base-editing">Base Editing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Design Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sensor-design">Sensor Design</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#oligo-generation">Oligo Generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#library-generation">Library Generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#jupyter-notebook-tutorial">Jupyter Notebook Tutorial</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#a-note-on-ram">A Note on RAM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#library-design">Library Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visualizations">Visualizations</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="jupyter_tutorial.html">🪐 Jupyter Notebook Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PEGG.html">📚 Complete Function Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="PEGG.html#pegg-prime-module">pegg.prime module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="PEGG.html#pegg-base-module">pegg.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.prime.pegg2">pegg.prime module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.base.base_editing">pegg.base module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.library_design.library">pegg.library_design module</a></li>
 </ul>
 </li>
@@ -129,27 +129,29 @@
 </div>
 <p>To modify and/or download specific python files, download the package from the <a class="reference external" href="https://github.com/samgould2/PEGG2.0">Github Repository</a> .</p>
 </div>
-<div class="section" id="designing-pegrnas-with-pegg">
-<h2>Designing pegRNAs with PEGG<a class="headerlink" href="#designing-pegrnas-with-pegg" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="input-formatting">
+<h2>Input Formatting<a class="headerlink" href="#input-formatting" title="Permalink to this heading">¶</a></h2>
+<p>Prime editing can generate a range of small mutations, including substitutions, insertions, and deletions:</p>
+<img alt="_images/PE_schematic.png" src="_images/PE_schematic.png" />
 <p>In order to use PEGG to design pegRNAs, you must provide a set of mutations in a pandas DataFrame for PEGG to use.
 There are 3 acceptable input formats that PEGG accepts</p>
-</div>
 <div class="section" id="wt-alt-format">
-<h2>(1) WT-ALT Format<a class="headerlink" href="#wt-alt-format" title="Permalink to this heading">¶</a></h2>
+<h3>(1) WT-ALT Format<a class="headerlink" href="#wt-alt-format" title="Permalink to this heading">¶</a></h3>
 <p>In this format, the user feeds in a set of wildtype sequences, and the corresponding set of desired mutant sequences.
 PEGG then uses a built-in aligner to determine the mutation from these sequences, and design pegRNAs for these variants.
 Note: Complex INDELs will break this function because they are difficult to align. If you want to design INDELs, use one of the two formats below.</p>
 <p>The pandas DataFrame must have at least 2 columns, with the following column names <strong>(1) ‘WT’</strong> and <strong>(2) ‘ALT’</strong></p>
 </div>
 <div class="section" id="primedesign-format">
-<h2>(2) PrimeDesign Format<a class="headerlink" href="#primedesign-format" title="Permalink to this heading">¶</a></h2>
+<h3>(2) PrimeDesign Format<a class="headerlink" href="#primedesign-format" title="Permalink to this heading">¶</a></h3>
 <p>In this format, users feed in a set of sequences with the desired edit in <a class="reference external" href="https://primedesign.pinellolab.partners.org/">PrimeDesign</a> format.
-For example, an A to G SNP would look like: “AATCG(A/G)GCTAG”, an insertion would be: “AATCG(/GTT)GCTAG”, a deletion: “AATCG(GTT/)GCTAG”, and an INDEL: “AATCG(C/GTT)GCTAG”.</p>
+For example, an A&gt;G SNP would look like: “AATCG(A/G)GCTAG”, a “GTT” insertion would be: “AATCG(/GTT)GCTAG”, a “GTT” deletion: “AATCG(GTT/)GCTAG”, and a “C&gt;GTT” INDEL: “AATCG(C/GTT)GCTAG”.
+It is reccomended that you include at least 100 nt of context sequence on either side of the variant.</p>
 <p>The pandas DataFrame must have at least 1 column, with the following column name: <strong>(1) ‘SEQ’</strong> .
 This column contains the PrimeDesign formatted sequences.</p>
 </div>
 <div class="section" id="cbioportal-format">
-<h2>(3) cBioPortal Format<a class="headerlink" href="#cbioportal-format" title="Permalink to this heading">¶</a></h2>
+<h3>(3) cBioPortal Format<a class="headerlink" href="#cbioportal-format" title="Permalink to this heading">¶</a></h3>
 <p>In this format, users simply provide a set of variants with their genome coordinates and reference and alternate alleles, as well as the variant type.
 This format is compatible with all of the datasets in the <a class="reference external" href="http://www.cbioportal.org/datasets">cBioPortal</a> , which contains cancer-associated variant datasets.</p>
 <p>If you want to build you own mutation dataset, it must have the following columns, with the associated column header names, in .csv format:</p>
@@ -157,9 +159,9 @@ This format is compatible with all of the datasets in the <a class="reference ex
 <li><p>Chromosome: which chromosome the mutation falls in. Use integers or ‘X’ and ‘Y’.</p></li>
 <li><p>Start_Position: start position of mutation in the reference genome (mutations should only be reported on the + strand)</p></li>
 <li><p>End_Position: end position of mutation in the reference genome</p></li>
-<li><p>Variant_Type: what type of mutation is it. Options: “SNP”, “ONP”, “INS”, “DEL”</p></li>
-<li><p>Reference_Allele: what is the reference allele. For insertions, this can be set to “-“.</p></li>
-<li><p>Tumor_Seq_Allele2: what is the mutant allele (i.e. what is the mutation sequence). For deletions, this can be set to “-“.</p></li>
+<li><p>Variant_Type: what type of mutation is it. Options: “SNP”, “ONP”, “INS”, “DEL”, “INDEL”</p></li>
+<li><p>Reference_Allele: what is the reference allele. For insertions, this should be set to “-“.</p></li>
+<li><p>Tumor_Seq_Allele2: what is the mutant allele (i.e. what is the mutation sequence). For deletions, this should be set to “-“.</p></li>
 </ol>
 <p>An example for loading in a dataset is provided here:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -170,8 +172,12 @@ This format is compatible with all of the datasets in the <a class="reference ex
 </pre></div>
 </div>
 <img alt="_images/mutant_input.png" src="_images/mutant_input.png" />
-<p>In addition, you must provide a genome that PEGG can use to find the associated sequences.
-There is a built in genome loader function that you can use, or format the chromosome sequences in a dictionary, with the keys as the chromosome identifiers:</p>
+<p>Other columns that you include in the DataFrame (e.g. HGVSp or HGVSc) will be retained by PEGG when it outputs the pegRNAs.</p>
+</div>
+<div class="section" id="b-reference-genome">
+<h3>(3b) Reference Genome<a class="headerlink" href="#b-reference-genome" title="Permalink to this heading">¶</a></h3>
+<p>In addition, to use the “cBioPortal” input format, you must provide a genome that PEGG can use to find the associated sequences.
+There is a built in genome loader function that you can use, or you can format the chromosome sequences in a dictionary, with the keys as the chromosome identifiers:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pegg.prime</span> <span class="kn">import</span> <span class="n">pegg2</span>
 
 <span class="c1">#filepath to .gz containing reference genome (here = GrCh37)</span>
@@ -180,14 +186,11 @@ There is a built in genome loader function that you can use, or format the chrom
 <span class="n">chrom_dict</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">pegg2</span><span class="o">.</span><span class="n">genome_loader</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>You can access the genome files at this link: <a class="reference external" href="https://www.dropbox.com/sh/5xsdzyiyrjiu9pf/AADiFFA3BQ3vX7swja-i2NBqa?dl=0">https://www.dropbox.com/sh/5xsdzyiyrjiu9pf/AADiFFA3BQ3vX7swja-i2NBqa?dl=0</a></p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://www.dropbox.com/sh/5xsdzyiyrjiu9pf/AADiFFA3BQ3vX7swja-i2NBqa?dl=0">Reference Files Dropbox Link</a></p></li>
-</ul>
+<p>You can access the genome files at this link: <a class="reference external" href="https://www.dropbox.com/sh/5xsdzyiyrjiu9pf/AADiFFA3BQ3vX7swja-i2NBqa?dl=0">Reference Files Dropbox Link</a></p>
 <p>It has been tested on human and mouse genomes.</p>
 </div>
 <div class="section" id="clinvar-mutations">
-<h2>(4) ClinVar mutations<a class="headerlink" href="#clinvar-mutations" title="Permalink to this heading">¶</a></h2>
+<h3>(4) ClinVar mutations<a class="headerlink" href="#clinvar-mutations" title="Permalink to this heading">¶</a></h3>
 <p>PEGG also has a built-in function for translating ClinVar IDs to the “cBioPortal” input format. To do so, download a ClinVar vcf.gz file,
 and choose your desired Variation IDs that you wish to model. These vcf.gz files are available in the <a class="reference external" href="https://www.dropbox.com/sh/5xsdzyiyrjiu9pf/AADiFFA3BQ3vX7swja-i2NBqa?dl=0">Reference Files Dropbox Link</a> (under the clinvar folder)
 or the more up to date files can be accessed here: <a class="reference external" href="https://ftp.ncbi.nlm.nih.gov/pub/clinvar/">https://ftp.ncbi.nlm.nih.gov/pub/clinvar/</a></p>
@@ -203,199 +206,144 @@ or the more up to date files can be accessed here: <a class="reference external"
 </pre></div>
 </div>
 </div>
+</div>
 <div class="section" id="generating-pegrnas">
 <h2>Generating pegRNAs<a class="headerlink" href="#generating-pegrnas" title="Permalink to this heading">¶</a></h2>
-<p>In order to use PEGG, you need at minimum 2 input files:</p>
-<ol class="arabic simple">
-<li><p>A dataframe containing a list of input mutations</p></li>
-<li><p>A reference genome to work from.</p></li>
-</ol>
-<p>An optional, but highly reccomended input file for use with the reference genome build GrCh37 is:</p>
-<ol class="arabic simple" start="3">
-<li><p>chrom_dict, which provides on/off target scores for each protospacer occuring in exonic regions of GrCh37.</p></li>
-</ol>
-<p>Reference files for (2) and (3), as well as a sample mutation dataset (1), are available at the following link:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://www.dropbox.com/sh/h6fdvpv3tyny27q/AADYVOkJe12XZiD4pf3_WXuga?dl=0">Reference Files Dropbox Link</a></p></li>
-</ul>
-</div>
-<div class="section" id="reference-file-formatting">
-<h2>Reference File Formatting<a class="headerlink" href="#reference-file-formatting" title="Permalink to this heading">¶</a></h2>
-<p>PEGG requires that the reference files are in a specific format. This should be the only painful part of setting up your environment
-to allow PEGG to generate pegRNAs.</p>
-<div class="section" id="input-mutations">
-<h3>(1) Input mutations<a class="headerlink" href="#input-mutations" title="Permalink to this heading">¶</a></h3>
-<p>First let’s load in a dataframe containing a list of input mutations (1):</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pegg</span>
+<p>To run PEGG to generate pegRNA-sensor pairs with the default parameters, simply execute the following code,
+which shows an example with PrimeDesign format:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pegg.prime</span> <span class="kn">import</span> <span class="n">pegg2</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="c1">#------(1) loading in input mutatations-------------</span>
-<span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;.../2020-06-16-MSK-IMPACT_EDITED.txt&#39;</span>
-<span class="n">mutant_input</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">seqs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AAAATCGTAGCTAGGCGTAGGGCGCGCGGGCTCGGAGGCGCGATGCGCAT(A/G)TGGATCGGGCTAGGCTAGCGCGGGCTAGCTAGCTTCGAGCCGCTA&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;AAAATCGTAGCTAGGCGTAGGGCGCGCGGGCTCGGAGGCGCGATGCGCAT(/GTGC)TGGATCGGGCTAGGCTAGCGCGGGCTAGCTAGCTTCGAGCCGCTA&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;AAAATCGTAGCTAGGCGTAGGGCGCGCGGGCTCGGAGGCGCGATGCGCAT(A/GTGC)TGGATCGGGCTAGGCTAGCGCGGGCTAGCTAGCTTCGAGCCGCTA&#39;</span><span class="p">]</span>
+
+<span class="nb">input</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="s1">&#39;SEQ&#39;</span><span class="p">],</span> <span class="p">[</span><span class="n">seqs</span><span class="p">])))</span>
+
+<span class="c1">#options = &#39;cBioPortal&#39;, &#39;WT_ALT&#39;, &#39;PrimeDesign&#39;</span>
+<span class="n">input_format</span> <span class="o">=</span> <span class="s1">&#39;PrimeDesign&#39;</span>
+
+<span class="n">pegRNAs</span> <span class="o">=</span> <span class="n">pegg2</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">input_format</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The above codeblock shows how to load in the sample mutation input file available in the <a class="reference external" href="https://www.dropbox.com/sh/h6fdvpv3tyny27q/AADYVOkJe12XZiD4pf3_WXuga?dl=0">dropbox of reference files</a>.
-To use <strong>your own mutation input</strong>, the input mutations must follow the format shown in the dataframe below:</p>
-<img alt="_images/mutant_input.png" src="_images/mutant_input.png" />
-<p>Namely, 7 columns are required, providing information about the input mutations relative to the provided reference genome.
-The input mutation dataframe <strong>must match the column naming scheme shown above</strong>:</p>
-<ol class="arabic simple">
-<li><p>Hugo_Symbol: the name of the gene within which the mutations falls. For non-coding locations, include some identifer.</p></li>
-<li><p>Chromosome: which chromosome the mutation falls in. Use integers or ‘X’ and ‘Y’.</p></li>
-<li><p>Start_Position: start position of mutation in the reference genome (mutations should only be reported on the + strand)</p></li>
-<li><p>End_Position: end position of mutation in the reference genome</p></li>
-<li><p>Variant_Type: what type of mutation is it. Options: “SNP”, “ONP”, “INS”, “DEL”</p></li>
-<li><p>Reference_Allele: what is the reference allele. For insertions, this can be set to “-“.</p></li>
-<li><p>Tumor_Seq_Allele2: what is the mutant allele (i.e. what is the mutation sequence). For deletions, this can be set to “-“.</p></li>
-</ol>
-</div>
-<div class="section" id="a-compatible-input-files">
-<h3>(1a) Compatible Input Files<a class="headerlink" href="#a-compatible-input-files" title="Permalink to this heading">¶</a></h3>
-<p>All of the mutation files listed in the cBioPortal are in the correct format for input into PEGG.
-They can be accessed at the following link: <a class="reference external" href="http://www.cbioportal.org/datasets">http://www.cbioportal.org/datasets</a></p>
-<p>See the jupyter notebook tutorial for a more in depth case study of using these reference databases.</p>
-</div>
-<div class="section" id="b-clinvar-variants">
-<h3>(1b) ClinVar variants<a class="headerlink" href="#b-clinvar-variants" title="Permalink to this heading">¶</a></h3>
-<p>PEGG also includes a built in tool that allows users to put a list of ClinVar variants in the correct format for interpretation by PEGG.
-This is done using the <strong>pegg.clinvar_VCF_translator()</strong> function, where users provide a clinvar.vcf.gz file and a list of Variation IDs that
-correspond with the variants they want to translate. These variation IDs are the identifiers for ClinVar variants:</p>
-<img alt="_images/var_ids.png" src="_images/var_ids.png" />
-<p>See the below codeblock for the precise syntax:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#this is the filepath to the .vcf.gz file (needs to be updated according to user)</span>
-<span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;.../clinvar_20221001.vcf.gz&#39;</span>
-<span class="n">variation_ids</span> <span class="o">=</span> <span class="p">[</span><span class="mi">925574</span><span class="p">,</span> <span class="mi">925434</span><span class="p">,</span> <span class="mi">926695</span><span class="p">,</span> <span class="mi">925707</span><span class="p">,</span> <span class="mi">325626</span><span class="p">,</span> <span class="mi">1191613</span><span class="p">,</span><span class="mi">308061</span><span class="p">]</span> <span class="c1">#list of ClinVar variants to translate</span>
-<span class="n">clinvar</span> <span class="o">=</span> <span class="n">pegg</span><span class="o">.</span><span class="n">clinvar_VCF_translator</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">variation_ids</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>This outputs a dataframe in the correct format for generating pegRNAs using PEGG:</p>
-<img alt="out_clinvar.png" src="out_clinvar.png" />
-<p>ClinVar VCF files can be accessed here: <a class="reference external" href="https://ftp.ncbi.nlm.nih.gov/pub/clinvar/">https://ftp.ncbi.nlm.nih.gov/pub/clinvar/</a></p>
-<p>A sample vcf.gz file with GrCh37 coordinates is provided in the <a class="reference external" href="https://www.dropbox.com/sh/h6fdvpv3tyny27q/AADYVOkJe12XZiD4pf3_WXuga?dl=0">dropbox of reference files</a> as well.</p>
-</div>
-<div class="section" id="reference-genome">
-<h3>(2) Reference Genome<a class="headerlink" href="#reference-genome" title="Permalink to this heading">¶</a></h3>
-<p>And now let’s load in the reference genome. I suggest using the codeblock below if you’re using GrCh37 or GrCh38 as a reference file.
-Otherwise, the format needs to be as follows:</p>
-<ul>
-<li><p><strong>records</strong> = a list containing the chromosome sequences (preferably parsed by SeqIO).</p></li>
-<li><p><strong>index_list</strong> = a list containing the indeces in <strong>records</strong> corresponding to chromosome 1-22, and chrX and chrY.</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>For example, <strong>records[index_list[0]] should refer to chromosome 1</strong> (numbering starts at 0, not 1 in index_list due to python conventions)</p></li>
-<li><p>And <strong>records[index_list[1]] should refer to chromosome 2</strong>, etc.</p></li>
-<li><p>For the X and Y chromosome, records[index_list[22]] should refer to chrX, and records[index_list[23]] should refer to chrY</p></li>
-</ul>
-</div></blockquote>
-</li>
-</ul>
-<p>In other words, <strong>records</strong> is a list containing the chromosome sequences, but likely also other unwanted sequences (alternate/unlocalized sequences),
-while <strong>index_list</strong> provides the indeces needed to place the chromosome sequences in records in order from chromosome 1-22, and chrX and chrY.</p>
+<p>This will output a dataframe that contains the pegRNA-sensor designs with default parameters.</p>
+<div class="section" id="design-options">
+<h3>Design Options<a class="headerlink" href="#design-options" title="Permalink to this heading">¶</a></h3>
+<p>There are a whole host of design parameters for the pegRNAs and sensors that can be customized.</p>
+<p><strong>pegRNA parameters:</strong></p>
 <ul class="simple">
-<li><p>An alternate way to format these input files is to have <strong>records</strong> list have the chromosome sequences in order from 1-22, chrX, and chrY, and set <strong>index_list</strong> = list(range(24))</p></li>
+<li><p><strong>PAM</strong> = PAM sequence for searching. Default = “NGG”. Can include any nucleic acid code (e.g. PAM = “NRCH”).</p></li>
+<li><p><strong>rank_by</strong> = What pegRNA parameter to rank pegRNAs by. Options = “PEGG2_Score” (default; weighted linear regression of different pegRNA parameters; r~.4) or “RF_Score” (random forest predictor of pegRNA efficiency; r~.6).</p></li>
+<li><p><strong>pegRNAs_per_mut</strong>: How many pegRNAs to produce per mutation. If you input an integer value <em>n</em>, PEGG will automatically select the <em>n</em> top ranked pegRNAs for that variant. Default = ‘All’ (all possible pegRNAs with parameters). Otherwise, choose an integer value (e.g. 5).</p></li>
+<li><p><strong>RTT_lengths</strong>: List containing RTT lengths to design pegRNAs for. Default = [5,10,15,20,25,30]</p></li>
+<li><p><strong>PBS_length</strong>: List containing PBS lengths to desing pegRNAs for. Default = [8,10,13,15]</p></li>
+<li><p><strong>min_RHA_size</strong>: Minimum size of the RHA (Right homology arm). Default = 1. Generally pegRNAs with smaller RHA perform poorly.</p></li>
+<li><p><strong>RE_sites</strong>: A list containing the RE recognition sites to filter (e.g. [‘CGTCTC’, ‘GAATTC’] for Esp3I and EcoRI). Default = None (no filtration).</p></li>
+<li><p><strong>polyT_threshold</strong>: The length of the polyT sequence to classify a pegRNA and/or sensor as containing a terminator. Default = 4.</p></li>
+<li><p><strong>proto_size</strong>: The length of the protospacer (excluding the appended G at the 5’ end). Default = 19 (G+19).</p></li>
+<li><p><strong>context_size</strong>: The amount of context/flanking sequence on either side of the mutation to generate. For larger variants, set this larger. Default = 120. e.g. AAA(A/G)AAA = context_size of 3</p></li>
 </ul>
-<p>See the following codeblock for how to set up <strong>records</strong> and <strong>index_list</strong> using the <a class="reference external" href="https://www.dropbox.com/sh/h6fdvpv3tyny27q/AADYVOkJe12XZiD4pf3_WXuga?dl=0">provided reference genome files, GrCh37 &amp; GrCh38</a>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#filepath to .gz containing reference genome (here = GrCh37)</span>
-<span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;./GCF_000001405.25_GRCh37.p13_genomic.fna.gz&#39;</span>
+<p><strong>sensor parameters</strong> (see section below for more information on sensor)</p>
+<ul class="simple">
+<li><p><strong>sensor:</strong> True/False whether to include a sensor in the pegRNA design or not.</p></li>
+<li><p><strong>before_proto_context</strong>: Default = 5. Amount of nucleotide context to put before the protospacer in the sensor</p></li>
+<li><p><strong>sensor_length</strong>: Total length of the sensor in nt. Default = 60.</p></li>
+<li><p><strong>sensor_orientation</strong>: Orientation of the sensor relative to the protospacer. Options for sensor_orientation = ‘reverse-complement’ or’forward’. Default = ‘reverse-complement’ (to minimize recombination).</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="base-editing">
+<h2>Base Editing<a class="headerlink" href="#base-editing" title="Permalink to this heading">¶</a></h2>
+<p>PEGG also contains a base editing module for designing base editing gRNA-sensor pairs.
+The input format is the same as for pegRNA generation (“cBioPortal”, “PrimeDesign”, or “WT_ALT”).
+The base editing design function will automatically filter non-SNP variants, and can be set to filter variants amenable to
+adenine base editing (ABE: A&gt;G or T&gt;C variants) and cytosine base editing (CBE: C&gt;T or G&gt;A variants):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pegg.base</span> <span class="kn">import</span> <span class="n">base_editing</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="n">records</span><span class="p">,</span> <span class="n">index_list</span> <span class="o">=</span> <span class="n">pegg</span><span class="o">.</span><span class="n">genome_loader</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="on-off-target-scores">
-<h3>(3) On/Off Target scores<a class="headerlink" href="#on-off-target-scores" title="Permalink to this heading">¶</a></h3>
-<p>The last reference file (3) is chrom_dict, which provides on/off target scores for protospacers in exonic regions of GrCh37.
-These scores are used in the ranking and filtration of pegRNAs. Curently this is only available for GrCh37, but a chrom_dict reference file for
-GrCh38 will be provided shortly and available in the <a class="reference external" href="https://www.dropbox.com/sh/h6fdvpv3tyny27q/AADYVOkJe12XZiD4pf3_WXuga?dl=0">dropbox of reference files</a>.</p>
-<p>To import this reference file, use the following syntax:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#---------loading in on/off-target efficiencies of sgRNAs in exonic regions of GrCh37---------------------</span>
-<span class="n">file</span> <span class="o">=</span> <span class="s1">&#39;.../chrom_dict.pickle&#39;</span>
-<span class="n">chrom_dict</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>If you are using an alternative genome, or don’t wish to use chrom_dict, set it equal to ‘none’:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">chrom_dict</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="using-pegg">
-<h2>Using PEGG<a class="headerlink" href="#using-pegg" title="Permalink to this heading">¶</a></h2>
-<p>Now that our reference files are loaded in, and PEGG is imported as a module, using PEGG is simple.
-We simply need to specify parameters which correspond with the different options associated with prime editing,
-as depicted in the visualization below:</p>
-<img alt="_images/PE_schematic.png" src="_images/PE_schematic.png" />
-<p>Namely, the user must specify:</p>
-<ol class="arabic simple">
-<li><p>Select mutations within mutant_input to generate pegRNAs for. This is done by providing a list of indeces that correspond with the desired mutations. The alternative is simply setting this to <strong>all mutations in the datasets, by having mut_idx_list = list(range(len(mutant_input)))</strong>.</p></li>
-<li><p>PAM sequence (string format)</p></li>
-<li><p>How many guides to return per mutation</p></li>
-<li><p>A list of RTT and PBS lengths to search.</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#specify which mutations within mutant_input to generate pegRNAs for</span>
-<span class="c1">#here we&#39;re going to just generate pegRNAs for 1 mutation, corresponding to row 4 of mutant_input</span>
-<span class="n">mut_idx_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-<span class="n">PAM</span> <span class="o">=</span> <span class="s1">&#39;NGG&#39;</span>
-<span class="n">guides_per_mut</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1">#specify how many pegRNAs to return for each mutation</span>
-<span class="n">RTT_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">30</span><span class="p">]</span> <span class="c1">#specify RTT lengths and PBS lengths to search</span>
-<span class="n">PBS_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span>
-<span class="n">minus_seqs</span> <span class="o">=</span> <span class="n">pegg</span><span class="o">.</span><span class="n">minus_seq_generator</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">index_list</span><span class="p">)</span>
+<span class="n">seqs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AAAATCGTAGCTAGGCGTAGGGCGCGCGGGCTCGGAGGCGCGATGCGCAT(A/G)TGGATCGGGCTAGGCTCGGAGCGGCGGGCTAGCTAGCTTCGAGCCGCTATCGCCCATCCTGCAC&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;AAAATCGTAGCTAGGCGTAGGGCGCGCGGGCTCCGGAGGCGCGATGCGCAT(C/T)TGGATCGGGCTAGGCTCGGAGCGGCGGGCTAGCTAGCTTCGAGCCGCTATCGCCCATCCTGCAC&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;AAAATCGTAGCTAGGCGTAGGGCGCGCGGGCTCCGGAGGCCGCGATGCGCAT(T/C)TGGATCGGGCTAGGCTCGGAGCGGCGGGCTAGCTAGCTTCGAGCCGCTATCGCCCATCCTGCAC&#39;</span><span class="p">]</span>
 
-<span class="c1">#now generating the pegRNAs</span>
-<span class="n">run_output</span> <span class="o">=</span> <span class="n">pegg</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">mutant_input</span><span class="p">,</span> <span class="n">mut_idx_list</span><span class="p">,</span> <span class="n">records</span><span class="p">,</span> <span class="n">index_list</span><span class="p">,</span> <span class="n">minus_seqs</span><span class="p">,</span> <span class="n">chrom_dict</span><span class="p">,</span> <span class="n">PAM</span><span class="p">,</span> <span class="n">RTT_lengths</span><span class="p">,</span> <span class="n">PBS_lengths</span><span class="p">,</span> <span class="n">guides_per_mut</span><span class="p">)</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="s1">&#39;SEQ&#39;</span><span class="p">],</span> <span class="p">[</span><span class="n">seqs</span><span class="p">])))</span>
+<span class="n">input_format</span> <span class="o">=</span> <span class="s1">&#39;PrimeDesign&#39;</span>
+
+<span class="n">gRNAs</span> <span class="o">=</span> <span class="n">base_editing</span><span class="o">.</span><span class="n">run_base</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">input_format</span><span class="p">,</span> <span class="n">chrom_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="section" id="id2">
+<h3>Design Options<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<p>Similar to pegRNA design, there are also multiple options for the base editing gRNA-sensor design function.</p>
+<ul class="simple">
+<li><p><strong>PAM</strong>: PAM sequence for searching. Default = “NGG”. Can include any nucleic acid code (e.g. PAM = “NRCH”).</p></li>
+<li><p><strong>filtration</strong>: Filters the mutation input list to only include the desired SNPs. Options = “No filter”, “ABE”, “CBE”, “ABE+CBE”, or a list containing the desired SNPs to model (e.g. [‘C&gt;A’, ‘T&gt;C’]). Default = “ABE+CBE”, filtering for only ABE or CBE amenable SNPs.</p></li>
+<li><p><strong>ideal_edit_window</strong>: Ideal editing window for the editor being used. Default = [4,8]. Labels mutations that fall in this window for future filtration if desired.</p></li>
+<li><p><strong>auto_SNP_filter</strong>: True/False for whether to filter mutant input to exclude mutations that are NOT SNPs (and thus not BE amenable). Highly reccomended to keep this as True.</p></li>
+<li><p><strong>proto_size</strong>: The length of the protospacer (excluding the appended G at the 5’ end). Default = 19 (G+19).</p></li>
+<li><p><strong>other parmeters are same as for pegg2.run()</strong>: context_size, RE_sites, polyT_threshold, before_proto_context, sensor_length, sensor_orientation, sensor.</p></li>
+</ul>
 </div>
-<div class="section" id="visualization-tools">
-<h2>Visualization Tools<a class="headerlink" href="#visualization-tools" title="Permalink to this heading">¶</a></h2>
-<p>PEGG has built in tools for visualizing the pegRNAs it generates, providing the ability to spot-check designs.</p>
-<p>In the sample below, we generate our pegRNAs using the run() function and then select a pegRNA from the resulting
-output dataframe to visualize, using <strong>pegg.pegrna_display()</strong>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pegRNA_df_loc</span><span class="o">=</span><span class="mi">0</span> <span class="c1">#choosing which guide to display from the dataframe</span>
-<span class="n">h</span> <span class="o">=</span> <span class="n">pegg</span><span class="o">.</span><span class="n">pegrna_display</span><span class="p">(</span><span class="n">run_output</span><span class="p">,</span> <span class="n">pegRNA_df_loc</span><span class="p">,</span> <span class="n">records</span><span class="p">,</span> <span class="n">index_list</span><span class="p">)</span>
-</pre></div>
 </div>
-<img alt="pegviz.png" src="pegviz.png" />
-<p>There’s another built-in tool for visualizing the 3’ extension (RTT and PBS sequence) of pegRNAs.
-In the example below, we use it to visualize the 3’ extensions of the first 4 guides in the output using
-<strong>pegg.align_display()</strong>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pegg</span><span class="o">.</span><span class="n">align_display</span><span class="p">(</span><span class="n">run_output</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">records</span><span class="p">,</span> <span class="n">index_list</span><span class="p">)</span>
-</pre></div>
-</div>
-<img alt="align_display.png" src="align_display.png" />
+<div class="section" id="sensor-design">
+<h2>Sensor Design<a class="headerlink" href="#sensor-design" title="Permalink to this heading">¶</a></h2>
+<img alt="_images/sensor.png" src="_images/sensor.png" />
+<p>The sensor is an artificial copy of the endogenous target that links each <a class="reference external" href="https://www.biorxiv.org/content/10.1101/2022.10.26.513842v4">pegRNA</a>  or <a class="reference external" href="https://www.nature.com/articles/s41587-021-01172-3">base editing gRNA</a> to its editing outcome at the endogenous locus.
+This allows for the systematic identification of high efficiency pegRNAs while controlling for the confounding effects of variable editing efficiency in a screening context.</p>
+<p>As discussed above, the parameters for sensor design are:</p>
+<ul class="simple">
+<li><p><strong>sensor:</strong> True/False whether to include a sensor in the pegRNA design or not.</p></li>
+<li><p><strong>before_proto_context</strong>: Default = 5. Amount of nucleotide context to put before the protospacer in the sensor</p></li>
+<li><p><strong>sensor_length</strong>: Total length of the sensor in nt. Default = 60.</p></li>
+<li><p><strong>sensor_orientation</strong>: Orientation of the sensor relative to the protospacer. Options for sensor_orientation = ‘reverse-complement’ or’forward’. Default = ‘reverse-complement’ (to minimize recombination).</p></li>
+</ul>
+<p>Here’s an example of a “forward” oriented sensor:</p>
+<img alt="_images/forward_sensor.png" src="_images/forward_sensor.png" />
+<p>And a “reverse-complement” oriented sensor:</p>
+<img alt="_images/sensor_rc.png" src="_images/sensor_rc.png" />
+<p>There are cases where it is not possible to produce a sensor for a given pegRNA or gRNA.
+For example, if a deletion is too large such that it goes beyond the sequence contained in a sensor, PEGG will not produce a sensor sequence for that pegRNA.
+This information is contained in the “sensor_error” column of the output of pegg2.run() or base_editing.run_base().</p>
 </div>
 <div class="section" id="oligo-generation">
 <h2>Oligo Generation<a class="headerlink" href="#oligo-generation" title="Permalink to this heading">¶</a></h2>
-<p>To automatically generate oligonucleotides that contain the pegRNAs designed using PEGG, the <strong>pegg.oligo_generator()</strong>
-function provides multiple options, and produces both a <strong>pegRNA oligo</strong> and an <strong>epegRNA oligo</strong> (with a 3’ structural motif, <a class="reference external" href="https://www.nature.com/articles/s41587-021-01039-7">tevopreQ1</a>).</p>
-<p>A unique feature of PEGG is the option to include a <a class="reference external" href="https://www.nature.com/articles/s41587-021-01172-3">sensor region</a>  in the oligo.
-This sensor region is a synthetic version of the endogenous target site, providing the ability to measure a proxy of editing outcomes at the endogenous locus.
-This approach can be useful in the context of a library of pegRNAs, allowing for the measurement of pegRNA enrichment/depletion <em>as well as</em> a proxy of editing outcomes
-with a single NGS amplicon. The below schematic shows a schematic of the oligos that are output with sensor=True or sensor=False:</p>
+<p>To automatically generate oligonucleotides that contain the pegRNAs or designed using PEGG, the <strong>pegg2.prime_oligo_generator()</strong>
+function provides multiple options, and produces a <strong>pegRNA oligo</strong> or <strong>epegRNA oligo</strong> (with a 3’ structural motif, <a class="reference external" href="https://www.nature.com/articles/s41587-021-01039-7">tevopreQ1 or mpknot</a>).
+These oligos are designed with premade adapters for restriction cloning. These adapters, as well as the scaffold sequence, and epegRNA motif, can be customized:</p>
 <img alt="_images/oligos.png" src="_images/oligos.png" />
-<p>Additionally, users need to specify whether they want to append a ‘G’ nucleotide to the beginning of the protospacer.
-This is reccomended in the original Anzalone et al., 2019 prime editing paper. The sensor and append_proto_G options are both set to True in the below example.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">oligos_w_sensor</span> <span class="o">=</span> <span class="n">pegg</span><span class="o">.</span><span class="n">oligo_generator</span><span class="p">(</span><span class="n">run_output</span><span class="p">,</span> <span class="n">append_proto_G</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sensor</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<p>Future versions of PEGG will include the ability to automatically generate oligos for Golden Gate pegRNA cloning.</p>
+<p>There is also a similar function for generating base editing gRNA oligos, the <strong>base_editing.base_oligo_generator()</strong> function.
+Again, the adapters are customizable, as is the gRNA scaffold sequence.</p>
+<p>For full documentation, see the <strong>complete function documentation</strong> page.</p>
+<p>Future versions of PEGG will include the option to automatically generate barcodes for these oligos.</p>
+</div>
+<div class="section" id="library-design">
+<h2>Library Design<a class="headerlink" href="#library-design" title="Permalink to this heading">¶</a></h2>
+<p>PEGG also contains a library design module. This module can produce non-targeting, safe-targeting, and silent control guides
+to act as controls in pooled screening. Non-targeting guides target no location in the genome (taken from <a class="reference external" href="https://www.nature.com/articles/nmeth.4423">Meier et al., 2017</a>),
+while safe-targeting guides target “safe regions” with no annotated function, as defined by <a class="reference external" href="https://www.nature.com/articles/ncomms15178">Morgens et al., 2017</a> .</p>
+<p>Note: safe-targeting guides require human genome <strong>GRCh37</strong> or mouse genome <strong>GRCm38</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pegg.prime</span> <span class="kn">import</span> <span class="n">pegg2</span>
+<span class="kn">from</span> <span class="nn">pegg.library_design</span> <span class="kn">import</span> <span class="n">library</span>
+
+<span class="c1">#filepath to .gz containing reference genome (here = GrCh37)</span>
+<span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;./GCF_000001405.25_GRCh37.p13_genomic.fna.gz&#39;</span>
+<span class="n">chrom_dict</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">pegg2</span><span class="o">.</span><span class="n">genome_loader</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+
+<span class="c1">#generate 100 safe-targeting loci that can be fed into PEGG</span>
+<span class="n">num_muts</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">safe</span> <span class="o">=</span> <span class="n">library</span><span class="o">.</span><span class="n">safe_muts</span><span class="p">(</span><span class="n">num_muts</span><span class="p">,</span> <span class="n">chrom_dict</span><span class="p">,</span> <span class="n">organism</span><span class="o">=</span><span class="s1">&#39;human&#39;</span><span class="p">)</span>
+
+<span class="c1">#and also generate 100 non-targeting guides for prime editing</span>
+<span class="n">num_guides</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">nontarget</span> <span class="o">=</span> <span class="n">library</span><span class="o">.</span><span class="n">nontargeting_guides</span><span class="p">(</span><span class="n">num_guides</span><span class="p">,</span> <span class="n">edit_type</span><span class="o">=</span><span class="s1">&#39;prime&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This returns a dataframe that has the oligos appended as columns (‘pegRNA_oligo’ and ‘epegRNA_tevopreQ1_oligo’ are the column names).</p>
-<p>Users can also specify which 3’ and 5’ adapter sequences they want to use, or simply leave these options blank
-and use the built-in adapters provided by the authors. In addition, users can specify to use a different gRNA scaffold,
-or use the canonical gRNA scaffold provided by the authors. In the above example, these parameters
-(3_prime_adapter, 5_prime_adapter, and gRNA_scaff) are left empty, so the default versions provided by the author are used.</p>
-<p>See the complete function documentation tab for more information about <strong>pegg.oligo_generator()</strong>.</p>
-</div>
-<div class="section" id="library-generation">
-<h2>Library Generation<a class="headerlink" href="#library-generation" title="Permalink to this heading">¶</a></h2>
-<p>PEGG also includes automated library generation and visualization functions.
-These provide the ability to automatically select all of the mutations associated with a particular gene,
-generate pegRNAs for these mutations, and generate neutral pegRNAs that introduce silent mutations as internal controls.</p>
-<p>The code below shows how to generate the neutral/silent substitutions based on inputting information about a gene
-as well as providing a list of the coding sequence locations of the relevant transcript. This list is generated manually in the example
-below. The jupyter notebook tutorial shows how this step can be automated based on using available gene annotations.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gene_name</span><span class="o">=</span><span class="s1">&#39;TP53&#39;</span>
-<span class="n">strand</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span>
-<span class="n">chrom</span><span class="o">=</span><span class="s1">&#39;chr17&#39;</span>
+<p>There’s also a function for generating neutral/silent substitutions for a particular transcript:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pegg.library_design</span> <span class="kn">import</span> <span class="n">library</span>
+
+<span class="n">gene_name</span><span class="o">=</span><span class="s1">&#39;TP53&#39;</span>
+<span class="n">strand</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span> <span class="c1">#strand of the transcript</span>
+<span class="n">chrom</span><span class="o">=</span><span class="mi">17</span>
 <span class="c1">#listing CDS of transcript ordered by +end</span>
 <span class="n">start_end_cds</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">7572930</span><span class="p">,</span> <span class="mi">7573008</span><span class="p">],</span>
 <span class="p">[</span><span class="mi">7573927</span><span class="p">,</span> <span class="mi">7574033</span><span class="p">],</span>
@@ -407,63 +355,33 @@ below. The jupyter notebook tutorial shows how this step can be automated based 
 <span class="p">[</span><span class="mi">7579312</span><span class="p">,</span> <span class="mi">7579590</span><span class="p">],</span>
 <span class="p">[</span><span class="mi">7579700</span><span class="p">,</span> <span class="mi">7579721</span><span class="p">],</span>
 <span class="p">[</span><span class="mi">7579839</span><span class="p">,</span> <span class="mi">7579912</span><span class="p">]]</span>
-<span class="n">neutral_p53</span> <span class="o">=</span> <span class="n">pegg</span><span class="o">.</span><span class="n">neutral_substitutions</span><span class="p">(</span><span class="n">gene_name</span><span class="p">,</span> <span class="n">chrom</span><span class="p">,</span> <span class="n">strand</span><span class="p">,</span> <span class="n">start_end_cds</span><span class="p">,</span> <span class="n">records</span><span class="p">,</span> <span class="n">index_list</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>This generates a dataframe of all possible neutral mutations:</p>
-<img alt="neutral_sub.png" src="neutral_sub.png" />
-<p>The above function is actually not needed to generate these libraries with internal controls included.
-This can be done by simply running the below function:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">control_fraction</span><span class="o">=</span><span class="mf">.01</span> <span class="c1">#what fraction of the library do you want to be neutral/silent pegRNAs</span>
-<span class="n">library_input</span> <span class="o">=</span> <span class="n">pegg</span><span class="o">.</span><span class="n">library_input_generator</span><span class="p">(</span><span class="n">mutant_input</span><span class="p">,</span> <span class="n">gene_name</span><span class="p">,</span> <span class="n">chrom</span><span class="p">,</span> <span class="n">strand</span><span class="p">,</span> <span class="n">start_end_cds</span><span class="p">,</span> <span class="n">records</span><span class="p">,</span> <span class="n">index_list</span><span class="p">,</span> <span class="n">control_fraction</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Once this library input is generated, this can simply be fed into the <strong>pegg.run()</strong> function as shown previously.
-In addition, there are built in library visualization tools. To use these, the user needs to add some information back into
-the library_input dataframe. Namely, neutral guides need to be labelled, and HGVSp information needs to be added back to the dataframe
-if it’s available:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#generating the pegRNA library</span>
-<span class="c1">#same input required as shown previously</span>
-<span class="n">ranked_filtered</span> <span class="o">=</span> <span class="n">pegg</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">mutant_input</span><span class="p">,</span> <span class="n">mut_idx_list</span><span class="p">,</span> <span class="n">records</span><span class="p">,</span> <span class="n">index_list</span><span class="p">,</span> <span class="n">minus_seqs</span><span class="p">,</span> <span class="n">chrom_dict</span><span class="p">,</span> <span class="n">PAM</span><span class="p">,</span> <span class="n">RTT_lengths</span><span class="p">,</span> <span class="n">PBS_lengths</span><span class="p">,</span> <span class="n">guides_per_mut</span><span class="p">)</span>
 
-<span class="c1">#adding HGVSp information back to the dataframe if it&#39;s available...</span>
-<span class="n">hg</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">ranked_filtered</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-   <span class="n">idx</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;mutant index&#39;</span><span class="p">]</span>
-   <span class="n">hgvsp</span> <span class="o">=</span> <span class="n">mutant_input</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="n">idx</span><span class="p">]][</span><span class="s1">&#39;HGVSp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-   <span class="n">hg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hgvsp</span><span class="p">)</span>
+<span class="n">neutral_p53</span> <span class="o">=</span> <span class="n">library</span><span class="o">.</span><span class="n">neutral_substitutions</span><span class="p">(</span><span class="n">gene_name</span><span class="p">,</span> <span class="n">chrom</span><span class="p">,</span> <span class="n">strand</span><span class="p">,</span> <span class="n">start_end_cds</span><span class="p">,</span> <span class="n">chrom_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>PEGG contains additional functions for aggregating mutations for a particular gene.
+There’s also a <strong>library_maker()</strong> function that combines all of the above functions to generate libraries in one shot.
+<strong>For a full example that highlights all of the library_design functionality, see the Jupyter notebook tutorial.</strong></p>
+</div>
+<div class="section" id="visualizations">
+<h2>Visualizations<a class="headerlink" href="#visualizations" title="Permalink to this heading">¶</a></h2>
+<p>PEGG contains built-in functions for pegRNA-sensor and gRNA-sensor pairs:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pegg.prime</span> <span class="kn">import</span> <span class="n">pegg2</span>
 
-<span class="c1">#also add in information for identifying neutral mutations</span>
-<span class="n">class_mut</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">ranked_filtered</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-   <span class="n">idx</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;mutant index&#39;</span><span class="p">]</span>
-   <span class="n">neut</span> <span class="o">=</span> <span class="n">mutant_input</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="n">idx</span><span class="p">]][</span><span class="s1">&#39;classification&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-   <span class="n">class_mut</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">neut</span><span class="p">)</span>
+<span class="c1">#visualizing pegRNA-sensor in row #4 from the</span>
+<span class="c1">#gRNAs DataFrame which contains the pegRNAs produced by pegg2.run()</span>
+<span class="n">base_editing</span><span class="o">.</span><span class="n">sensor_viz</span><span class="p">(</span><span class="n">pegRNAs</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/forward_sensor.png" src="_images/forward_sensor.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pegg.base</span> <span class="kn">import</span> <span class="n">base_editing</span>
 
-<span class="n">ranked_filtered</span><span class="p">[</span><span class="s1">&#39;HGVSp&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">hg</span>
-<span class="n">ranked_filtered</span><span class="p">[</span><span class="s1">&#39;classification&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">class_mut</span>
+<span class="c1">#visualizing gRNA-sensor in row #4 from the</span>
+<span class="c1">#gRNAs DataFrame which contains the base editing gRNAs produced by base_editing.run_base()</span>
+<span class="n">base_editing</span><span class="o">.</span><span class="n">sensor_viz_base</span><span class="p">(</span><span class="n">gRNAs</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Once this is done, the libraries can be visualized using either of the two functions below:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pegg</span><span class="o">.</span><span class="n">lollipop_library</span><span class="p">(</span><span class="n">ranked_filtered</span><span class="p">,</span> <span class="n">gene_name</span><span class="p">,</span> <span class="n">start_end_cds</span><span class="p">,</span> <span class="n">strand</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-<img alt="lollipop.png" src="lollipop.png" />
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pegg</span><span class="o">.</span><span class="n">matrix_rep_library</span><span class="p">(</span><span class="n">ranked_filtered</span><span class="p">,</span> <span class="n">gene_name</span><span class="p">,</span> <span class="n">start_end_cds</span><span class="p">,</span> <span class="n">strand</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-<img alt="matrix_lib.png" src="matrix_lib.png" />
-<p>More information about the library generation functionality is provided in the jupyter notebook tutorial.</p>
-</div>
-<div class="section" id="jupyter-notebook-tutorial">
-<h2>Jupyter Notebook Tutorial<a class="headerlink" href="#jupyter-notebook-tutorial" title="Permalink to this heading">¶</a></h2>
-<p>A jupyter notebook version of the PEGG tutorial can be accessed at the following link:</p>
-<p><a class="reference external" href="https://github.com/samgould2/PEGG/blob/main/examples/PEGG_example.ipynb">Jupyter Notebook Tutorial</a></p>
-</div>
-<div class="section" id="a-note-on-ram">
-<h2>A Note on RAM<a class="headerlink" href="#a-note-on-ram" title="Permalink to this heading">¶</a></h2>
-<p>Importing a reference genome into the local environment requires ~4 Gb of RAM. Chrom_dict is also a large file.
-It’s reccomended to use a machine with <em>at least</em>  16 Gb of RAM, though more is preferable, when running pegg.</p>
+<img alt="_images/sensor_base_forward.png" src="_images/sensor_base_forward.png" />
 </div>
 </div>
 
