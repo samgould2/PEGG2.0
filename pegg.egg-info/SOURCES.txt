@@ -1,0 +1,9 @@
+LICENSE
+README.rst
+setup.py
+pegg/__init__.py
+pegg.egg-info/PKG-INFO
+pegg.egg-info/SOURCES.txt
+pegg.egg-info/dependency_links.txt
+pegg.egg-info/requires.txt
+pegg.egg-info/top_level.txt
