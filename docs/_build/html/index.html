@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2D2D2D" />
+  
+  <title>PEGG :: PEGG: Prime Editing Guide Generator</title>
+  
+  <link rel="icon" type="image/png" href="_static/PEGG_notext.ico">
+  
+  <link rel="index" title="Index" href="genindex.html"/>
+
+  <link rel="stylesheet" href="_static/css/nltk_theme.css"/>
+  <link rel="stylesheet" href="_static/css/custom.css"/>
+
+  <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+      <script type="text/javascript" src="_static/documentation_options.js"></script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+  
+
+  <script src="https://email.tl.fortawesome.com/c/eJxNjUEOgyAQAF8jR7Kw6wIHDh7sP1Cw2mgxgmn6-3JsMqc5zEQfE8dkxOY1KKMUOI3ACFKRJpSW2AAp7ontYIaxI6i7XPJVwyeVfCQ550Os3jLrGSNOLgbdAy6s0PBk2TFNjEbsfq31LB0OnX407pJa5v2faRadwSW63mn5KuLyR9j2tgx3zecanl-55R_-jjPs"></script> 
+</head>
+
+<body>
+  <div id="nltk-theme-container">
+    <header>
+      <div id="logo-container">
+          
+          <a href="#"><img src="_static/PEGG_notext.png"></a>
+          
+      </div>
+      <div id="project-container">
+        
+        <h1>PEGG Documentation</h1>
+        
+      </div>
+
+      <a id="menu-toggle" class="fa fa-bars" aria-hidden="true"></a>
+
+      <script type="text/javascript">
+        $("#menu-toggle").click(function() {
+          $("#menu-toggle").toggleClass("toggled");
+          $("#side-menu-container").slideToggle(300);
+        });
+      </script>
+    </header>
+
+    <div id="content-container">
+
+      <div id="side-menu-container">
+
+        <div id="search" role="search">
+        <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+            <input type="text" name="q" placeholder="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+</div>
+
+        <div id="side-menu" role="navigation">
+          
+  
+    
+  
+  
+    <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">🚀 Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#input-formatting">Input Formatting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#wt-alt-format">(1) WT-ALT Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#primedesign-format">(2) PrimeDesign Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#cbioportal-format">(3) cBioPortal Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#b-reference-genome">(3b) Reference Genome</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#clinvar-mutations">(4) ClinVar mutations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#generating-pegrnas">Generating pegRNAs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#design-options">Design Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#base-editing">Base Editing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#id2">Design Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#sensor-design">Sensor Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#oligo-generation">Oligo Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#library-design">Library Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#visualizations">Visualizations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jupyter_tutorial.html">🪐 Jupyter Notebook Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PEGG.html">📚 Complete Function Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.prime.pegg2">pegg.prime module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.base.base_editing">pegg.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.library_design.library">pegg.library_design module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">❓ About PEGG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other_design_tools.html">🚩Other pegRNA &amp; gRNA Design Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="other_design_tools.html#pegrna-design-tools">pegRNA Design Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="other_design_tools.html#base-editing-design-tools">base editing design tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="other_design_tools.html#off-target-analysis">off-target analysis</a></li>
+</ul>
+</li>
+</ul>
+
+  
+
+        </div>
+
+        
+      </div>
+
+      <div id="main-content-container">
+        <div id="main-content" role="main">
+          
+  <div class="section" id="pegg-pegg-prime-editing-guide-generator">
+<h1><a class="reference internal" href="_images/PEGG_3.png"><img alt="PEGG" src="_images/PEGG_3.png" style="width: 200px; height: 200px;" /></a> PEGG: Prime Editing Guide Generator<a class="headerlink" href="#pegg-pegg-prime-editing-guide-generator" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="id1">
+<h2><a class="reference external" href="https://www.biorxiv.org/content/10.1101/2022.10.26.513842v4">Click here to read the bioRxiv preprint</a><a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p>PEGG is a python package that designs prime editing guide RNAs (pegRNAs) and base editing guide RNAs (gRNAs) for use in precision genome editing.
+Unlike the existing, web-based programs for pegRNA design, PEGG is suitable for designing thousands of pegRNAs at once, giving users the ability to design entire libraries of pegRNAs
+and gRNAs. Uniquely, PEGG can design paired pegRNA or gRNA-sensor cassettes that include a synthetic version of the target locus, allowing for
+the calibration of guide editing activity in pooled screens (see above bioRxiv preprint for more information).</p>
+<p>PEGG’s main functions are:</p>
+<ol class="arabic simple">
+<li><p>Generating pegRNAs or gRNAs based on a list of input mutations. The input format is extremely flexible, allowing for users to input a list of genome coordinates or sequences with desired edits.</p></li>
+<li><p>Ranking and filtering these pegRNAs based on their properties, including On-Target (Azimuth) Scores.</p></li>
+<li><p>Automated oligo generation (with the option to include a synthetic “sensor” region).</p></li>
+<li><p>Automated pegRNA/gRNA library design with included safe-targeting mutations, non-targeting guides, and silent substitution controls.</p></li>
+<li><p>Visualization Tools for pegRNA and gRNA design.</p></li>
+</ol>
+<p>PEGG has recently been updated to version 2.0, with new features including (1) increased input mutation format flexibility,
+(2) Dynamically computed Azimuth on-target scores, (3) a new base editing module, (4) improved library design functionality, as well as some minor bug fixes with INS/DEL design.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h2>
+<p>PEGG is available through the python package index. To install, use pip:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pegg</span>
+</pre></div>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">🚀 Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#input-formatting">Input Formatting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#generating-pegrnas">Generating pegRNAs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#base-editing">Base Editing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#sensor-design">Sensor Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#oligo-generation">Oligo Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#library-design">Library Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#visualizations">Visualizations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jupyter_tutorial.html">🪐 Jupyter Notebook Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PEGG.html">📚 Complete Function Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.prime.pegg2">pegg.prime module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.base.base_editing">pegg.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PEGG.html#module-pegg.library_design.library">pegg.library_design module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">❓ About PEGG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other_design_tools.html">🚩Other pegRNA &amp; gRNA Design Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="other_design_tools.html#pegrna-design-tools">pegRNA Design Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="other_design_tools.html#base-editing-design-tools">base editing design tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="other_design_tools.html#off-target-analysis">off-target analysis</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>PEGG is an open source python package. If you use PEGG, please cite it using the following citation:</p>
+<p>Gould, S. I., Wuest, A. N., Dong, K., Johnson, G. A., Hsu, A., Narendra, V. K., Levine, S. S., Liu, D. R., &amp; Sánchez Rivera, F. J. (2022). High throughput evaluation of genetic variants with prime editing sensor libraries. bioRxiv. <a class="reference external" href="https://doi.org/10.1101/2022.10.26.513842">https://doi.org/10.1101/2022.10.26.513842</a></p>
+</div>
+<div class="section" id="function-index">
+<h2>Function Index<a class="headerlink" href="#function-index" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+        </div>
+      </div>
+
+    </div>
+
+<footer>
+    <div id="footer-info">
+        <ul id="build-details">
+            
+                <li class="footer-element">
+                    
+                        <a href="_sources/index.rst.txt" rel="nofollow"> source</a>
+                    
+                </li>
+            
+
+            
+
+            
+        </ul>
+
+        
+            <div id="copyright">
+                &copy; 2023, Samuel Gould
+            </div>
+        
+
+        <div id="credit">
+            created with <a href="http://sphinx-doc.org/">Sphinx</a> and <a href="https://github.com/tomaarsen/nltk_theme">NLTK Theme</a>
+        </div>
+    </div>
+</footer> 
+
+</div>
+
+</body>
+</html>
