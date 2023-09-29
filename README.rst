@@ -1,5 +1,5 @@
-|PEGG| PEGG: Prime Editing Guide Generator (Version 2.0)
-============================================
+|PEGG| PEGG: Prime Editing Guide Generator (v2.0)
+======================================================
 
 .. |PEGG| image:: docs/PEGG_3.png
    :width: 200px
@@ -8,7 +8,6 @@
 `Full Documentation is available here (pegg.readthedocs.io) <https://pegg.readthedocs.io/en/latest/>`_
 
 `Click here to read the bioRxiv preprint <https://www.biorxiv.org/content/10.1101/2022.10.26.513842v4>`_ 
-******************************************************************************************************************
 
 PEGG is a python module that designs prime editing guide RNAs (pegRNAs) and base editing guide RNAs (gRNAs) for use in precision genome editing.
 Unlike the existing, web-based programs for pegRNA design, PEGG is suitable for designing thousands of pegRNAs at once, giving users the ability to design entire libraries of pegRNAs
