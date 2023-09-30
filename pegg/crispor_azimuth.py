@@ -1,15 +1,163 @@
-import pandas
-import time
-import sklearn
+
 import numpy as np
+import os
+import pandas
+import sklearn
+import pickle
+import time
 import Bio.SeqUtils as SeqUtil
 import Bio.Seq as Seq
-import azimuth.util
 import sys
 import Bio.SeqUtils.MeltingTemp as Tm
-import pickle
 import itertools
+from math import exp       
+from re import findall 
+import importlib
 
+##code taken from: https://github.com/maximilianh/crisporWebsite
+##Modified to run within this package...
+
+def calcAziScore(seqs):
+    " the official implementation of the Doench2016 (aka Fusi) score from Microsoft "
+    res = []
+    for seq in seqs:
+        if "N" in seq:
+            res.append(-1) # can't do Ns
+            continue
+
+        pam = seq[25:27]
+        # pam_audit = do not check for NGG PAM
+        seq = seq.upper()
+        score = predict(np.array([seq]), None, None, pam_audit=False)[0]
+        res.append(int(round(100*score)))
+    return res
+
+#------function from model_comparison.py------------
+
+def predict(seq, aa_cut=-1, percent_peptide=-1, model=None, model_file=None, pam_audit=True, length_audit=False, learn_options_override=None):
+    """
+    if pam_audit==False, then it will not check for GG in the expected position
+    this is useful if predicting on PAM mismatches, such as with off-target
+    """
+    # assert not (model is None and model_file is None), "you have to specify either a model or a model_file"
+    assert isinstance(seq, (np.ndarray)), "Please ensure seq is a numpy array"
+    assert len(seq[0]) > 0, "Make sure that seq is not empty"
+    assert isinstance(seq[0], str), "Please ensure input sequences are in string format, i.e. 'AGAG' rather than ['A' 'G' 'A' 'G'] or alternate representations"
+
+    if aa_cut is not None:
+        assert len(aa_cut) > 0, "Make sure that aa_cut is not empty"
+        assert isinstance(aa_cut, (np.ndarray)), "Please ensure aa_cut is a numpy array"
+        assert np.all(np.isreal(aa_cut)), "amino-acid cut position needs to be a real number"
+
+    if percent_peptide is not None:
+        assert len(percent_peptide) > 0, "Make sure that percent_peptide is not empty"
+        assert isinstance(percent_peptide, (np.ndarray)), "Please ensure percent_peptide is a numpy array"
+        assert np.all(np.isreal(percent_peptide)), "percent_peptide needs to be a real number"
+
+
+    if model_file is None:
+
+        ##NEED TO CHANGE THESE WITH IMPORTLIB!!!!!!
+
+        #azimuth_saved_model_dir = os.path.join(os.path.dirname(azimuth.__file__), 'saved_models')
+
+        if np.any(percent_peptide == -1) or (percent_peptide is None and aa_cut is None):
+            #print("No model file specified, using V3_model_nopos")
+            model_name = 'V3_model_nopos.pickle'
+            model_file = importlib.resources.files(__package__).joinpath(model_name)
+            
+        else:
+            #print("No model file specified, using V3_model_full")
+            model_name = 'V3_model_full.pickle'
+            model_file = importlib.resources.files(__package__).joinpath(model_name)
+
+        #model_file = os.path.join(azimuth_saved_model_dir, model_name)
+
+    if model is None:
+        with open(model_file, 'rb') as f:
+            model, learn_options = pickle.load(f)
+    else:
+        model, learn_options = model
+        
+    learn_options["V"] = 2
+
+    learn_options = override_learn_options(learn_options_override, learn_options)
+
+    # Y, feature_sets, target_genes, learn_options, num_proc = setup(test=False, order=2, learn_options=learn_options, data_file=test_filename)
+    # inputs, dim, dimsum, feature_names = pd.concatenate_feature_sets(feature_sets)
+
+    Xdf = pandas.DataFrame(columns=['30mer', 'Strand'], data=list(zip(seq, ['NA' for x in range(len(seq))])))
+
+    if np.all(percent_peptide != -1) and (percent_peptide is not None and aa_cut is not None):
+        gene_position = pandas.DataFrame(columns=['Percent Peptide', 'Amino Acid Cut position'], data=list(zip(percent_peptide, aa_cut)))
+    else:
+        gene_position = pandas.DataFrame(columns=['Percent Peptide', 'Amino Acid Cut position'], data=list(zip(np.ones(seq.shape[0])*-1, np.ones(seq.shape[0])*-1)))
+
+    feature_sets = featurize_data(Xdf, learn_options, pandas.DataFrame(), gene_position, pam_audit=pam_audit, length_audit=length_audit)
+    inputs, dim, dimsum, feature_names = concatenate_feature_sets(feature_sets)
+    
+    #print "CRISPR"
+    #pandas.DataFrame(inputs).to_csv("CRISPR.inputs.test.csv")
+    #import ipdb; ipdb.set_trace()
+
+    # call to scikit-learn, returns a vector of predicted values    
+    preds = model.predict(inputs)
+
+    # also check that predictions are not 0/1 from a classifier.predict() (instead of predict_proba() or decision_function())
+    unique_preds = np.unique(preds)
+    ok = False
+    for pr in preds:
+        if pr not in [0,1]:
+            ok = True
+    assert ok, "model returned only 0s and 1s"
+    return preds
+
+def override_learn_options(learn_options_override, learn_options):
+    """
+    override all keys seen in learn_options_override to alter learn_options
+    """
+    if learn_options_override is not None:
+        for k in list(learn_options_override.keys()):
+            learn_options[k] = learn_options_override[k]
+    return learn_options
+
+def concatenate_feature_sets(feature_sets, keys=None):
+    '''
+    Given a dictionary of sets of features, each in a Pandas.DataFrame,
+    concatenate them together to form one big np.array, and get the dimension
+    of each set
+    Returns: inputs, dim
+    '''
+    assert feature_sets != {}, "no feature sets present"
+    if keys is None:
+        keys = list(feature_sets.keys())
+
+    F = feature_sets[keys[0]].shape[0]
+    for set in list(feature_sets.keys()):
+        F2 = feature_sets[set].shape[0]
+        assert F == F2, "not same # individuals for features %s and %s" % (keys[0], set)
+
+    N = feature_sets[keys[0]].shape[0]
+    inputs = np.zeros((N, 0))
+    feature_names = []
+    dim = {}
+    dimsum = 0
+    for set in keys:
+        inputs_set = feature_sets[set].values
+        dim[set] = inputs_set.shape[1]
+        dimsum += dim[set]
+        inputs = np.hstack((inputs, inputs_set))
+        feature_names.extend(feature_sets[set].columns.tolist())
+
+    if False:
+        inputs.shape
+        for j in keys: print(j + str(feature_sets[j].shape))
+        import ipdb; ipdb.set_trace()
+
+    #print "final size of inputs matrix is (%d, %d)" % inputs.shape
+    return inputs, dim, dimsum, feature_names
+
+#--------functions from featurization.py-----------
 def featurize_data(data, learn_options, Y, gene_position, pam_audit=True, length_audit=True, quiet=True):
     '''
     assumes that data contains the 30mer
@@ -189,16 +337,6 @@ def SeqUtilFeatures(data):
     return feat
 
 
-def organism_feature(data):
-    '''
-    Human vs. mouse
-    '''
-    organism = np.array(data['Organism'].values)
-    feat = pandas.DataFrame(pandas.DataFrame(featarray))
-    import ipdb; ipdb.set_trace()
-    return feat
-
-
 def get_micro_homology_features(gene_names, learn_options, X):
     # originally was flipping the guide itself as necessary, but now flipping the gene instead
 
@@ -213,7 +351,7 @@ def get_micro_homology_features(gene_names, learn_options, X):
         k_mer_length_left = 9
         k_mer_length_right = 21
         for gene in gene_names.unique():
-            gene_seq = Seq.Seq(util.get_gene_sequence(gene)).reverse_complement()
+            gene_seq = Seq.Seq(get_gene_sequence(gene)).reverse_complement()
             guide_inds = np.where(gene_names.values == gene)[0]
             print("getting microhomology for all %d guides in gene %s" % (len(guide_inds), gene))
             for j, ps in enumerate(guide_inds):
@@ -254,7 +392,7 @@ def get_micro_homology_features(gene_names, learn_options, X):
 
                     sixtymer = str(left_win) + str(guide_seq) + str(right_win)
                     assert len(sixtymer)==60, "should be of length 60"
-                    mh_score, oof_score = microhomology.compute_score(sixtymer)
+                    mh_score, oof_score = compute_score(sixtymer)
 
                 feat.ix[ps,"mh_score"] = mh_score
                 feat.ix[ps,"oof_score"] = oof_score
@@ -273,7 +411,7 @@ def local_gene_seq_features(gene_names, learn_options, X):
     # number of nulceotides to take to the left and right of the guide
     k_mer_length = learn_options['include_gene_guide_feature']
     for gene in gene_names.unique():
-        gene_seq = Seq.Seq(util.get_gene_sequence(gene)).reverse_complement()
+        gene_seq = Seq.Seq(get_gene_sequence(gene)).reverse_complement()
         for ps in np.where(gene_names.values==gene)[0]:
             guide_seq = Seq.Seq(X['30mer'][ps])
             strand = X['Strand'][ps]
@@ -320,7 +458,7 @@ def gene_feature(Y, X, learn_options):
     molecular_weight = np.zeros((gene_names.shape[0], 1))
 
     for gene in gene_names.unique():
-        seq = util.get_gene_sequence(gene)
+        seq = get_gene_sequence(gene)
         gene_length[gene_names.values==gene] = len(seq)
         gc_content[gene_names.values==gene] = SeqUtil.GC(seq)
         temperature[gene_names.values==gene] = Tm.Tm_NN(seq, rna=False)
@@ -550,3 +688,94 @@ def normalize_feature_sets(feature_sets):
     print("\t\tElapsed time for normalizing features is %.2f seconds" % (t2-t1))
 
     return new_feature_sets
+
+#-------util.py functions------
+
+def get_gene_sequence(gene_name):
+    try:
+        gene_file = '../../gene_sequences/%s_sequence.txt' % gene_name
+        #gene_file = '../gene_sequences/%s_sequence.txt' % gene_name
+        #gene_file = 'gene_sequences/%s_sequence.txt' % gene_name
+        with open(gene_file, 'rb') as f:
+            seq = f.read()
+            seq = seq.replace('\r\n', '')
+    except:
+        raise Exception("could not find gene sequence file %s, please see examples and generate one for your gene as needed, with this filename" % gene_file)
+
+    return seq
+
+#-----microhomology.py-----
+def compute_score(seq, tmpfile1="1.before removing duplication.txt", tmpfile2="2.all microhomology patterns.txt", verbose=False):
+    length_weight=20.0 
+    left=30        # Insert the position expected to be broken. 
+    right=len(seq)-int(left) 
+    #print 'length of seq = '+str(len(seq)) 
+     
+    file_temp=open(tmpfile1, "w") 
+    for k in range(2,left)[::-1]: 
+            for j in range(left,left+right-k+1): 
+                    for i in range(0,left-k+1): 
+                            if seq[i:i+k]==seq[j:j+k]: 
+                                    length=j-i 
+                                    file_temp.write(seq[i:i+k]+'\t'+str(i)+'\t'+str(i+k)+'\t'+str(j)+'\t'+str(j+k)+'\t'+str(length)+'\n') 
+    file_temp.close() 
+     
+    ### After searching out all microhomology patterns, duplication should be removed!! 
+    f1=open(tmpfile1, "r") 
+    s1=f1.read() 
+     
+    f2=open(tmpfile2, "w") #After removing duplication 
+    f2.write(seq+'\t'+'microhomology\t'+'deletion length\t'+'score of a pattern\n') 
+     
+    if s1!="": 
+            list_f1=s1.strip().split('\n') 
+            sum_score_3=0 
+            sum_score_not_3=0 
+     
+            for i in range(len(list_f1)): 
+                    n=0 
+                    score_3=0 
+                    score_not_3=0 
+                    line=list_f1[i].split('\t') 
+                    scrap=line[0] 
+                    left_start=int(line[1]) 
+                    left_end=int(line[2]) 
+                    right_start=int(line[3]) 
+                    right_end=int(line[4]) 
+                    length=int(line[5]) 
+     
+                    for j in range(i): 
+                            line_ref=list_f1[j].split('\t') 
+                            left_start_ref=int(line_ref[1]) 
+                            left_end_ref=int(line_ref[2]) 
+                            right_start_ref=int(line_ref[3]) 
+                            right_end_ref=int(line_ref[4]) 
+     
+                            if (left_start >= left_start_ref) and (left_end <= left_end_ref) and (right_start >= right_start_ref) and (right_end <= right_end_ref): 
+                                    if (left_start - left_start_ref)==(right_start - right_start_ref) and (left_end - left_end_ref)==(right_end - right_end_ref): 
+                                            n+=1 
+                            else: pass 
+                           
+                    if n == 0: 
+                            if (length % 3)==0: 
+                                    length_factor = round(1/exp((length)/(length_weight)),3) 
+                                    num_GC=len(findall('G',scrap))+len(findall('C',scrap)) 
+                                    score_3=100*length_factor*((len(scrap)-num_GC)+(num_GC*2)) 
+                                     
+                            elif (length % 3)!=0: 
+                                    length_factor = round(1/exp((length)/(length_weight)),3) 
+                                    num_GC=len(findall('G',scrap))+len(findall('C',scrap)) 
+                                    score_not_3=100*length_factor*((len(scrap)-num_GC)+(num_GC*2)) 
+     
+                            f2.write(seq[0:left_end]+'-'*length+seq[right_end:]+'\t'+scrap+'\t'+str(length)+'\t'+str(100*length_factor*((len(scrap)-num_GC)+(num_GC*2)))+'\n') 
+                    sum_score_3+=score_3 
+                    sum_score_not_3+=score_not_3 
+     
+            mh_score = sum_score_3+sum_score_not_3
+            oof_score = (sum_score_not_3)*100/(sum_score_3+sum_score_not_3)
+            if verbose:
+                print('Microhomology score = ' + str(mh_score)) 
+                print('Out-of-frame score = ' + str(oof_score)) 
+    f1.close() 
+    f2.close()
+    return mh_score, oof_score

@@ -1,4 +1,4 @@
-import prime
+from . import prime
 import numpy as np
 import pandas as pd
 import Bio.Seq
@@ -695,7 +695,7 @@ def base_oligo_generator(peg_df, five_prime_adapter = 'AGCGTACACGTCTCACACC',thre
                 sensor = ''
 
             gRNA_full = five_prime_adapter + proto + gRNA_scaff + u6_term + sensor + three_prime_adapter
-            base_oligos.append(pegRNA_full)
+            base_oligos.append(gRNA_full)
 
     #if it isn't:
     else:
@@ -704,7 +704,7 @@ def base_oligo_generator(peg_df, five_prime_adapter = 'AGCGTACACGTCTCACACC',thre
             extension = val['RTT_PBS']
 
             gRNA_full = five_prime_adapter + proto + gRNA_scaff + u6_term + three_prime_adapter
-            base_oligos.append(pegRNA_full)
+            base_oligos.append(gRNA_full)
 
 
     peg_df['gRNA_oligo'] = base_oligos
