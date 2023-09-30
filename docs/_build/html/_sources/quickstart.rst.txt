@@ -82,12 +82,11 @@ There is a built in genome loader function that you can use, or you can format t
 
 .. code-block:: python
 
-   from pegg.prime import pegg2 
+   from pegg import prime
 
    #filepath to .gz containing reference genome (here = GrCh37)
    filepath = './GCF_000001405.25_GRCh37.p13_genomic.fna.gz'
-
-   chrom_dict, i = pegg2.genome_loader(filepath)
+   chrom_dict, i = prime.genome_loader(filepath)
 
 You can access the genome files at this link: `Reference Files Dropbox Link <https://www.dropbox.com/sh/5xsdzyiyrjiu9pf/AADiFFA3BQ3vX7swja-i2NBqa?dl=0>`_
 
@@ -108,12 +107,12 @@ See the below codeblock for the precise syntax:
 
 .. code-block:: python
 
-   from pegg.prime import pegg2 
+   from pegg import prime 
 
    #filepath to the clinvar vcf.gz file
    filepath = '.../GrCh37_clinvar_20230923.vcf.gz'
    variation_ids = [925574, 925434, 926695, 925707, 325626, 1191613, 308061, 361149, 1205375, 208043]
-   df = pegg2.clinvar_VCF_translator(filepath, variation_ids)
+   df = prime.clinvar_VCF_translator(filepath, variation_ids)
 
 
 Generating pegRNAs
@@ -124,7 +123,7 @@ which shows an example with PrimeDesign format:
 
 .. code-block:: python
 
-   from pegg.prime import pegg2 
+   from pegg import prime
    import pandas as pd
 
    seqs = ['AAAATCGTAGCTAGGCGTAGGGCGCGCGGGCTCGGAGGCGCGATGCGCAT(A/G)TGGATCGGGCTAGGCTAGCGCGGGCTAGCTAGCTTCGAGCCGCTA',
@@ -136,7 +135,7 @@ which shows an example with PrimeDesign format:
    #options = 'cBioPortal', 'WT_ALT', 'PrimeDesign'
    input_format = 'PrimeDesign'
    
-   pegRNAs = pegg2.run(input, input_format)
+   pegRNAs = prime.run(input, input_format)
 
 This will output a dataframe that contains the pegRNA-sensor designs with default parameters.
 
@@ -187,7 +186,7 @@ adenine base editing (ABE: A>G or T>C variants) and cytosine base editing (CBE: 
 
 .. code-block:: python
 
-   from pegg.base import base_editing
+   from pegg import base
    import pandas as pd
 
    seqs = ['AAAATCGTAGCTAGGCGTAGGGCGCGCGGGCTCGGAGGCGCGATGCGCAT(A/G)TGGATCGGGCTAGGCTCGGAGCGGCGGGCTAGCTAGCTTCGAGCCGCTATCGCCCATCCTGCAC',
@@ -197,7 +196,7 @@ adenine base editing (ABE: A>G or T>C variants) and cytosine base editing (CBE: 
    input = pd.DataFrame(dict(zip(['SEQ'], [seqs])))
    input_format = 'PrimeDesign'
 
-   gRNAs = base_editing.run_base(input, input_format, chrom_dict=None)
+   gRNAs = base.run_base(input, input_format, chrom_dict=None)
 
 Design Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -213,7 +212,7 @@ Similar to pegRNA design, there are also multiple options for the base editing g
 
 - **proto_size**: The length of the protospacer (excluding the appended G at the 5' end). Default = 19 (G+19).
 
-- **other parmeters are same as for pegg2.run()**: context_size, RE_sites, polyT_threshold, before_proto_context, sensor_length, sensor_orientation, sensor.
+- **other parmeters are same as for prime.run()**: context_size, RE_sites, polyT_threshold, before_proto_context, sensor_length, sensor_orientation, sensor.
 
 
 Sensor Design
@@ -243,12 +242,12 @@ And a "reverse-complement" oriented sensor:
 
 There are cases where it is not possible to produce a sensor for a given pegRNA or gRNA. 
 For example, if a deletion is too large such that it goes beyond the sequence contained in a sensor, PEGG will not produce a sensor sequence for that pegRNA.
-This information is contained in the "sensor_error" column of the output of pegg2.run() or base_editing.run_base().
+This information is contained in the "sensor_error" column of the output of prime.run() or base.run_base().
 
 Oligo Generation
 ******************
 
-To automatically generate oligonucleotides that contain the pegRNAs or designed using PEGG, the **pegg2.prime_oligo_generator()**
+To automatically generate oligonucleotides that contain the pegRNAs or designed using PEGG, the **prime.prime_oligo_generator()**
 function provides multiple options, and produces a **pegRNA oligo** or **epegRNA oligo** (with a 3' structural motif, `tevopreQ1 or mpknot <https://www.nature.com/articles/s41587-021-01039-7>`_).
 These oligos are designed with premade adapters for restriction cloning. These adapters, as well as the scaffold sequence, and epegRNA motif, can be customized:
 
@@ -256,7 +255,7 @@ These oligos are designed with premade adapters for restriction cloning. These a
 
 Future versions of PEGG will include the ability to automatically generate oligos for Golden Gate pegRNA cloning.
 
-There is also a similar function for generating base editing gRNA oligos, the **base_editing.base_oligo_generator()** function. 
+There is also a similar function for generating base editing gRNA oligos, the **base.base_oligo_generator()** function. 
 Again, the adapters are customizable, as is the gRNA scaffold sequence.
 
 For full documentation, see the **complete function documentation** page.
@@ -274,12 +273,12 @@ Note: safe-targeting guides require human genome **GRCh37** or mouse genome **GR
 
 .. code-block:: python
 
-   from pegg.prime import pegg2 
-   from pegg.library_design import library
+   from pegg import prime
+   from pegg import library
 
    #filepath to .gz containing reference genome (here = GrCh37)
    filepath = './GCF_000001405.25_GRCh37.p13_genomic.fna.gz'
-   chrom_dict, i = pegg2.genome_loader(filepath)
+   chrom_dict, i = prime.genome_loader(filepath)
 
    #generate 100 safe-targeting loci that can be fed into PEGG
    num_muts = 100
@@ -293,7 +292,7 @@ There's also a function for generating neutral/silent substitutions for a partic
 
 .. code-block:: python
 
-   from pegg.library_design import library
+   from pegg import library
 
    gene_name='TP53'
    strand = '-' #strand of the transcript
@@ -313,7 +312,7 @@ There's also a function for generating neutral/silent substitutions for a partic
    neutral_p53 = library.neutral_substitutions(gene_name, chrom, strand, start_end_cds, chrom_dict)
 
 PEGG contains additional functions for aggregating mutations for a particular gene.
-There's also a **library_maker()** function that combines all of the above functions to generate libraries in one shot.
+There's also a **library.library_maker()** function that combines all of the above functions to generate libraries in one shot.
 **For a full example that highlights all of the library_design functionality, see the Jupyter notebook tutorial.**
 
 Visualizations
@@ -322,21 +321,21 @@ PEGG contains built-in functions for pegRNA-sensor and gRNA-sensor pairs:
 
 .. code-block:: python
 
-   from pegg.prime import pegg2
+   from pegg import prime
 
    #visualizing pegRNA-sensor in row #4 from the 
-   #gRNAs DataFrame which contains the pegRNAs produced by pegg2.run()
-   base_editing.sensor_viz(pegRNAs, 4)
+   #pegRNAs DataFrame which contains the pegRNAs produced by prime.run()
+   prime.sensor_viz(pegRNAs, 4)
 
 .. image:: forward_sensor.png
 
 .. code-block:: python
 
-   from pegg.base import base_editing
+   from pegg import base
 
    #visualizing gRNA-sensor in row #4 from the 
-   #gRNAs DataFrame which contains the base editing gRNAs produced by base_editing.run_base()
-   base_editing.sensor_viz_base(gRNAs, 4)
+   #gRNAs DataFrame which contains the base editing gRNAs produced by base.run_base()
+   base.sensor_viz_base(gRNAs, 4)
 
 .. image:: sensor_base_forward.png
 

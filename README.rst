@@ -1,6 +1,7 @@
-|PEGG| PEGG: Prime Editing Guide Generator (v2.0)
+|PEGG| PEGG: Prime Editing Guide Generator
 ======================================================
-
+Version 2.0 (Released Sept. 2023)
+****************************************
 .. |PEGG| image:: docs/PEGG_3.png
    :width: 200px
    :height: 200px
@@ -10,7 +11,7 @@
 `Click here to read the bioRxiv preprint <https://www.biorxiv.org/content/10.1101/2022.10.26.513842v4>`_ 
 
 Installation
-**************
+****************
 PEGG is available through the python package index. To install, use pip: 
 
 .. code-block:: python

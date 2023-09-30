@@ -3,23 +3,23 @@
 
 This page contains the complete documentation for each function in the pegg module. 
 
-pegg.prime module
+pegg.prime
 ******************
-.. automodule:: pegg.prime.pegg2
+.. automodule:: pegg.prime
    :members:
    :undoc-members:
    :show-inheritance:
 
-pegg.base module
+pegg.base
 ******************
-.. automodule:: pegg.base.base_editing
+.. automodule:: pegg.base
    :members:
    :undoc-members:
    :show-inheritance:
 
-pegg.library_design module
+pegg.library
 ****************************
-.. automodule:: pegg.library_design.library
+.. automodule:: pegg.library
    :members:
    :undoc-members:
    :show-inheritance:
