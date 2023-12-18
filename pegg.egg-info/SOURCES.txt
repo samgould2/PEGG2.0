@@ -22,3 +22,8 @@ pegg.egg-info/SOURCES.txt
 pegg.egg-info/dependency_links.txt
 pegg.egg-info/requires.txt
 pegg.egg-info/top_level.txt
+pegg/__pycache__/__init__.cpython-39.pyc
+pegg/__pycache__/base.cpython-39.pyc
+pegg/__pycache__/crispor_azimuth.cpython-39.pyc
+pegg/__pycache__/library.cpython-39.pyc
+pegg/__pycache__/prime.cpython-39.pyc

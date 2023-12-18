@@ -159,7 +159,7 @@ def gRNA_generator(mut, PAM, orientation, proto_size, ideal_edit_window = [4,8])
         #and then convert to 1 to 20 indexing...
         proto_loc = 21-proto_loc
         proto_location.append(proto_loc)
-        if (proto_loc>=ideal_edit_window[0]) and (proto_loc<=ideal_edit_window[0]):
+        if (proto_loc>=ideal_edit_window[0]) and (proto_loc<=ideal_edit_window[1]):
             ideal_edit.append(True)
         else:
             ideal_edit.append(False)
@@ -689,7 +689,7 @@ def base_oligo_generator(peg_df, five_prime_adapter = 'AGCGTACACGTCTCACACC',thre
     if "sensor_wt" in peg_df.keys():
         for i, val in peg_df.iterrows():
             proto = val['Protospacer']
-            extension = val['RTT_PBS']
+            #extension = val['RTT_PBS']
             sensor = val["sensor_wt"]
             if sensor==None: #there are some sensor errors where it is =None
                 sensor = ''
@@ -701,7 +701,7 @@ def base_oligo_generator(peg_df, five_prime_adapter = 'AGCGTACACGTCTCACACC',thre
     else:
         for i, val in peg_df.iterrows():
             proto = val['Protospacer']
-            extension = val['RTT_PBS']
+            #extension = val['RTT_PBS']
 
             gRNA_full = five_prime_adapter + proto + gRNA_scaff + u6_term + three_prime_adapter
             base_oligos.append(gRNA_full)
