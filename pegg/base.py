@@ -159,7 +159,7 @@ def gRNA_generator(mut, PAM, orientation, proto_size, ideal_edit_window = [4,8])
         #and then convert to 1 to 20 indexing...
         proto_loc = 21-proto_loc
         proto_location.append(proto_loc)
-        if (proto_loc>=ideal_edit_window[0]) and (proto_loc<=ideal_edit_window[0]):
+        if (proto_loc>=ideal_edit_window[0]) and (proto_loc<=ideal_edit_window[1]):
             ideal_edit.append(True)
         else:
             ideal_edit.append(False)
