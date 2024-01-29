@@ -41,6 +41,14 @@ PEGG is available through the python package index. To install, use pip:
 
    pip install pegg
 
+Note
+*****
+PEGG has been tested with python version 3.9 and 3.10. To get it to install, you may need to use a `virtual environment <https://saturncloud.io/blog/how-to-install-python-39-with-conda-a-guide-for-data-scientists/>`_ :
+
+.. code-block:: python
+
+   conda create -n myenv python=3.9
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:

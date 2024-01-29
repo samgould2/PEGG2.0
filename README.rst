@@ -18,6 +18,14 @@ PEGG is available through the python package index. To install, use pip:
 
    pip install pegg
 
+Note
+*****
+PEGG has been tested with python version 3.9 and 3.10. To get it to install, you may need to use a `virtual environment <https://saturncloud.io/blog/how-to-install-python-39-with-conda-a-guide-for-data-scientists/>`_ :
+
+.. code-block:: python
+
+   conda create -n myenv python=3.9
+
 PEGG is a python package that designs prime editing guide RNAs (pegRNAs) and base editing guide RNAs (gRNAs) for use in precision genome editing.
 Unlike the existing, web-based programs for pegRNA design, PEGG is suitable for designing thousands of pegRNAs at once, giving users the ability to design entire libraries of pegRNAs
 and gRNAs. Uniquely, PEGG can design paired pegRNA or gRNA-sensor cassettes that include a synthetic version of the target locus, allowing for 
