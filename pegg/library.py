@@ -3,7 +3,9 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import Bio.Seq
-import importlib
+#import importlib
+from importlib.resources import files
+
 
 def mutation_aggregator(mutant_input, gene_name):    
     """
@@ -301,11 +303,13 @@ def safe_muts(num_muts, chrom_dict, organism='human'):
     assert organism in ['human', 'mouse'], "Pick a valid reference organism ('human' or 'mouse')"
 
     if organism == 'human':
-        h = importlib.resources.files(__package__).joinpath('human_safe_regions_bassik.csv')
+        #h = importlib.resources.files(__package__).joinpath('human_safe_regions_bassik.csv')
+        h = files(__package__).joinpath('human_safe_regions_bassik.csv')
         d = pd.read_csv(h)
 
     if organism == 'mouse':
-        m = importlib.resources.files(__package__).joinpath('mouse_safe_regions_bassik.csv')
+       #m = importlib.resources.files(__package__).joinpath('mouse_safe_regions_bassik.csv')
+        m = files(__package__).joinpath('mouse_safe_regions_bassik.csv')
         d = pd.read_csv(m)
 
     #dealing with mix of strings and ints in column because of pandas saving/loading issue with dtypes
@@ -430,11 +434,13 @@ def nontargeting_guides(num_guides, edit_type='prime'):
         num_guides = 1000
 
     if edit_type == 'prime':
-        pr = importlib.resources.files(__package__).joinpath('non_targeting_human_prime.csv')
+        #pr = importlib.resources.files(__package__).joinpath('non_targeting_human_prime.csv')
+        pr = files(__package__).joinpath('non_targeting_human_prime.csv')
         df = pd.read_csv(pr)
 
     if edit_type == 'base':
-        ba = importlib.resources.files(__package__).joinpath('non_targeting_human_base.csv')
+        #ba = importlib.resources.files(__package__).joinpath('non_targeting_human_base.csv')
+        ba = files(__package__).joinpath('non_targeting_human_base.csv')
         df = pd.read_csv(ba)
 
     df = df[:num_guides]

@@ -7,7 +7,7 @@ setup(
     author = 'Samuel Gould',
     author_email = 'samgould@mit.edu',
     url = 'https://github.com/samgould2/PEGG2.0',
-    version = '2.0.9',
+    version = '2.1.0',
     description = 'Prime Editing Guide Generator',
     #package_dir = {'pegg': ''},
     #packages = setuptools.find_packages(), #['pegg'],
@@ -16,7 +16,7 @@ setup(
     #py_modules= ["pegg.prime", "pegg.base", "pegg.library", "pegg.crisporEffScores"],
 
     install_requires = ["Bio>=1.4.0",
-        "cyvcf2>=0.30.18",
+        "cyvcf2==0.30.18",
         "matplotlib>=3.5.1",
         "mock>=4.0.3",
         "numpy>=1.21.5",
@@ -26,7 +26,6 @@ setup(
         "Sphinx>=4.4.0",
         "scikit-learn==1.1.1",
         "regex>=2023.8.8",
-        "importlib"
     ],
 
     classifiers=[

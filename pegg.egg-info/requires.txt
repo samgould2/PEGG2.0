@@ -1,5 +1,5 @@
 Bio>=1.4.0
-cyvcf2>=0.30.18
+cyvcf2==0.30.18
 matplotlib>=3.5.1
 mock>=4.0.3
 numpy>=1.21.5
@@ -9,4 +9,3 @@ setuptools>=61.2.0
 Sphinx>=4.4.0
 scikit-learn==1.1.1
 regex>=2023.8.8
-importlib

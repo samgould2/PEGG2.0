@@ -12,7 +12,9 @@ import Bio.SeqUtils.MeltingTemp as Tm
 import itertools
 from math import exp       
 from re import findall 
-import importlib
+#import importlib
+from importlib.resources import files
+
 
 ##code taken from: https://github.com/maximilianh/crisporWebsite
 ##Modified to run within this package...
@@ -64,12 +66,14 @@ def predict(seq, aa_cut=-1, percent_peptide=-1, model=None, model_file=None, pam
         if np.any(percent_peptide == -1) or (percent_peptide is None and aa_cut is None):
             #print("No model file specified, using V3_model_nopos")
             model_name = 'V3_model_nopos.pickle'
-            model_file = importlib.resources.files(__package__).joinpath(model_name)
+            #model_file = importlib.resources.files(__package__).joinpath(model_name)
+            model_file = files(__package__).joinpath(model_name)
             
         else:
             #print("No model file specified, using V3_model_full")
             model_name = 'V3_model_full.pickle'
-            model_file = importlib.resources.files(__package__).joinpath(model_name)
+            #model_file = importlib.resources.files(__package__).joinpath(model_name)
+            model_file = files(__package__).joinpath(model_name)
 
         #model_file = os.path.join(azimuth_saved_model_dir, model_name)
 
