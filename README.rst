@@ -8,7 +8,7 @@ Version 2.0 (Released Sept. 2023)
 
 `Full Documentation is available here (pegg.readthedocs.io) <https://pegg.readthedocs.io/en/latest/>`_
 
-`Click here to read the bioRxiv preprint <https://www.biorxiv.org/content/10.1101/2022.10.26.513842v4>`_ 
+`Click here to read the Nature Biotechnology article <https://www.nature.com/articles/s41587-024-02172-9>`_ 
 
 Installation
 ****************
@@ -20,11 +20,19 @@ PEGG is available through the python package index. To install, use pip:
 
 Note
 *****
-PEGG has been tested with python version 3.9 and 3.10. To get it to install, you may need to use a `virtual environment <https://saturncloud.io/blog/how-to-install-python-39-with-conda-a-guide-for-data-scientists/>`_ :
+PEGG has been tested with python versions 3.9 and 3.10. Python versions higher than 3.10 are not compatible with the scikit-learn package version needed to compute protospacer on-target scores.
+To get it to install, you may need to use a `virtual environment <https://saturncloud.io/blog/how-to-install-python-39-with-conda-a-guide-for-data-scientists/>`_ :
 
 .. code-block:: python
 
    conda create -n myenv python=3.9
+
+Additionally, some users (particularly on Windows) have reported installation issues stemming from the cyvcf2 package used for translating ClinVar IDs to a format compatiable with PEGG.
+A version without this package and its functionality is available for local pip installation in the following `dropbox link (pegg-2.0.92-py3-none-any.whl) <https://www.dropbox.com/sh/5xsdzyiyrjiu9pf/AADiFFA3BQ3vX7swja-i2NBqa?dl=0>`_ .
+
+
+Usage
+*******
 
 PEGG is a python package that designs prime editing guide RNAs (pegRNAs) and base editing guide RNAs (gRNAs) for use in precision genome editing.
 Unlike the existing, web-based programs for pegRNA design, PEGG is suitable for designing thousands of pegRNAs at once, giving users the ability to design entire libraries of pegRNAs
@@ -48,4 +56,4 @@ PEGG has recently been updated to version 2.0, with new features including (1) i
 
 PEGG is an open source python package. If you use PEGG, please cite it using the following citation:
 
-Gould, S. I., Wuest, A. N., Dong, K., Johnson, G. A., Hsu, A., Narendra, V. K., Levine, S. S., Liu, D. R., & Sánchez Rivera, F. J. (2022). High throughput evaluation of genetic variants with prime editing sensor libraries. bioRxiv. https://doi.org/10.1101/2022.10.26.513842
+Gould, S.I., Wuest, A.N., Dong, K. et al. High-throughput evaluation of genetic variants with prime editing sensor libraries. Nat Biotechnol (2024). https://doi.org/10.1038/s41587-024-02172-9
