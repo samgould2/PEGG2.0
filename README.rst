@@ -1,6 +1,6 @@
 |PEGG| PEGG: Prime Editing Guide Generator
 ======================================================
-Version 2.0 (Released Sept. 2023)
+Version 2.0 (Released Sept. 2023; Updated Mar. 2024)
 ****************************************
 .. |PEGG| image:: docs/PEGG_3.png
    :width: 200px
