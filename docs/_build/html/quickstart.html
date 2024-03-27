@@ -128,6 +128,13 @@
 </pre></div>
 </div>
 <p>To modify and/or download specific python files, download the package from the <a class="reference external" href="https://github.com/samgould2/PEGG2.0">Github Repository</a> .</p>
+<p>PEGG has been tested with python versions 3.9 and 3.10. Python versions higher than 3.10 are not compatible with the scikit-learn package version needed to compute protospacer on-target scores.
+To get it to install, you may need to use a <a class="reference external" href="https://saturncloud.io/blog/how-to-install-python-39-with-conda-a-guide-for-data-scientists/">virtual environment</a> :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">myenv</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.9</span>
+</pre></div>
+</div>
+<p>Additionally, some users (particularly on Windows) have reported installation issues stemming from the cyvcf2 package used for translating ClinVar IDs to a format compatiable with PEGG.
+A version without this package and its functionality is available for local pip installation in the following <a class="reference external" href="https://www.dropbox.com/sh/5xsdzyiyrjiu9pf/AADiFFA3BQ3vX7swja-i2NBqa?dl=0">dropbox link (pegg-2.0.92-py3-none-any.whl)</a> .</p>
 </div>
 <div class="section" id="input-formatting">
 <h2>Input Formatting<a class="headerlink" href="#input-formatting" title="Permalink to this heading">¶</a></h2>
