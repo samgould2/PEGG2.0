@@ -13,6 +13,9 @@
 `Click here to read the Nature Biotechnology article <https://www.nature.com/articles/s41587-024-02172-9>`_ 
 ******************************************************************************************************************
 
+`PEGG has been updated to version 3.0 <https://pegg30.readthedocs.io/en/latest/>`_ 
+******************************************************************************************************************
+
 PEGG is a python package that designs prime editing guide RNAs (pegRNAs) and base editing guide RNAs (gRNAs) for use in precision genome editing.
 Unlike the existing, web-based programs for pegRNA design, PEGG is suitable for designing thousands of pegRNAs at once, giving users the ability to design entire libraries of pegRNAs
 and gRNAs. Uniquely, PEGG can design paired pegRNA or gRNA-sensor cassettes that include a synthetic version of the target locus, allowing for 
